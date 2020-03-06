@@ -1,3 +1,1 @@
-# ceurart
-
-CEUR-WS proceedings style
+# [CEUR-WS.org](http://ceur-ws.org/) proceedings style
