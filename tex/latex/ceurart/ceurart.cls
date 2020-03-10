@@ -1382,71 +1382,71 @@
 \bool_new:N \g_stm_augr_bool
 
 \NewDocumentEnvironment { augroup } { }
-   {
-     \bool_gset_true:N \g_stm_augr_bool
-     \int_gincr:N \g_stm_augr_int
-     \seq_new:c {g_stm_au\int_use:N \g_stm_augr_int _seq}
-     \seq_new:c {g_stm_aff\int_use:N \g_stm_augr_int _seq}
-     \seq_new:c {g_stm_collab\int_use:N \g_stm_augr_int _seq}
-     \seq_new:c {g_stm_clau\int_use:N \g_stm_augr_int _seq}
-     \msg_term:n { AUGR:~\int_use:N \g_stm_augr_int ... }
-   }
-   {
-     \seq_gput_right:Nn \g_stm_augr_seq
-       {
-         \int_gincr:N \g_stm_aaugr_int
-         \group_begin:
-         \stmAuthorSetup { type = collaboration }
-         \l_stm_clb_setup_tl
-         \par \vskip \l_stm_augroup_before_dim
-         \l_stm_augroup_align_tl
-         \l_stm_augroup_size_tl
-         \l_stm_augroup_shape_tl
-         \l_stm_augroup_weight_tl
-         \color{ \l_stm_augroup_color_tl }
-         \seq_use:cnnn { g_stm_au\int_use:N \g_stm_aaugr_int _seq }
-         { ~and~ } { ,~ } { ~and~ }
-         \par \vskip \l_stm_augroup_after_dim
-         \group_end:
-%
-         \group_begin:
-         \stmAffSetup { type = normal }
-         \l_stm_aff_setup_tl
-         \par \vskip\l_stm_aff_before_dim
-         \l_stm_aff_align_tl
-         \l_stm_aff_size_tl
-         \l_stm_aff_shape_tl
-         \l_stm_aff_weight_tl
-         \color{ \l_stm_aff_color_tl }
-         \seq_use:cn { g_stm_aff\int_use:N \g_stm_aaugr_int _seq }
-           { \par \smallskip }
-         \par\vskip\l_stm_aff_after_dim
-         \msg_term:n { AAUGR:~\int_use:N \g_stm_aaugr_int ... }
-         \group_end:
-%
-         \group_begin:
-         \stmAuthorSetup { type = collaboration }
-         \l_stm_clb_setup_tl
-         \par \vskip \l_stm_augroup_before_dim
-         \l_stm_augroup_align_tl
-         \l_stm_augroup_size_tl
-         \l_stm_augroup_shape_tl
-         \l_stm_augroup_weight_tl
-         \color{ \l_stm_augroup_color_tl }
-         \seq_use:cn {g_stm_collab\int_use:N \g_stm_aaugr_int _seq} { }
-         \seq_use:cnnn {g_stm_clau\int_use:N \g_stm_aaugr_int _seq}
-         { ~and~ } { ,~ } { ~and~ }
-         \par\vskip \l_stm_augroup_after_dim
-         \group_end:
-        }
-    }
+{
+  \bool_gset_true:N \g_stm_augr_bool
+  \int_gincr:N \g_stm_augr_int
+  \seq_new:c {g_stm_au\int_use:N \g_stm_augr_int _seq}
+  \seq_new:c {g_stm_aff\int_use:N \g_stm_augr_int _seq}
+  \seq_new:c {g_stm_collab\int_use:N \g_stm_augr_int _seq}
+  \seq_new:c {g_stm_clau\int_use:N \g_stm_augr_int _seq}
+  \msg_term:n { AUGR:~\int_use:N \g_stm_augr_int ... }
+}
+{
+  \seq_gput_right:Nn \g_stm_augr_seq
+  {
+    \int_gincr:N \g_stm_aaugr_int
+    \group_begin:
+    \stmAuthorSetup { type = collaboration }
+    \l_stm_clb_setup_tl
+    \par \vskip \l_stm_augroup_before_dim
+    \l_stm_augroup_align_tl
+    \l_stm_augroup_size_tl
+    \l_stm_augroup_shape_tl
+    \l_stm_augroup_weight_tl
+    \color{ \l_stm_augroup_color_tl }
+    \seq_use:cnnn { g_stm_au\int_use:N \g_stm_aaugr_int _seq }
+    { ~and~ } { ,~ } { ~and~ }
+    \par \vskip \l_stm_augroup_after_dim
+    \group_end:
+    % 
+    \group_begin:
+    \stmAffSetup { type = normal }
+    \l_stm_aff_setup_tl
+    \par \vskip\l_stm_aff_before_dim
+    \l_stm_aff_align_tl
+    \l_stm_aff_size_tl
+    \l_stm_aff_shape_tl
+    \l_stm_aff_weight_tl
+    \color{ \l_stm_aff_color_tl }
+    \seq_use:cn { g_stm_aff\int_use:N \g_stm_aaugr_int _seq }
+    { \par \smallskip }
+    \par\vskip\l_stm_aff_after_dim
+    \msg_term:n { AAUGR:~\int_use:N \g_stm_aaugr_int ... }
+    \group_end:
+    % 
+    \group_begin:
+    \stmAuthorSetup { type = collaboration }
+    \l_stm_clb_setup_tl
+    \par \vskip \l_stm_augroup_before_dim
+    \l_stm_augroup_align_tl
+    \l_stm_augroup_size_tl
+    \l_stm_augroup_shape_tl
+    \l_stm_augroup_weight_tl
+    \color{ \l_stm_augroup_color_tl }
+    \seq_use:cn {g_stm_collab\int_use:N \g_stm_aaugr_int _seq} { }
+    \seq_use:cnnn {g_stm_clau\int_use:N \g_stm_aaugr_int _seq}
+    { ~and~ } { ,~ } { ~and~ }
+    \par\vskip \l_stm_augroup_after_dim
+    \group_end:
+  }
+}
 
-%
-% Abstract
-%
+%%
+%% Abstract
+%%
+
 \RequirePackage{moreverb}
 
-\tex_gdef:D \abstractname { A\,B\,S\,T\,R\,A\,C\,T }
 \tl_new:N \l_stm_abs_title_tl
 \box_new:N \g_stm_abs_box
 
@@ -1460,16 +1460,18 @@
   \IfNoValueTF { #1 } { }
   { \tex_gdef:D \abstractname { #1 } }
   \parindent \z@
+  \leftskip = .1 \textwidth
   % \box_if_empty:NTF \g_stm_key_box
-  % { \leftskip = .35 \textwidth }
+  % { \leftskip = .1 \textwidth }
   % {
   %   \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_stm_key_box }
   %   \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_stm_key_box }
-  %   \leftskip .35\textwidth
-  %   \hspace*{-.35 \textwidth }
+  %   \leftskip .1\textwidth
+  %   \hspace*{-.1 \textwidth }
   %   \noindent\hbox_to_wd:nn {  \z@ } { \box \g_stm_key_box }
   %   \skip_vertical:n { - \l_tmpa_dim }
   % }
+  \skip_vertical:n { \baselineskip }
   \noindent \abstractname \par
   % \skip_vertical:n { -4pt}
   % \noindent \rule{.65\textwidth}{.2pt}\par
@@ -1557,19 +1559,23 @@
    }
 
 \NewDocumentEnvironment { keywords } { O{ Keywords } }
-   {
-     \tex_global:D \tex_setbox:D \g_stm_key_box = \vtop \bgroup
-     % \hsize=.25 \textwidth
-     \vspace*{0pt}
-     \cs_new:Nn \sep: {\unskip,~}
-     \cs_set_eq:NN \sep \sep:
-     \parindent \z@
-     % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
-     % \rule{.25 \textwidth}{.2pt}\par
-     \noindent \textbf {\sffamily #1 }  \par
-     \footnotesize
-   }
-   { \egroup }
+{
+  \tex_global:D \tex_setbox:D \g_stm_key_box = \vtop \bgroup
+  % \hsize=.25 \textwidth
+  \vspace*{0pt}
+  \cs_new:Nn \sep: {\unskip,~}
+  \cs_set_eq:NN \sep \sep:
+  \parindent \z@
+  
+  % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
+  % \rule{.25 \textwidth}{.2pt}\par
+  \noindent \textbf {\sffamily #1 }  \par
+  \footnotesize
+}
+{
+  \skip_vertical:n { \baselineskip }
+  \egroup
+}
 
 %% Acknowledgments
 
