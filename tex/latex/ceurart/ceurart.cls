@@ -15,7 +15,7 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.2.2}%
+\def\RCSversion{0.2.3}%
 \def\RCSdate{2020/03/08}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
@@ -1580,7 +1580,7 @@
 }
 { \group_end: }
 
-   
+
 %% Copyright
 
 \def\copyrightyear#1{\def\@copyrightyear{#1}}
@@ -2612,15 +2612,39 @@
 \xspaceaddexceptions{]}
 
 \AtBeginDocument{\bibsep=0pt}
-%\ifbool{casfinallayout}
-%  {%
-   \AtBeginDocument{
-    %\gdef\bibfont{\fontsize{8pt}{10pt}\selectfont}%
-    %\gdef\bibfont{\small\selectfont}%
-    \gdef\casbiographyfont{\fontsize{8pt}{10pt}\selectfont}%
-   }%
-%  }
-%  {}
+
+%%
+%% Fonts
+%%
+
+\ExplSyntaxOn
+
+\RequirePackage[T1]{fontenc}
+
+\file_if_exist:nTF { stix2.sty }
+{
+  \file_if_exist:nTF { libertine.sty }
+  {
+    %% Math font
+    \RequirePackage[notext]{stix2}
+    %% Main font
+    \RequirePackage[mono=false]{libertine}
+  }
+  { \RequirePackage{stix2} }
+}
+{
+  \iow_term:x {  *********************************************************** }
+  \iow_term:x { ~Stix ~ and ~ Libertine~ fonts ~ are ~ not ~ available ~ }
+  \iow_term:x { ~ in ~TeX~system.~Hence~CMR~ fonts~ are ~ used. }
+  \iow_term:x {  *********************************************************** }
+}
+
+%% Mono font
+\file_if_exist:nTF { inconsolata.sty }
+{ \RequirePackage[scaled=.9]{inconsolata} }
+{ \tex_gdef:D \ttdefault { cmtt } }
+
+\ExplSyntaxOff
 
 \endinput
 

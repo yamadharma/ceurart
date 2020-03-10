@@ -2,7 +2,7 @@
  "ceurart"
  (lambda ()
    (TeX-add-to-alist 'LaTeX-provided-package-options
-                     '(("xcolor" "svgnames" "dvipsnames") ("hyperref" "bookmarksnumbered" "unicode" "colorlinks")))
+                     '(("xcolor" "svgnames" "dvipsnames") ("hyperref" "bookmarksnumbered" "unicode" "colorlinks") ("fontenc" "T1") ("stix2" "notext") ("libertine" "mono=false") ("inconsolata" "scaled=.9")))
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
@@ -39,7 +39,11 @@
     "fontawesome5"
     "moreverb"
     "calc"
-    "wrapfig")
+    "wrapfig"
+    "fontenc"
+    "stix2"
+    "libertine"
+    "inconsolata")
    (TeX-add-symbols
     '("ceurConference" ["argument"] 3)
     '("shorttitle" 1)
