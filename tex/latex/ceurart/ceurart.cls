@@ -39,7 +39,7 @@
 % \@bls=\baselineskip
 
 %\newif\if@twocolumn
-\DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
+\DeclareOption{twocolumn}{\global\dctrue \global\scfalse \PassOptionsToClass{fontsize=10pt}{scrartcl}}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -50,7 +50,7 @@
 % \ExecuteOptions{a4paper,10pt,oneside,review}
 % \ExecuteOptions{a4paper,oneside,10pt,DIV=calc}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-\PassOptionsToClass{a4paper,twoside=false,DIV=15,fontsize=10pt}{scrartcl}
+\PassOptionsToClass{a4paper,twoside=false,DIV=12,fontsize=11pt}{scrartcl}
 \ProcessOptions\relax
 \LoadClass{scrartcl}
 
