@@ -1450,7 +1450,7 @@
 \tl_new:N \l_stm_abs_title_tl
 \box_new:N \g_stm_abs_box
 
-\tex_gdef:D \abstractname { \textbf{Abstract} }
+\tex_gdef:D \abstractname { \textbf{\sffamily Abstract} }
 
 \NewDocumentEnvironment { Abstract } { o }
 {
@@ -1566,7 +1566,7 @@
      \parindent \z@
      % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
      % \rule{.25 \textwidth}{.2pt}\par
-     \noindent \textbf { #1 }  \par
+     \noindent \textbf {\sffamily #1 }  \par
      \footnotesize
    }
    { \egroup }
