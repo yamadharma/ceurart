@@ -154,7 +154,6 @@ sympy-plots-for-*.tex/
 /.emacs.desktop.lock
 *.elc
 auto-save-list
-auto/*.el
 tramp
 .\#*
 
