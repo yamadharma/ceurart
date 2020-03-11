@@ -116,7 +116,7 @@
 \bool_gset_false:N \g_stm_nologo_bool
 
 %%
-%% Whistles
+%% Bells and Whistles
 %%
 
 \file_if_exist:nTF { fontawesome5.sty }
@@ -2639,24 +2639,28 @@
 
 \RequirePackage[T1]{fontenc}
 
+%% Math font
 \file_if_exist:nTF { stix2.sty }
 {
-  \file_if_exist:nTF { libertine.sty }
+  \RequirePackage[notext]{stix2}
+}  
+{
+  \file_if_exist:nTF { stix.sty }
   {
-    %% Math font
-    \RequirePackage[notext]{stix2}
-    %% Main font
-    \RequirePackage[mono=false]{libertine}
+    \RequirePackage[notext]{stix}
   }
   {
-    \RequirePackage{stix2}
+    \iow_term:x { Stix fonts are not available }
   }
 }
+
+%% Main font
+\file_if_exist:nTF { libertine.sty }
 {
-  \iow_term:x {  *********************************************************** }
-  \iow_term:x { ~Stix ~ and ~ Libertine~ fonts ~ are ~ not ~ available ~ }
-  \iow_term:x { ~ in ~TeX~system.~Hence~CMR~ fonts~ are ~ used. }
-  \iow_term:x {  *********************************************************** }
+  \RequirePackage[mono=false]{libertine}
+}
+{
+  \iow_term:x { Libertine fonts are not available }
 }
 
 %% Mono font
