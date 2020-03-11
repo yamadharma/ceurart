@@ -1,4 +1,10 @@
 
+v0.2.5 / 2020-03-11
+=============
+
+  * Workaround for bibstyle elsarticle-num-names.bst absence
+  * Check stix and stix2 fonts
+
 v0.2.4 / 2020-03-11
 ==================
 
