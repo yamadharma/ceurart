@@ -3,8 +3,7 @@
 %% Options:
 %% twocolumn : Two column layout.
 \documentclass[
-%11pt,
-%twocolumn,
+% twocolumn,
 ]{ceurart}
 
 \usepackage[numbers]{natbib}
@@ -12,8 +11,8 @@
 %% TEMPORARY: To count the number of characters per page
 \usepackage{lipsum}
 
-%% TEMPORARY
-\sloppy
+%% Setting of tolerance to 9999
+% \sloppy
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -32,7 +31,7 @@
   Detection}{June 03--05, 2020}{Woodstock, NY}
 
 %%
-%% The "title" command 
+%% The "title" command
 \title{A better way to format your document for CEUR-WS}
 
 %%
@@ -131,22 +130,6 @@ Now this is only one style:
 \item {\verb|twocolumn|}: Two column layout.
 \end{itemize}
 
-\subsection{Template Parameters}
-
-In addition to specifying the \textit{template style} to be used in
-formatting your work, there are a number of \textit{template parameters}
-which modify some part of the applied template style.
-
-Frequently-used parameters, or combinations of parameters, include:
-\begin{itemize}
-\item {\verb|anonymous|}: Suitable for a ``double-blind''
-  conference submission. Anonymizes the work.
-\item {\verb|review|}: Suitable for a ``double-blind''
-  conference submission. Includes line
-  numbers.
-\item{\verb|screen|}: Produces colored hyperlinks.
-\end{itemize}
-
 \section{Modifications}
 
 Modifying the template --- including but not limited to: adjusting
@@ -165,13 +148,6 @@ Use the {\verb|title|} command to define the title of your work. If
 your work has a subtitle, define it with the {\verb|subtitle|}
 command.  Do not insert line breaks in your title.
 
-If your title is lengthy, you must define a short version to be used
-in the page headers, to prevent overlapping text. The \verb|title|
-command has a ``short title'' parameter:
-\begin{verbatim}
-%   \title[short title]{full title}
-\end{verbatim}
-
 \section{Authors and Affiliations}
 
 Each author must be defined separately for accurate metadata
@@ -182,9 +158,8 @@ possible. Include authors' e-mail addresses whenever possible.
 Grouping authors' names or e-mail addresses, or providing an ``e-mail
 alias,'' as shown below, is not acceptable:
 \begin{verbatim}
-%   \author{Brooke Aster, David Mehldau}
-  \email{dave,judy,steve@university.edu}
-  \email{firstname.lastname@phillips.org}
+\author{Brooke Aster}
+\ead{steve@university.edu}
 \end{verbatim}
 
 The \verb|authornote| and \verb|authornotemark| commands allow a note
@@ -196,7 +171,7 @@ the list of authors to be used in the page headers, to prevent
 overlapping text. The following command should be placed just after
 the last \verb|\author{}| definition:
 \begin{verbatim}
-%   \renewcommand{\shortauthors}{McCartney, et al.}
+\renewcommand{\shortauthors}{McCartney, et al.}
 \end{verbatim}
 Omitting this command will force the use of a concatenated list of all
 of the authors' names, which may result in overlapping text in the
@@ -439,7 +414,12 @@ Thanks to the developers of ACM consolidated LaTeX styles
 %%
 %% The next two lines define the bibliography style to be used, and
 %% the bibliography file.
-\bibliographystyle{elsarticle-num-names}
+\IfFileExists{elsarticle-num-names.bst}{%
+  \bibliographystyle{elsarticle-num-names}
+}{
+  \bibliographystyle{elsarticle-num}
+}
+
 \bibliography{sample-ceur}
 
 %%
