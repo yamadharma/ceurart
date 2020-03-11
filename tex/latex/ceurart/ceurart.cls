@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.2.3}%
-\def\RCSdate{2020/03/08}%
+\def\RCSversion{0.2.4}%
+\def\RCSdate{2020/03/11}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -101,17 +101,32 @@
 \let\tnotesep\@empty
 \let\@title\@empty
 
+\ExplSyntaxOn
+
 %
 % Load Common items
 %
 
 
 %%
+%%
+%%
+
+\bool_new:N \g_stm_nologo_bool
+\bool_gset_false:N \g_stm_nologo_bool
+
+%%
 %% Whistles
 %%
 
-\RequirePackage{fontawesome5}
-
+\file_if_exist:nTF { fontawesome5.sty }
+{
+  \RequirePackage{fontawesome5}
+  \bool_gset_false:N \g_stm_nologo_bool
+}
+{
+  \bool_gset_true:N \g_stm_nologo_bool
+}
 
 %%
 %% Utils
@@ -134,7 +149,6 @@
 %
 % Specific to Single Column
 %
-\ExplSyntaxOn
 
 \RenewDocumentCommand \maketitle {}
 {
@@ -524,8 +538,8 @@
       \bool_if:NTF \g_stm_nologo_bool
       {
         \int_compare:nTF { \g_ead_int = 1 }
-        { \textit{Email~address:\c_space_token} }
-        { \textit{Email~addresses:\c_space_token} }
+        { \textsc{email~address:\c_space_token} }
+        { \textsc{email~addresses:\c_space_token} }
       }
       { \faIcon[regular]{envelope-open}\c_space_token }
       \seq_use:Nn \g_stm_ead_seq { ;~ }
@@ -547,7 +561,7 @@
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
       \bool_if:NTF \g_stm_nologo_bool
-      { \textit{URL:\c_space_token} }
+      { \textsc{url:\c_space_token} }
       { \faIcon{globe}\c_space_token }
       \seq_use:Nn \g_stm_uad_seq { ;~ }
     }
@@ -581,7 +595,7 @@
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
       \bool_if:NTF \g_stm_nologo_bool
-      { \textsc{orcid}(s):\c_space_token }
+      { \textsc{orcid:\c_space_token} }
       { \faIcon{orcid}\c_space_token }
       \seq_use:Nn \g_stm_orcid_seq { ;~ }
     }
@@ -945,8 +959,6 @@
 \seq_new:N  \g_stm_twitter_seq
 \seq_new:N  \g_stm_gplus_seq
 \seq_new:N  \g_stm_linkedin_seq
-\bool_new:N \g_stm_nologo_bool
-\bool_gset_false:N \g_stm_nologo_bool
 
 \NewDocumentCommand \twitterauthor { m m }
    {
@@ -2636,7 +2648,9 @@
     %% Main font
     \RequirePackage[mono=false]{libertine}
   }
-  { \RequirePackage{stix2} }
+  {
+    \RequirePackage{stix2}
+  }
 }
 {
   \iow_term:x {  *********************************************************** }
