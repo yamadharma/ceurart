@@ -2629,13 +2629,22 @@
 
 \xspaceaddexceptions{]}
 
+\ExplSyntaxOn
+
+%%
+%% Bibliography
+%%
+
+\RequirePackage[numbers,sort&compress]{natbib}
 \AtBeginDocument{\bibsep=0pt}
+
+\bibliographystyle{elsarticle-num-names}
+% \bibliographystyle{elsarticle-num}
+
 
 %%
 %% Fonts
 %%
-
-\ExplSyntaxOn
 
 \ifpdftex
 \RequirePackage[T1]{fontenc}
@@ -2645,8 +2654,7 @@
 \file_if_exist:nTF { libertinus.sty }
 {
   \RequirePackage{libertinus}
-}
-{
+}{
   \iow_term:x { Libertinus fonts are not available }
 }
 
@@ -2655,8 +2663,7 @@
 \file_if_exist:nTF { libertinust1math.sty }
 {
   \RequirePackage{libertinust1math}
-}
-{
+}{
   \iow_term:x { Libertinus math fonts are not available }
 }
 \fi

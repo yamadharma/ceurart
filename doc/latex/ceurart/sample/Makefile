@@ -1,6 +1,6 @@
 # LATEX: pdflatex | xelatex | lualatex
 LATEX = pdflatex
-LATEX_FLAGS = -shell-escape
+LATEX_FLAGS = -shell-escape -write18
 BIBTEX = bibtex
 
 FILES = $(patsubst %.tex, %.pdf, $(wildcard *.tex))

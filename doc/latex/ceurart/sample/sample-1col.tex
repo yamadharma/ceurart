@@ -6,14 +6,6 @@
 % twocolumn,
 ]{ceurart}
 
-\usepackage[numbers]{natbib}
-
-%% TEMPORARY: To count the number of characters per page
-\usepackage{lipsum}
-
-%% Setting of tolerance to 9999
-% \sloppy
-
 %%
 %% end of the preamble, start of the body of the document source.
 \begin{document}
@@ -21,7 +13,6 @@
 %%
 %% Rights management information.
 %% CC-BY is default license.
-
 \copyrightyear{2020}
 \copyrightclause{Copyright for this paper by its authors.\\ Use permitted under Creative Commons License Attribution 4.0 International (CC BY 4.0).}
 
@@ -37,37 +28,28 @@
 %%
 %% The "author" command and its associated commands are used to define
 %% the authors and their affiliations.
-
 \author[1,2]{Dmitry S. Kulyabov}[%
 orcid=0000-0002-0877-7063,
 ]
-
 \ead{kulyabov-ds@rudn.ru}
-
 \address[1]{Peoples' Friendship University of Russia (RUDN University),
   6 Miklukho-Maklaya St, Moscow, 117198, Russian Federation}
-
 \address[2]{Joint Institute for Nuclear Research,
   6 Joliot-Curie, Dubna, Moscow region, 141980, Russian Federation}
 
 \author[3]{Ilaria Tiddi}[%
 orcid=0000-0001-7116-9338,
 ]
-
 \address[3]{Vrije Universiteit Amsterdam, De Boelelaan 1105, 1081 HV Amsterdam, The Netherlands}
-
 \ead{i.tiddi@vu.nl}
 \ead[url]{https://kmitd.github.io/ilaria/}
 
 \author[4]{Manfred Jeusfeld}[%
 orcid=0000-0002-9421-8566,
 ]
-
 \address[4]{University of Skövde, Högskolevägen 1, 541 28 Skövde, Sweden}
-
 \ead{Manfred.Jeusfeld@acm.org}
 \ead[url]{http://conceptbase.sourceforge.net/mjf/}
-
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -144,9 +126,8 @@ capitalized style or they should all use the regular English (or
 native language) style. It does not make a good impression if you or
 your authors mix the styles.
 
-Use the {\verb|title|} command to define the title of your work. If
-your work has a subtitle, define it with the {\verb|subtitle|}
-command.  Do not insert line breaks in your title.
+Use the \verb|title| command to define the title of your work. Do not
+insert line breaks in your title.
 
 \section{Authors and Affiliations}
 
@@ -198,9 +179,9 @@ Table captions are placed \textit{above} the table.
 Because tables cannot be split across pages, the best placement for
 them is typically the top of the page nearest their initial cite.  To
 ensure this proper ``floating'' placement of tables, use the
-environment \textbf{table} to enclose the table's contents and the
+environment \verb|table| to enclose the table's contents and the
 table caption. The contents of the table itself must go in the
-\textbf{tabular} environment, to be aligned properly in rows and
+\verb|tabular| environment, to be aligned properly in rows and
 columns, with the desired horizontal and vertical rules.
 
 Immediately following this sentence is the point at which
@@ -224,7 +205,7 @@ this document.
 \end{table}
 
 To set a wider table, which takes up the whole width of the page's
-live area, use the environment \textbf{table*} to enclose the table's
+live area, use the environment \verb|table*| to enclose the table's
 contents and the table caption.  As with a single-column table, this
 wide table will ``float'' to a location deemed more
 desirable. Immediately following this sentence is the point at which
@@ -255,17 +236,17 @@ discussed in the next sections.
 \subsection{Inline (In-text) Equations}
 
 A formula that appears in the running text is called an inline or
-in-text formula.  It is produced by the \textbf{math} environment,
+in-text formula.  It is produced by the \verb|math| environment,
 which can be invoked with the usual
-\texttt{{\char'134}begin\,\ldots{\char'134}end} construction or with
-the short form \texttt{\$\,\ldots\$}. You can use any of the symbols
+\verb|\begin| \ldots \verb|\end| construction or with
+the short form \verb|$| \ldots \verb|$|. You can use any of the symbols
 and structures, from $\alpha$ to $\omega$, available in
 \LaTeX~\cite{Lamport:LaTeX};
 this section will simply show a few
 examples of in-text equations in context. Notice how this equation:
 \begin{math}
-  \lim_{n\rightarrow \infty}x=0
-\end{math},
+  \lim_{n\rightarrow \infty} \frac{1}{n} = 0,
+\end{math}
 set here in in-line math style, looks slightly different when
 set in display style.  (See next section).
 
@@ -277,11 +258,11 @@ environment. An unnumbered display equation is produced by the
 \textbf{displaymath} environment.
 
 Again, in either environment, you can use any of the symbols and
-structures available in \LaTeX\@; this section will just give a couple
+structures available in \LaTeX{}; this section will just give a couple
 of examples of display equations in context.  First, consider the
 equation, shown as an inline equation above:
 \begin{equation}
-  \lim_{n\rightarrow \infty}x=0
+  \lim_{n\rightarrow \infty} \frac{1}{n} = 0.
 \end{equation}
 Notice how it is formatted somewhat differently in
 the \textbf{displaymath}
@@ -329,7 +310,6 @@ article DOI, etc.
 The bibliography is included in your source document with these two
 commands, placed just before the \verb|\end{document}| command:
 \begin{verbatim}
-\bibliographystyle{elsarticle-num-names}
 \bibliography{bibfile}
 \end{verbatim}
 where ``\verb|bibfile|'' is the name, without the ``\verb|.bib|''
@@ -407,19 +387,12 @@ and subsection identification method.
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
 \begin{acknowledgments}
-Thanks to the developers of ACM consolidated LaTeX styles
+  Thanks to the developers of ACM consolidated LaTeX styles
   \url{https://github.com/borisveytsman/acmart}.
 \end{acknowledgments}
 
 %%
-%% The next two lines define the bibliography style to be used, and
-%% the bibliography file.
-\IfFileExists{elsarticle-num-names.bst}{%
-  \bibliographystyle{elsarticle-num-names}
-}{
-  \bibliographystyle{elsarticle-num}
-}
-
+%% Define the bibliography file to be used
 \bibliography{sample-ceur}
 
 %%
@@ -455,11 +428,6 @@ dui. Etiam sagittis eleifend elementum.
 Nam interdum magna at lectus dignissim, ac dignissim lorem
 rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
 massa et mattis lacinia.
-
-\clearpage
-\lipsum
-\lipsum
-\lipsum
 
 \end{document}
 
