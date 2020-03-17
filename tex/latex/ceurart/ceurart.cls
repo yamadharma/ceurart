@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.2.4}%
-\def\RCSdate{2020/03/11}%
+\def\RCSversion{0.2.6}%
+\def\RCSdate{2020/03/18}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -2637,36 +2637,29 @@
 
 \ExplSyntaxOn
 
+\ifpdftex
 \RequirePackage[T1]{fontenc}
-
-%% Math font
-\file_if_exist:nTF { stix2.sty }
-{
-  \RequirePackage[notext]{stix2}
-}  
-{
-  \file_if_exist:nTF { stix.sty }
-  {
-    \RequirePackage[notext]{stix}
-  }
-  {
-    \iow_term:x { Stix fonts are not available }
-  }
-}
+\fi
 
 %% Main font
-\file_if_exist:nTF { libertine.sty }
+\file_if_exist:nTF { libertinus.sty }
 {
-  \RequirePackage[mono=false]{libertine}
+  \RequirePackage{libertinus}
 }
 {
-  \iow_term:x { Libertine fonts are not available }
+  \iow_term:x { Libertinus fonts are not available }
 }
 
-%% Mono font
-\file_if_exist:nTF { inconsolata.sty }
-{ \RequirePackage[scaled=.9]{inconsolata} }
-{ \tex_gdef:D \ttdefault { cmtt } }
+%% Math font for PDFLaTeX
+\ifpdftex
+\file_if_exist:nTF { libertinust1math.sty }
+{
+  \RequirePackage{libertinust1math}
+}
+{
+  \iow_term:x { Libertinus math fonts are not available }
+}
+\fi
 
 \ExplSyntaxOff
 

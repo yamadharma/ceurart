@@ -1,6 +1,7 @@
-LATEX=pdflatex
-LATEX_FLAGS=-shell-escape
-BIBTEX=bibtex
+# LATEX: pdflatex | xelatex | lualatex
+LATEX = pdflatex
+LATEX_FLAGS = -shell-escape
+BIBTEX = bibtex
 
 FILES = $(patsubst %.tex, %.pdf, $(wildcard *.tex))
 
@@ -13,8 +14,6 @@ all: $(FILES)
 	-$(BIBTEX) `basename $< .tex`
 	$(LATEX) $(LATEX_FLAGS) $<
 	$(LATEX) $(LATEX_FLAGS) $<
-	# mkdir -p out
-	# mv $@ out
 
 clean:
 	-rm -f *.{log,toc,tac,aux,dvi,ps,bbl,blg,tmp,nav,out,snm,vrb,rel,cut,abs,*~}
