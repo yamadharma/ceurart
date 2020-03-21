@@ -1,0 +1,1 @@
+../tex/latex/ceurart/ceurart.cls
