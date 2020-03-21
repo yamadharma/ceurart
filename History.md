@@ -1,4 +1,12 @@
 
+v0.2.6 / 2020-03-21
+=============
+
+  * Sample maked consistent with class
+  * conference command changed
+  * Moved bibstyle stuff to class
+  * Switched to libertinus fonts
+
 v0.2.5 / 2020-03-11
 =============
 

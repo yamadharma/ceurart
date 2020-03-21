@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.2.4}%
-\def\RCSdate{2020/03/11}%
+\def\RCSversion{0.2.6}%
+\def\RCSdate{2020/03/18}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -132,19 +132,24 @@
 %% Utils
 %%
 
+%% Workaround for unwanted '.pdf' to path (provided by hyperref)
+%% https://tex.stackexchange.com/questions/154335/href-adds-unwanted-pdf-to-path-provided
 \providecommand*{\hrefurl}{\hyper@normalise\hrefurl@}
 \providecommand*{\hrefurl@}[2]{\hyper@linkurl{#2}{#1}}
 
-\newcommand\ceurConference[4][]{%
-  \gdef\ceurConference@shortname{#1}%
-  \gdef\ceurConference@name{#2}%
-  \gdef\ceurConference@date{#3}%
-  \gdef\ceurConference@venue{#4}%
-  \ifx\ceurConference@shortname\@empty
-    \gdef\ceurConference@shortname{#2}%
-  \fi
-}
+% \newcommand\ceurConference[4][]{%
+%   \gdef\ceurConference@shortname{#1}%
+%   \gdef\ceurConference@name{#2}%
+%   \gdef\ceurConference@date{#3}%
+%   \gdef\ceurConference@venue{#4}%
+%   \ifx\ceurConference@shortname\@empty
+%     \gdef\ceurConference@shortname{#2}%
+%   \fi
+% }
 
+\DeclareRobustCommand\conference[1]{%
+  \gdef\ceurConference@name{#1}%
+}
 
 %
 % Specific to Single Column
@@ -152,7 +157,7 @@
 
 \RenewDocumentCommand \maketitle {}
 {
-  \nonumnote{\itshape \ceurConference@name,~\ceurConference@date,~\ceurConference@venue}
+  \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
   \logonote{\@ceurLogoLine}
   % \ifbool { usecasgrabsbox }
@@ -1615,7 +1620,7 @@
 \newdimen\ccLogoWidth
 
 \def\@copyrightLine{%
-  \setbox\@tempboxa\hbox{\includegraphics[height=14\p@,clip]{cc-by}}%
+  \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
   \ccLogoWidth=\dimexpr\wd\@tempboxa
   \@rightskip\@flushglue \rightskip\@rightskip
   % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
@@ -1625,6 +1630,7 @@
   \end{minipage}
   \enskip
   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
+    \tiny
     \textcopyright\ \@copyrightyear\ %
     \ifx\@copyrightclause\@empty%
       \textcolor{red}{Author: Please fill in the \string\copyrightclause\space macro}%
@@ -1638,7 +1644,7 @@
 
 \def\@ceurLogoLine{%
   % set width of ceur-ws logo equals to width of cc-by logo
-  \setbox\@tempboxa\hbox{\includegraphics[height=14\p@,clip]{cc-by}}%
+  \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
   \ccLogoWidth=\dimexpr\wd\@tempboxa
   \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
   \@rightskip\@flushglue \rightskip\@rightskip
@@ -2629,44 +2635,44 @@
 
 \xspaceaddexceptions{]}
 
+\ExplSyntaxOn
+
+%%
+%% Bibliography
+%%
+
+\RequirePackage[numbers,sort&compress]{natbib}
 \AtBeginDocument{\bibsep=0pt}
+
+% \bibliographystyle{elsarticle-num-names}
+\bibliographystyle{elsarticle-num}
+
 
 %%
 %% Fonts
 %%
 
-\ExplSyntaxOn
-
+\ifpdftex
 \RequirePackage[T1]{fontenc}
-
-%% Math font
-\file_if_exist:nTF { stix2.sty }
-{
-  \RequirePackage[notext]{stix2}
-}  
-{
-  \file_if_exist:nTF { stix.sty }
-  {
-    \RequirePackage[notext]{stix}
-  }
-  {
-    \iow_term:x { Stix fonts are not available }
-  }
-}
+\fi
 
 %% Main font
-\file_if_exist:nTF { libertine.sty }
+\file_if_exist:nTF { libertinus.sty }
 {
-  \RequirePackage[mono=false]{libertine}
-}
-{
-  \iow_term:x { Libertine fonts are not available }
+  \RequirePackage{libertinus}
+}{
+  \iow_term:x { Libertinus fonts are not available }
 }
 
-%% Mono font
-\file_if_exist:nTF { inconsolata.sty }
-{ \RequirePackage[scaled=.9]{inconsolata} }
-{ \tex_gdef:D \ttdefault { cmtt } }
+%% Math font for PDFLaTeX
+\ifpdftex
+\file_if_exist:nTF { libertinust1math.sty }
+{
+  \RequirePackage{libertinust1math}
+}{
+  \iow_term:x { Libertinus math fonts are not available }
+}
+\fi
 
 \ExplSyntaxOff
 
