@@ -1620,7 +1620,6 @@
 \newdimen\ccLogoWidth
 
 \def\@copyrightLine{%
-  % \setbox\@tempboxa\hbox{\includegraphics[height=14\p@,clip]{cc-by}}%
   \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
   \ccLogoWidth=\dimexpr\wd\@tempboxa
   \@rightskip\@flushglue \rightskip\@rightskip
@@ -1645,7 +1644,6 @@
 
 \def\@ceurLogoLine{%
   % set width of ceur-ws logo equals to width of cc-by logo
-  % \setbox\@tempboxa\hbox{\includegraphics[height=14\p@,clip]{cc-by}}%
   \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
   \ccLogoWidth=\dimexpr\wd\@tempboxa
   \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
@@ -2646,8 +2644,8 @@
 \RequirePackage[numbers,sort&compress]{natbib}
 \AtBeginDocument{\bibsep=0pt}
 
-\bibliographystyle{elsarticle-num-names}
-% \bibliographystyle{elsarticle-num}
+% \bibliographystyle{elsarticle-num-names}
+\bibliographystyle{elsarticle-num}
 
 
 %%
