@@ -132,19 +132,24 @@
 %% Utils
 %%
 
+%% Workaround for unwanted '.pdf' to path (provided by hyperref)
+%% https://tex.stackexchange.com/questions/154335/href-adds-unwanted-pdf-to-path-provided
 \providecommand*{\hrefurl}{\hyper@normalise\hrefurl@}
 \providecommand*{\hrefurl@}[2]{\hyper@linkurl{#2}{#1}}
 
-\newcommand\ceurConference[4][]{%
-  \gdef\ceurConference@shortname{#1}%
-  \gdef\ceurConference@name{#2}%
-  \gdef\ceurConference@date{#3}%
-  \gdef\ceurConference@venue{#4}%
-  \ifx\ceurConference@shortname\@empty
-    \gdef\ceurConference@shortname{#2}%
-  \fi
-}
+% \newcommand\ceurConference[4][]{%
+%   \gdef\ceurConference@shortname{#1}%
+%   \gdef\ceurConference@name{#2}%
+%   \gdef\ceurConference@date{#3}%
+%   \gdef\ceurConference@venue{#4}%
+%   \ifx\ceurConference@shortname\@empty
+%     \gdef\ceurConference@shortname{#2}%
+%   \fi
+% }
 
+\DeclareRobustCommand\conference[1]{%
+  \gdef\ceurConference@name{#1}%
+}
 
 %
 % Specific to Single Column
@@ -152,7 +157,7 @@
 
 \RenewDocumentCommand \maketitle {}
 {
-  \nonumnote{\itshape \ceurConference@name,~\ceurConference@date,~\ceurConference@venue}
+  \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
   \logonote{\@ceurLogoLine}
   % \ifbool { usecasgrabsbox }
