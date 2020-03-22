@@ -242,7 +242,7 @@
     \xmpdatawrite{Subject}{CEUR Workshop Proceedings (CEUR-WS.org)}
 
     \ifx\@copyrightclause\@empty\else
-      \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
+      % \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
       \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
     \fi
 
