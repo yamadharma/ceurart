@@ -66,7 +66,21 @@
 \RequirePackage{footmisc}
 \RequirePackage[svgnames,dvipsnames]{xcolor}
 
-\RequirePackage[bookmarksnumbered,unicode,colorlinks]{hyperref}
+\ExplSyntaxOn
+
+% PDF/A support
+
+\bool_new:N \g_ceur_pdfx_bool
+\bool_gset_false:N \g_ceur_pdfx_bool
+
+\file_if_exist:nTF { pdfx.sty }
+{
+  \RequirePackage[useBOM]{pdfx}
+  \bool_gset_true:N \g_ceur_pdfx_bool
+}{
+  \RequirePackage{hyperref}
+}
+\hypersetup{colorlinks,bookmarksnumbered,pdfencoding=unicode,allcolors=black}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
@@ -76,7 +90,6 @@
 }
 \urlstyle{rm}
 \colorlet{scolor}{black}
-% \colorlet{hscolor}{DarkSlateGrey}
 \colorlet{hscolor}{DarkSlateGrey}
 \hypersetup{%
   pdfcreator={ceurart.cls},
@@ -85,7 +98,7 @@
   % pdfauthor={\csuse{__short_authors:}},
   % pdfauthor={\csuse{__authors:}},
   % pdftitle={\@title},
-  pdfsubject={CEUR Workshop Proceedings (CEUR-WS.org)},
+  pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
   % pdfkeywords={\@keywords},
   linkcolor={hscolor},
   urlcolor={hscolor},
@@ -97,27 +110,28 @@
 %   {pdftitle={\csuse{__short_title:}},
 %   pdfauthor={\csuse{__short_authors:}}}}
 
- \let\comma\@empty
+\let\comma\@empty
 \let\tnotesep\@empty
 \let\@title\@empty
-
-\ExplSyntaxOn
 
 %
 % Load Common items
 %
 
-
 %%
 %%
 %%
 
-\bool_new:N \g_stm_nologo_bool
-\bool_gset_false:N \g_stm_nologo_bool
+%%
+%% Bools
+%%
 
 %%
 %% Bells and Whistles
 %%
+
+\bool_new:N \g_stm_nologo_bool
+\bool_gset_false:N \g_stm_nologo_bool
 
 \file_if_exist:nTF { fontawesome5.sty }
 {
@@ -129,6 +143,26 @@
 }
 
 %%
+%% PDF/A
+%%
+
+%% allocate a write stream
+\iow_new:N \g_xmpdata_output_iow
+\iow_open:Nn \g_xmpdata_output_iow { \c_sys_jobname_str .xmpdata }
+
+%% User interface
+\NewDocumentCommand{\xmpdatawrite}{ m m }
+{
+  \xmpdata_write:n { \iow_char:N \\ #1 \iow_char:N \{ #2 \iow_char:N \} }
+}
+
+%% Inner function
+\cs_new_protected:Npn \xmpdata_write:n #1
+{
+  \iow_now:Nx \g_xmpdata_output_iow { #1 }
+}
+
+%%
 %% Utils
 %%
 
@@ -136,6 +170,10 @@
 %% https://tex.stackexchange.com/questions/154335/href-adds-unwanted-pdf-to-path-provided
 \providecommand*{\hrefurl}{\hyper@normalise\hrefurl@}
 \providecommand*{\hrefurl@}[2]{\hyper@linkurl{#2}{#1}}
+
+%%
+%%
+%%
 
 % \newcommand\ceurConference[4][]{%
 %   \gdef\ceurConference@shortname{#1}%
@@ -191,7 +229,34 @@
   \renewcommand\thefootnote{\arabic{footnote}}
   \gdef\@pdfauthor{\infoauthors}
   % \gdef\@pdfsubject{Complex ~STM ~Content}
+
+  %% PDF/A
+  \bool_if:NTF \g_ceur_pdfx_bool
+  {
+    \xmpdatawrite{Title}{\casprelimstitle}
+    \xmpdatawrite{Author}{\pdfxauthors}
+    \xmpdatawrite{Subject}{CEUR Workshop Proceedings (CEUR-WS.org)}
+    
+    \ifx\@copyrightclause\@empty\else    
+      \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
+      \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
+    \fi
+
+    \xmpdatawrite{Journaltitle}{CEUR Workshop Proceedings}
+    \xmpdatawrite{Journalnumber}{1613-0073}
+  }{
+  }
 }
+
+
+  % pdfcreator={ceurart.cls},
+  % % pdfproducer={pdfTeX;},
+  % % pdftitle={\csuse{__short_title:}},
+  % % pdfauthor={\csuse{__short_authors:}},
+  % % pdfauthor={\csuse{__authors:}},
+  % % pdftitle={\@title},
+  % pdfsubject={CEUR Workshop Proceedings (CEUR-WS.org)},
+
 
 %
 % Front matter macros
@@ -819,9 +884,10 @@
       }
 
 
-%
-% Author macros
-%
+%%
+%% Author macros
+%%
+
 \seq_new:c { g_stm_au0_seq }
 \seq_new:c { g_stm_clau0_seq }
 \int_new:N \g_stm_au_int
@@ -1063,6 +1129,7 @@
 \seq_new:N \g_stm_prelimsau_seq
 
 \csxdef{infoauthors}{}
+\csgdef { pdfxauthors } { }
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
 \RenewDocumentCommand \author { O{} m O{} }
    {
@@ -1165,6 +1232,10 @@
           { \xappto \infoauthors { et~al. } }
           { }
         }
+        %
+        \csgdef { __pdfxauthor } { #2 }
+        \xappto \pdfxauthors { \__pdfxauthor , ~ }
+
     }
 
 \NewDocumentCommand \stmauthors { }
@@ -1425,7 +1496,7 @@
     { ~and~ } { ,~ } { ~and~ }
     \par \vskip \l_stm_augroup_after_dim
     \group_end:
-    % 
+    %
     \group_begin:
     \stmAffSetup { type = normal }
     \l_stm_aff_setup_tl
@@ -1440,7 +1511,7 @@
     \par\vskip\l_stm_aff_after_dim
     \msg_term:n { AAUGR:~\int_use:N \g_stm_aaugr_int ... }
     \group_end:
-    % 
+    %
     \group_begin:
     \stmAuthorSetup { type = collaboration }
     \l_stm_clb_setup_tl
@@ -1583,7 +1654,7 @@
   \cs_new:Nn \sep: {\unskip,~}
   \cs_set_eq:NN \sep \sep:
   \parindent \z@
-  
+
   % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
   % \rule{.25 \textwidth}{.2pt}\par
   \noindent \textbf {\sffamily #1 }  \par
@@ -2644,17 +2715,17 @@
 \RequirePackage[numbers,sort&compress]{natbib}
 \AtBeginDocument{\bibsep=0pt}
 
-% \bibliographystyle{elsarticle-num-names}
-\bibliographystyle{elsarticle-num}
+\bibliographystyle{elsarticle-num-names}
+% \bibliographystyle{elsarticle-num}
 
 
 %%
 %% Fonts
 %%
 
-\ifpdftex
-\RequirePackage[T1]{fontenc}
-\fi
+% \ifpdftex
+% \RequirePackage[T1]{fontenc}
+% \fi
 
 %% Main font
 \file_if_exist:nTF { libertinus.sty }
