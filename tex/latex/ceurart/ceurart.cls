@@ -2723,13 +2723,14 @@
 % \bibliographystyle{elsarticle-num}
 
 
+
 %%
 %% Fonts
 %%
 
-% \ifpdftex
-% \RequirePackage[T1]{fontenc}
-% \fi
+\ifpdftex
+\RequirePackage[T1]{fontenc}
+\fi
 
 %% Main font
 \file_if_exist:nTF { libertinus.sty }
