@@ -1,4 +1,19 @@
 
+v0.2.9 / 2020-03-22
+=============
+
+  * Removed natbib sort&compress (this is online publication). Fixed entries' types in bib-file.
+  * Restored fontencoding T1 for pdflatex
+  * Removed some hyperref warnings
+  * Copyright info disabled in PDF/X
+  * Check version of fontawesome5.sty (needs for orcid icon)
+  * PDF/X preliminary support
+
+v0.2.8 / 2020-03-21
+=============
+
+  * symlinks -> files
+
 v0.2.7 / 2020-03-21
 =============
 

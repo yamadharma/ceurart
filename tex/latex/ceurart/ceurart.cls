@@ -66,7 +66,21 @@
 \RequirePackage{footmisc}
 \RequirePackage[svgnames,dvipsnames]{xcolor}
 
-\RequirePackage[bookmarksnumbered,unicode,colorlinks]{hyperref}
+\ExplSyntaxOn
+
+% PDF/A support
+
+\bool_new:N \g_ceur_pdfx_bool
+\bool_gset_false:N \g_ceur_pdfx_bool
+
+\file_if_exist:nTF { pdfx.sty }
+{
+  \RequirePackage[useBOM]{pdfx}
+  \bool_gset_true:N \g_ceur_pdfx_bool
+}{
+  \RequirePackage{hyperref}
+}
+\hypersetup{colorlinks,bookmarksnumbered,pdfencoding=unicode,allcolors=DarkSlateGrey}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
@@ -76,56 +90,65 @@
 }
 \urlstyle{rm}
 \colorlet{scolor}{black}
-% \colorlet{hscolor}{DarkSlateGrey}
 \colorlet{hscolor}{DarkSlateGrey}
-\hypersetup{%
-  pdfcreator={ceurart.cls},
-  % pdfproducer={pdfTeX;},
-  % pdftitle={\csuse{__short_title:}},
-  % pdfauthor={\csuse{__short_authors:}},
-  % pdfauthor={\csuse{__authors:}},
-  % pdftitle={\@title},
-  pdfsubject={CEUR Workshop Proceedings (CEUR-WS.org)},
-  % pdfkeywords={\@keywords},
-  linkcolor={hscolor},
-  urlcolor={hscolor},
-  citecolor={hscolor},
-  filecolor={hscolor},
-  menucolor={hscolor},
-}
 % \AtEndDocument{\hypersetup
 %   {pdftitle={\csuse{__short_title:}},
 %   pdfauthor={\csuse{__short_authors:}}}}
 
- \let\comma\@empty
+\let\comma\@empty
 \let\tnotesep\@empty
 \let\@title\@empty
-
-\ExplSyntaxOn
 
 %
 % Load Common items
 %
 
-
 %%
 %%
 %%
 
-\bool_new:N \g_stm_nologo_bool
-\bool_gset_false:N \g_stm_nologo_bool
+%%
+%% Bools
+%%
 
 %%
 %% Bells and Whistles
 %%
 
+\bool_new:N \g_ceur_nologo_bool
+\bool_gset_false:N \g_ceur_nologo_bool
+
 \file_if_exist:nTF { fontawesome5.sty }
 {
   \RequirePackage{fontawesome5}
-  \bool_gset_false:N \g_stm_nologo_bool
+  % We need orcid icon
+  \@ifpackagelater{fontawesome5}{2020/01/17}{%
+    \bool_gset_false:N \g_ceur_nologo_bool
+  }{%
+    \bool_gset_true:N \g_ceur_nologo_bool
+  }
+}{
+  \bool_gset_true:N \g_ceur_nologo_bool
 }
+
+%%
+%% PDF/A
+%%
+
+%% allocate a write stream
+\iow_new:N \g_xmpdata_output_iow
+\iow_open:Nn \g_xmpdata_output_iow { \c_sys_jobname_str .xmpdata }
+
+%% User interface
+\NewDocumentCommand{\xmpdatawrite}{ m m }
 {
-  \bool_gset_true:N \g_stm_nologo_bool
+  \xmpdata_write:n { \iow_char:N \\ #1 \iow_char:N \{ #2 \iow_char:N \} }
+}
+
+%% Inner function
+\cs_new_protected:Npn \xmpdata_write:n #1
+{
+  \iow_now:Nx \g_xmpdata_output_iow { #1 }
 }
 
 %%
@@ -136,6 +159,10 @@
 %% https://tex.stackexchange.com/questions/154335/href-adds-unwanted-pdf-to-path-provided
 \providecommand*{\hrefurl}{\hyper@normalise\hrefurl@}
 \providecommand*{\hrefurl@}[2]{\hyper@linkurl{#2}{#1}}
+
+%%
+%%
+%%
 
 % \newcommand\ceurConference[4][]{%
 %   \gdef\ceurConference@shortname{#1}%
@@ -191,7 +218,49 @@
   \renewcommand\thefootnote{\arabic{footnote}}
   \gdef\@pdfauthor{\infoauthors}
   % \gdef\@pdfsubject{Complex ~STM ~Content}
+
+  %% PDF/A
+  \bool_if:NTF \g_ceur_pdfx_bool
+  {
+    \xmpdatawrite{Title}{\casprelimstitle}
+    \xmpdatawrite{Author}{\pdfxauthors}
+    \xmpdatawrite{Subject}{CEUR Workshop Proceedings (CEUR-WS.org)}
+
+    \ifx\@copyrightclause\@empty\else
+      % \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
+      \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
+    \fi
+
+    \xmpdatawrite{Journaltitle}{CEUR Workshop Proceedings}
+    \xmpdatawrite{Journalnumber}{1613-0073}
+  }{
+    \hypersetup{%
+      pdfcreator={ceurart.cls},
+      % pdfproducer={pdfTeX;},
+      % pdftitle={\csuse{__short_title:}},
+      % pdfauthor={\csuse{__short_authors:}},
+      % pdfauthor={\csuse{__authors:}},
+      % pdftitle={\@title},
+      pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
+      % pdfkeywords={\@keywords},
+      linkcolor={hscolor},
+      urlcolor={hscolor},
+      citecolor={hscolor},
+      filecolor={hscolor},
+      menucolor={hscolor},
+    }    
+  }
 }
+
+
+  % pdfcreator={ceurart.cls},
+  % % pdfproducer={pdfTeX;},
+  % % pdftitle={\csuse{__short_title:}},
+  % % pdfauthor={\csuse{__short_authors:}},
+  % % pdfauthor={\csuse{__authors:}},
+  % % pdftitle={\@title},
+  % pdfsubject={CEUR Workshop Proceedings (CEUR-WS.org)},
+
 
 %
 % Front matter macros
@@ -540,11 +609,11 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_stm_nologo_bool
+      \bool_if:NTF \g_ceur_nologo_bool
       {
         \int_compare:nTF { \g_ead_int = 1 }
-        { \textsc{email~address:\c_space_token} }
-        { \textsc{email~addresses:\c_space_token} }
+        { \textsc{email:\c_space_token} }
+        { \textsc{email:\c_space_token} }
       }
       { \faIcon[regular]{envelope-open}\c_space_token }
       \seq_use:Nn \g_stm_ead_seq { ;~ }
@@ -565,7 +634,7 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_stm_nologo_bool
+      \bool_if:NTF \g_ceur_nologo_bool
       { \textsc{url:\c_space_token} }
       { \faIcon{globe}\c_space_token }
       \seq_use:Nn \g_stm_uad_seq { ;~ }
@@ -599,7 +668,7 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_stm_nologo_bool
+      \bool_if:NTF \g_ceur_nologo_bool
       { \textsc{orcid:\c_space_token} }
       { \faIcon{orcid}\c_space_token }
       \seq_use:Nn \g_stm_orcid_seq { ;~ }
@@ -819,9 +888,10 @@
       }
 
 
-%
-% Author macros
-%
+%%
+%% Author macros
+%%
+
 \seq_new:c { g_stm_au0_seq }
 \seq_new:c { g_stm_clau0_seq }
 \int_new:N \g_stm_au_int
@@ -1010,7 +1080,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { Facebook:\c_space_token }
              { \faIcon{facebook-f}\c_space_token }
             \seq_use:Nn \g_stm_facebook_seq {,\c_space_token }
@@ -1024,7 +1094,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { Twitter:\c_space_token }
              { \faIcon{twitter}\c_space_token }
             \seq_use:Nn \g_stm_twitter_seq {,\c_space_token }
@@ -1038,7 +1108,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { Google+:\c_space_token }
              { \faIcon{google-plus-g}\c_space_token }
             \seq_use:Nn \g_stm_gplus_seq {,\c_space_token }
@@ -1052,7 +1122,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { LinkedIn:\c_space_token }
              { \faIcon{linkedin-in}\c_space_token }
             \seq_use:Nn \g_stm_linkedin_seq {,\c_space_token }
@@ -1063,6 +1133,7 @@
 \seq_new:N \g_stm_prelimsau_seq
 
 \csxdef{infoauthors}{}
+\csgdef { pdfxauthors } { }
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
 \RenewDocumentCommand \author { O{} m O{} }
    {
@@ -1165,6 +1236,10 @@
           { \xappto \infoauthors { et~al. } }
           { }
         }
+        %
+        \csgdef { __pdfxauthor } { #2 }
+        \xappto \pdfxauthors { \__pdfxauthor , ~ }
+
     }
 
 \NewDocumentCommand \stmauthors { }
@@ -1425,7 +1500,7 @@
     { ~and~ } { ,~ } { ~and~ }
     \par \vskip \l_stm_augroup_after_dim
     \group_end:
-    % 
+    %
     \group_begin:
     \stmAffSetup { type = normal }
     \l_stm_aff_setup_tl
@@ -1440,7 +1515,7 @@
     \par\vskip\l_stm_aff_after_dim
     \msg_term:n { AAUGR:~\int_use:N \g_stm_aaugr_int ... }
     \group_end:
-    % 
+    %
     \group_begin:
     \stmAuthorSetup { type = collaboration }
     \l_stm_clb_setup_tl
@@ -1583,7 +1658,7 @@
   \cs_new:Nn \sep: {\unskip,~}
   \cs_set_eq:NN \sep \sep:
   \parindent \z@
-  
+
   % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
   % \rule{.25 \textwidth}{.2pt}\par
   \noindent \textbf {\sffamily #1 }  \par
@@ -1787,7 +1862,7 @@
   longtitle     .bool_gset:N    = \g_stm_longtitle_bool    ,
   longabstract  .bool_gset:N    = \g_stm_longtitle_bool    ,
   breakafter    .clist_gset:N   = \g_stm_breakafter_clist  ,
-  nologo        .bool_gset:N    = \g_stm_nologo_bool       ,
+  nologo        .bool_gset:N    = \g_ceur_nologo_bool       ,
 }
 
 \bool_new:N \g_stm_breakafter_title_bool
@@ -2641,11 +2716,13 @@
 %% Bibliography
 %%
 
-\RequirePackage[numbers,sort&compress]{natbib}
+% \RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage[numbers]{natbib}
 \AtBeginDocument{\bibsep=0pt}
 
-% \bibliographystyle{elsarticle-num-names}
-\bibliographystyle{elsarticle-num}
+\bibliographystyle{elsarticle-num-names}
+% \bibliographystyle{elsarticle-num}
+
 
 
 %%
