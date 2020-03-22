@@ -91,21 +91,6 @@
 \urlstyle{rm}
 \colorlet{scolor}{black}
 \colorlet{hscolor}{DarkSlateGrey}
-\hypersetup{%
-  pdfcreator={ceurart.cls},
-  % pdfproducer={pdfTeX;},
-  % pdftitle={\csuse{__short_title:}},
-  % pdfauthor={\csuse{__short_authors:}},
-  % pdfauthor={\csuse{__authors:}},
-  % pdftitle={\@title},
-  pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
-  % pdfkeywords={\@keywords},
-  linkcolor={hscolor},
-  urlcolor={hscolor},
-  citecolor={hscolor},
-  filecolor={hscolor},
-  menucolor={hscolor},
-}
 % \AtEndDocument{\hypersetup
 %   {pdftitle={\csuse{__short_title:}},
 %   pdfauthor={\csuse{__short_authors:}}}}
@@ -249,6 +234,21 @@
     \xmpdatawrite{Journaltitle}{CEUR Workshop Proceedings}
     \xmpdatawrite{Journalnumber}{1613-0073}
   }{
+    \hypersetup{%
+      pdfcreator={ceurart.cls},
+      % pdfproducer={pdfTeX;},
+      % pdftitle={\csuse{__short_title:}},
+      % pdfauthor={\csuse{__short_authors:}},
+      % pdfauthor={\csuse{__authors:}},
+      % pdftitle={\@title},
+      pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
+      % pdfkeywords={\@keywords},
+      linkcolor={hscolor},
+      urlcolor={hscolor},
+      citecolor={hscolor},
+      filecolor={hscolor},
+      menucolor={hscolor},
+    }    
   }
 }
 
