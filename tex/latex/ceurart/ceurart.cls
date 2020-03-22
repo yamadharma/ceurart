@@ -130,16 +130,20 @@
 %% Bells and Whistles
 %%
 
-\bool_new:N \g_stm_nologo_bool
-\bool_gset_false:N \g_stm_nologo_bool
+\bool_new:N \g_ceur_nologo_bool
+\bool_gset_false:N \g_ceur_nologo_bool
 
 \file_if_exist:nTF { fontawesome5.sty }
 {
   \RequirePackage{fontawesome5}
-  \bool_gset_false:N \g_stm_nologo_bool
-}
-{
-  \bool_gset_true:N \g_stm_nologo_bool
+  % We need orcid icon
+  \@ifpackagelater{fontawesome5}{2020/01/17}{%
+    \bool_gset_false:N \g_ceur_nologo_bool
+  }{%
+    \bool_gset_true:N \g_ceur_nologo_bool
+  }
+}{
+  \bool_gset_true:N \g_ceur_nologo_bool
 }
 
 %%
@@ -236,8 +240,8 @@
     \xmpdatawrite{Title}{\casprelimstitle}
     \xmpdatawrite{Author}{\pdfxauthors}
     \xmpdatawrite{Subject}{CEUR Workshop Proceedings (CEUR-WS.org)}
-    
-    \ifx\@copyrightclause\@empty\else    
+
+    \ifx\@copyrightclause\@empty\else
       \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
       \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
     \fi
@@ -605,11 +609,11 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_stm_nologo_bool
+      \bool_if:NTF \g_ceur_nologo_bool
       {
         \int_compare:nTF { \g_ead_int = 1 }
-        { \textsc{email~address:\c_space_token} }
-        { \textsc{email~addresses:\c_space_token} }
+        { \textsc{email:\c_space_token} }
+        { \textsc{email:\c_space_token} }
       }
       { \faIcon[regular]{envelope-open}\c_space_token }
       \seq_use:Nn \g_stm_ead_seq { ;~ }
@@ -630,7 +634,7 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_stm_nologo_bool
+      \bool_if:NTF \g_ceur_nologo_bool
       { \textsc{url:\c_space_token} }
       { \faIcon{globe}\c_space_token }
       \seq_use:Nn \g_stm_uad_seq { ;~ }
@@ -664,7 +668,7 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_stm_nologo_bool
+      \bool_if:NTF \g_ceur_nologo_bool
       { \textsc{orcid:\c_space_token} }
       { \faIcon{orcid}\c_space_token }
       \seq_use:Nn \g_stm_orcid_seq { ;~ }
@@ -1076,7 +1080,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { Facebook:\c_space_token }
              { \faIcon{facebook-f}\c_space_token }
             \seq_use:Nn \g_stm_facebook_seq {,\c_space_token }
@@ -1090,7 +1094,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { Twitter:\c_space_token }
              { \faIcon{twitter}\c_space_token }
             \seq_use:Nn \g_stm_twitter_seq {,\c_space_token }
@@ -1104,7 +1108,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { Google+:\c_space_token }
              { \faIcon{google-plus-g}\c_space_token }
             \seq_use:Nn \g_stm_gplus_seq {,\c_space_token }
@@ -1118,7 +1122,7 @@
           \tex_def:D \thefootnote{}
           \footnotetext
           {
-            \bool_if:NTF \g_stm_nologo_bool
+            \bool_if:NTF \g_ceur_nologo_bool
              { LinkedIn:\c_space_token }
              { \faIcon{linkedin-in}\c_space_token }
             \seq_use:Nn \g_stm_linkedin_seq {,\c_space_token }
@@ -1858,7 +1862,7 @@
   longtitle     .bool_gset:N    = \g_stm_longtitle_bool    ,
   longabstract  .bool_gset:N    = \g_stm_longtitle_bool    ,
   breakafter    .clist_gset:N   = \g_stm_breakafter_clist  ,
-  nologo        .bool_gset:N    = \g_stm_nologo_bool       ,
+  nologo        .bool_gset:N    = \g_ceur_nologo_bool       ,
 }
 
 \bool_new:N \g_stm_breakafter_title_bool
