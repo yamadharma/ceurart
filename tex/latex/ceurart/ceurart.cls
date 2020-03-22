@@ -80,7 +80,7 @@
 }{
   \RequirePackage{hyperref}
 }
-\hypersetup{colorlinks,bookmarksnumbered,pdfencoding=unicode,allcolors=black}
+\hypersetup{colorlinks,bookmarksnumbered,pdfencoding=unicode,allcolors=DarkSlateGrey}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
@@ -2716,7 +2716,8 @@
 %% Bibliography
 %%
 
-\RequirePackage[numbers,sort&compress]{natbib}
+% \RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage[numbers]{natbib}
 \AtBeginDocument{\bibsep=0pt}
 
 \bibliographystyle{elsarticle-num-names}
