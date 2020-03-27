@@ -2,7 +2,8 @@
 v0.2.9 / 2020-03-22
 =============
 
-  * Removed natbib sort&compress (this is online publication). Fixed entries' types in bib-file.
+  * Removed natbib sort&compress (this is online publication). 
+  * Fixed entries' types in bib-file.
   * Restored fontencoding T1 for pdflatex
   * Removed some hyperref warnings
   * Copyright info disabled in PDF/X
