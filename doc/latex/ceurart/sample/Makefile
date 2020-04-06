@@ -16,7 +16,7 @@ all: $(FILES)
 	$(LATEX) $(LATEX_FLAGS) $<
 
 clean:
-	-rm -f *.{log,toc,tac,aux,dvi,ps,bbl,blg,tmp,nav,out,snm,vrb,rel,cut,abs,*~}
+	-rm -f *.{log,toc,tac,aux,dvi,ps,bbl,blg,tmp,nav,out,snm,vrb,rel,cut,abs,*~,xmpdata,xmpi}
 	-rm -rf out _minted* auto
 	for i in $(ALLSUBDIRS); do \
 	    (cd $$i; make clean) || exit 1; \
