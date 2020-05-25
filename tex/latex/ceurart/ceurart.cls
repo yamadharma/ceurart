@@ -1544,10 +1544,9 @@
 
 \tex_gdef:D \abstractname { \textbf{\sffamily Abstract} }
 
-\NewDocumentEnvironment { Abstract } { o }
-{
-%  \global\setbox \g_stm_abs_box = \vtop \bgroup
-%  \hsize = .65 \textwidth \parindent \z@
+\NewDocumentEnvironment { Abstract } { o } {
+  % \global\setbox \g_stm_abs_box = \vtop \bgroup
+  % \hsize = .65 \textwidth \parindent \z@
   \group_begin:
   \IfNoValueTF { #1 } { }
   { \tex_gdef:D \abstractname { #1 } }
@@ -1556,12 +1555,12 @@
   % \box_if_empty:NTF \g_stm_key_box
   % { \leftskip = .1 \textwidth }
   % {
-  %   \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_stm_key_box }
-  %   \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_stm_key_box }
-  %   \leftskip .1\textwidth
-  %   \hspace*{-.1 \textwidth }
-  %   \noindent\hbox_to_wd:nn {  \z@ } { \box \g_stm_key_box }
-  %   \skip_vertical:n { - \l_tmpa_dim }
+  % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_stm_key_box }
+  % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_stm_key_box }
+  % \leftskip .1\textwidth
+  % \hspace*{-.1 \textwidth }
+  % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_stm_key_box }
+  % \skip_vertical:n { - \l_tmpa_dim }
   % }
   \skip_vertical:n { \baselineskip }
   \noindent \abstractname \par
@@ -1569,10 +1568,11 @@
   % \noindent \rule{.65\textwidth}{.2pt}\par
   \footnotesize
   \ignorespaces \everypar { \parindent=1.5em }
+}{
+  \par
+  \noindent\hbox_to_wd:nn { \z@ } { \box \g_stm_key_box }
+  \par \group_end:
 }
-{\par
-  \noindent\hbox_to_wd:nn {  \z@ } { \box \g_stm_key_box }
-  \par \group_end:}
 
 \NewDocumentEnvironment { PrelimsAbstract } { O{} }
   {\parindent=0pt
@@ -1650,10 +1650,9 @@
      \par\noindent \textit { PACS:\c_space_token } #1
    }
 
-\NewDocumentEnvironment { keywords } { O{ Keywords } }
-{
+\NewDocumentEnvironment { keywords } { O{ Keywords } } {
   \tex_global:D \tex_setbox:D \g_stm_key_box = \vtop \bgroup
-  % \hsize=.25 \textwidth
+  \hsize=.9 \textwidth
   \vspace*{0pt}
   \cs_new:Nn \sep: {\unskip,~}
   \cs_set_eq:NN \sep \sep:
@@ -1663,8 +1662,7 @@
   % \rule{.25 \textwidth}{.2pt}\par
   \noindent \textbf {\sffamily #1 }  \par
   \footnotesize
-}
-{
+}{
   \skip_vertical:n { \baselineskip }
   \egroup
 }
