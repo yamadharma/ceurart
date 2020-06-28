@@ -1208,10 +1208,13 @@
       \footnotetext{Deceased~author.}
     }
   }
-  \tl_if_empty:NF \l_ceur_au_email_tl
-  {
+  \tl_if_empty:NF \l_ceur_au_email_tl {
     \wrAux { \token_to_str:N \emailauthor
       { \l_ceur_au_email_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_url_tl {
+    \wrAux { \token_to_str:N \urlauthor
+      { \l_ceur_au_url_tl } { \exp_not:n {#2} } }
   }
   % various social media
   \tl_if_empty:NTF \l_ceur_au_facebook_tl { }
