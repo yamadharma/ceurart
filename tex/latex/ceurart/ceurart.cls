@@ -39,7 +39,7 @@
 % \@bls=\baselineskip
 
 %\newif\if@twocolumn
-\DeclareOption{twocolumn}{\global\dctrue \global\scfalse \PassOptionsToClass{fontsize=10pt}{scrartcl}}
+\DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -50,9 +50,15 @@
 % \ExecuteOptions{a4paper,10pt,oneside,review}
 % \ExecuteOptions{a4paper,oneside,10pt,DIV=calc}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-\PassOptionsToClass{a4paper,twoside=false,DIV=12,fontsize=11pt}{scrartcl}
+\PassOptionsToClass{a4paper,twoside=false}{scrartcl}
 \ProcessOptions\relax
 \LoadClass{scrartcl}
+\KOMAoptions{DIV=10}
+\ifdc
+  \KOMAoptions{fontsize=9pt}
+\else
+  \KOMAoptions{fontsize=11pt}
+\fi
 
 \RequirePackage{graphicx}
 \RequirePackage{amsmath,amsfonts,amssymb}
