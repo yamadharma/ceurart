@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.2.6}%
-\def\RCSdate{2020/03/18}%
+\def\RCSversion{0.2.10}%
+\def\RCSdate{2020/06/28}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -39,7 +39,7 @@
 % \@bls=\baselineskip
 
 %\newif\if@twocolumn
-\DeclareOption{twocolumn}{\global\dctrue \global\scfalse \PassOptionsToClass{fontsize=10pt}{scrartcl}}
+\DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -50,9 +50,15 @@
 % \ExecuteOptions{a4paper,10pt,oneside,review}
 % \ExecuteOptions{a4paper,oneside,10pt,DIV=calc}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-\PassOptionsToClass{a4paper,twoside=false,DIV=12,fontsize=11pt}{scrartcl}
+\PassOptionsToClass{a4paper,twoside=false}{scrartcl}
 \ProcessOptions\relax
 \LoadClass{scrartcl}
+\KOMAoptions{DIV=10}
+\ifdc
+  \KOMAoptions{fontsize=9pt}
+\else
+  \KOMAoptions{fontsize=11pt}
+\fi
 
 \RequirePackage{graphicx}
 \RequirePackage{amsmath,amsfonts,amssymb}
@@ -118,8 +124,7 @@
 \bool_new:N \g_ceur_nologo_bool
 \bool_gset_false:N \g_ceur_nologo_bool
 
-\file_if_exist:nTF { fontawesome5.sty }
-{
+\file_if_exist:nTF { fontawesome5.sty } {%
   \RequirePackage{fontawesome5}
   % We need orcid icon
   \@ifpackagelater{fontawesome5}{2020/01/17}{%
@@ -127,7 +132,7 @@
   }{%
     \bool_gset_true:N \g_ceur_nologo_bool
   }
-}{
+}{%
   \bool_gset_true:N \g_ceur_nologo_bool
 }
 
@@ -214,10 +219,10 @@
     \printFirstPageNotes
   }
   \normalcolor \normalfont
-  \setcounter{footnote}{\int_use:N \g_stm_fnote_int}
+  \setcounter{footnote}{\int_use:N \g_ceur_fnote_int}
   \renewcommand\thefootnote{\arabic{footnote}}
   \gdef\@pdfauthor{\infoauthors}
-  % \gdef\@pdfsubject{Complex ~STM ~Content}
+  % \gdef\@pdfsubject{Complex ~CEUR ~Content}
 
   %% PDF/A
   \bool_if:NTF \g_ceur_pdfx_bool
@@ -270,7 +275,7 @@
 % Usage of those macros and methods are gratefully acknowledged.
 %
 
-\keys_define:nn { stm / title }
+\keys_define:nn { ceur / title }
    {
      mode      .choice:     ,
      mode / title  .meta:n  =
@@ -342,14 +347,14 @@
          after  = 0pt              ,
          align  = \raggedright     ,
        } ,
-     type      .tl_set:N    = \l_stm_title_type_tl      ,
-     size      .tl_set:N    = \l_stm_title_size_tl      ,
-     shape     .tl_set:N    = \l_stm_title_shape_tl     ,
-     weight    .tl_set:N    = \l_stm_title_weight_tl    ,
-     before    .dim_set:N   = \l_stm_title_before_dim   ,
-     after     .dim_set:N   = \l_stm_title_after_dim    ,
-     align     .tl_set:N    = \l_stm_title_align_tl     ,
-     color     .tl_set:N    = \l_stm_title_color_tl     ,
+     type      .tl_set:N    = \l_ceur_title_type_tl      ,
+     size      .tl_set:N    = \l_ceur_title_size_tl      ,
+     shape     .tl_set:N    = \l_ceur_title_shape_tl     ,
+     weight    .tl_set:N    = \l_ceur_title_weight_tl    ,
+     before    .dim_set:N   = \l_ceur_title_before_dim   ,
+     after     .dim_set:N   = \l_ceur_title_after_dim    ,
+     align     .tl_set:N    = \l_ceur_title_align_tl     ,
+     color     .tl_set:N    = \l_ceur_title_color_tl     ,
    }
 
 \NewDocumentCommand \processTmarks { }
@@ -373,29 +378,29 @@
    {
      \pdfstringdef \@pdftitle { #2 }
      \csgdef { casprelimstitle } { #2 }
-     \keys_set:nn { stm / title } { #1 }
-     \seq_gput_right:Nn \g_stm_title_seq
+     \keys_set:nn { ceur / title } { #1 }
+     \seq_gput_right:Nn \g_ceur_title_seq
       {
-        \keys_set:nn { stm / title } { #1 }
-        % \iow_term:n { MODE:~\l_stm_title_mode_tl ~ ~ [#1]}
-        \par \vskip \l_stm_title_before_dim
-        \l_stm_title_align_tl
-        \l_stm_title_size_tl
-        \l_stm_title_shape_tl
-        \l_stm_title_weight_tl
-        \color { \l_stm_title_color_tl }
+        \keys_set:nn { ceur / title } { #1 }
+        % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
+        \par \vskip \l_ceur_title_before_dim
+        \l_ceur_title_align_tl
+        \l_ceur_title_size_tl
+        \l_ceur_title_shape_tl
+        \l_ceur_title_weight_tl
+        \color { \l_ceur_title_color_tl }
         #2
         \tl_set:Nn \l_tmpa_tl { title }
-        \tl_if_eq:NNTF \l_stm_title_type_tl \l_tmpa_tl
+        \tl_if_eq:NNTF \l_ceur_title_type_tl \l_tmpa_tl
         { \processTmarks } { }
-        \par \vskip  \l_stm_title_after_dim
+        \par \vskip  \l_ceur_title_after_dim
         \normalcolor \normalsize \normalfont
       }
      }
 
 %  \gappto\usestmtitle{#1}%
 
-\renewcommand \@title { \seq_use:Nn \g_stm_title_seq { } }
+\renewcommand \@title { \seq_use:Nn \g_ceur_title_seq { } }
 
 \NewDocumentCommand \wrAun { m }      %  unexpanded write to aux
    { \iow_now:Nn \@auxout { #1 } }
@@ -407,7 +412,7 @@
 \NewDocumentCommand \wrShipAun { m }   % unexpanded write at shipout
    { \iow_shipout:Nn \@auxout { #1 } }
 
-\NewDocumentCommand \stmLabel { m }
+\NewDocumentCommand \ceurLabel { m }
    {
      \@bsphack \wrAux
      { \token_to_str:N \NewLabel { #1 }
@@ -420,7 +425,7 @@
        { \cs_new:cx { X@#1: } { #2 } }
        { \cs_set:cx { X@#1: } { #2 } }
      }
-\NewDocumentCommand \stmRef { m }
+\NewDocumentCommand \ceurRef { m }
    {
     \cs_if_free:cTF { X@#1: }
       { 0 } {\use:c {X@#1:} }
@@ -449,7 +454,7 @@
 
 \NewDocumentCommand \corref { m }
    {
-     \str_set:Nx \l_tmpa_str { \stmRef { #1 } }
+     \str_set:Nx \l_tmpa_str { \ceurRef { #1 } }
      \wrAux { \token_to_str:N \csxdef { mark@corau\theau@ }
        {
          \cs_if_free:cTF { X@#1: } {0} { \use:c {X@#1:} }
@@ -463,40 +468,42 @@
      \writemarks {corau\theau@} { #1 }
    }
 
-\seq_new:N \l_stm_au_seq
-\seq_new:N \l_stm_au_sn_seq
-\seq_new:N \l_stm_au_fn_seq
-\seq_new:N \l_stm_au_ead_seq
-\seq_new:N \l_stm_au_orcid_seq
-\seq_new:N \l_stm_au_contrib_role_seq
+\seq_new:N \l_ceur_au_seq
+\seq_new:N \l_ceur_au_sn_seq
+\seq_new:N \l_ceur_au_fn_seq
+\seq_new:N \l_ceur_au_ead_seq
+\seq_new:N \l_ceur_au_orcid_seq
+\seq_new:N \l_ceur_au_email_seq
+\seq_new:N \l_ceur_au_url_seq
+\seq_new:N \l_ceur_au_contrib_role_seq
 
 \NewDocumentCommand \parsename { m }
-   { \seq_set_split:Nnn \l_stm_au_seq { ~ } {#1}
-     \seq_pop_right:NN \l_stm_au_seq \l_stm_au_sn_seq
-     \seq_map_inline:Nn \l_stm_au_seq
-      { \seq_put_right:Nx \l_stm_au_ead_seq
+   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
+     \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+     \seq_map_inline:Nn \l_ceur_au_seq
+      { \seq_put_right:Nx \l_ceur_au_ead_seq
         { \tl_head:n { #1 }. } }
     }
 
 \NewDocumentCommand \invparsename { m }
-   { \seq_set_split:Nnn \l_stm_au_seq { ~ } {#1}
-     \seq_pop_left:NN \l_stm_au_seq \l_stm_au_sn_seq
-     \seq_map_inline:Nn \l_stm_au_seq
-      { \seq_put_right:Nx \l_stm_au_ead_seq
+   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
+     \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+     \seq_map_inline:Nn \l_ceur_au_seq
+      { \seq_put_right:Nx \l_ceur_au_ead_seq
         { \tl_head:n { #1 }. } }
     }
 
 
-\NewDocumentCommand \surname {} { \l_stm_au_sn_seq }
+\NewDocumentCommand \surname {} { \l_ceur_au_sn_seq }
 \NewDocumentCommand \firstname {}
-    { \seq_use:Nn \l_stm_au_seq { ~ } }
+    { \seq_use:Nn \l_ceur_au_seq { ~ } }
 \NewDocumentCommand \eadauthor {}
-    { \seq_map_inline:Nn \l_stm_au_seq
+    { \seq_map_inline:Nn \l_ceur_au_seq
       { \regex_match:nnTF { \. } { ##1 }
         { ##1 }
         { \tl_head:n {##1}. }
       }
-        {~} \l_stm_au_sn_seq
+        {~} \l_ceur_au_sn_seq
      }
 \cs_set_eq:NN \shortauthor \eadauthor
 
@@ -507,7 +514,7 @@
      \clist_map_inline:nn { #1 }
      {
        \seq_put_right:Nx \l_affmk_seq
-       {\stmRef{##1}}
+       {\ceurRef{##1}}
       }
     }
 
@@ -524,7 +531,7 @@
 \NewDocumentCommand \listAff { }
    {
      \tl_if_blank:nTF { \l_affmk_seq }
-       { \tl_gset:Nn \g_stm_comma_tl { 0 } }
+       { \tl_gset:Nn \g_ceur_comma_tl { 0 } }
        {
          \seq_use:Nn \l_affmk_seq { , }
          \tex_def:D \sep{\unskip,}
@@ -539,11 +546,11 @@
 \NewDocumentCommand \eadsep { } { }
 
 \int_new:N \g_ead_int
-\seq_new:N \g_stm_ead_seq
+\seq_new:N \g_ceur_ead_seq
 \int_new:N \g_uad_int
-\seq_new:N \g_stm_uad_seq
-\seq_new:N \g_stm_orcid_seq
-\seq_new:N \g_stm_contrib_role_seq
+\seq_new:N \g_ceur_uad_seq
+\seq_new:N \g_ceur_orcid_seq
+\seq_new:N \g_ceur_contrib_role_seq
 
 \newcommand\theead { \int_use:N \g_ead_int }
 
@@ -558,7 +565,7 @@
 \NewDocumentCommand \urlauthor { m m }
    {
      \int_gincr:N \g_uad_int
-     \seq_gput_right:Nn \g_stm_uad_seq
+     \seq_gput_right:Nn \g_ceur_uad_seq
        {
          { %\ttfamily \tl_to_str:n
            \url{ #1 } }
@@ -567,7 +574,7 @@
        }
      }
 \NewDocumentCommand \@stmuads { }
-  { \seq_use:Nn \g_stm_uad_seq { ;~ } }
+  { \seq_use:Nn \g_ceur_uad_seq { ;~ } }
 
 \NewDocumentCommand \@ead { m }
    {
@@ -584,7 +591,7 @@
 \NewDocumentCommand \emailauthor { m m }
 {
   \int_gincr:N \g_ead_int
-  \seq_gput_right:Nn \g_stm_ead_seq
+  \seq_gput_right:Nn \g_ceur_ead_seq
   {
     % { \ttfamily \tl_to_str:n { #1 } }
     { \href {mailto: #1 } { #1 } }
@@ -595,7 +602,7 @@
 
 \NewDocumentCommand \@elseads { }
 {
-  \seq_use:Nn \g_stm_ead_seq { ;~ }
+  \seq_use:Nn \g_ceur_ead_seq { ;~ }
 }
 
 \NewDocumentCommand \printemails { }
@@ -616,7 +623,7 @@
         { \textsc{email:\c_space_token} }
       }
       { \faIcon[regular]{envelope-open}\c_space_token }
-      \seq_use:Nn \g_stm_ead_seq { ;~ }
+      \seq_use:Nn \g_ceur_ead_seq { ;~ }
     }
   }
   {  }
@@ -637,7 +644,7 @@
       \bool_if:NTF \g_ceur_nologo_bool
       { \textsc{url:\c_space_token} }
       { \faIcon{globe}\c_space_token }
-      \seq_use:Nn \g_stm_uad_seq { ;~ }
+      \seq_use:Nn \g_ceur_uad_seq { ;~ }
     }
   }
   { }
@@ -650,7 +657,7 @@
 
 \NewDocumentCommand \orcidauthor { m m }
    {
-     \seq_gput_right:Nn \g_stm_orcid_seq
+     \seq_gput_right:Nn \g_ceur_orcid_seq
        {
          % { \ttfamily \tl_to_str:n { #1 } }
          { \hrefurl { https://orcid.org/ #1 } { #1 } }
@@ -671,7 +678,7 @@
       \bool_if:NTF \g_ceur_nologo_bool
       { \textsc{orcid:\c_space_token} }
       { \faIcon{orcid}\c_space_token }
-      \seq_use:Nn \g_stm_orcid_seq { ;~ }
+      \seq_use:Nn \g_ceur_orcid_seq { ;~ }
     }
   \group_end:
 }
@@ -680,7 +687,7 @@
 % Contrib Role
 %
 
-\seq_gclear_new:N \g_stm_credits_seq
+\seq_gclear_new:N \g_ceur_credits_seq
 
 \NewDocumentCommand \ContribRole { m }
 {
@@ -690,7 +697,7 @@
 
 \NewDocumentCommand \creditauthor { m m }
 {
-  \seq_gput_right:Nx \g_stm_credits_seq
+  \seq_gput_right:Nx \g_ceur_credits_seq
   { { \exp_not:N\bfseries #2 :}\space #1 }
 }
 
@@ -698,17 +705,17 @@
 
 \NewDocumentCommand \printcredits { }
 {
-  \seq_if_empty:NF \g_stm_credits_seq
+  \seq_if_empty:NF \g_ceur_credits_seq
   {
     \section*{CRediT ~authorship ~contribution ~statement}
-    \seq_use:Nn \g_stm_credits_seq { .~ }.
+    \seq_use:Nn \g_ceur_credits_seq { .~ }.
   }
 }
 
 \NewDocumentCommand \writemarks { m m }
    { \wrAux { \token_to_str:N \csgdef{mark@#1}{#2} } }
 
-\seq_new:N \g_stm_title_seq
+\seq_new:N \g_ceur_title_seq
 
 \NewDocumentCommand \tnotemark { O{} }
    { \writemarks { title } { #1 } }
@@ -732,20 +739,20 @@
       }
     }
 
-\seq_new:N \g_stm_tnote_seq
-\int_new:N \g_stm_tnote_int
+\seq_new:N \g_ceur_tnote_seq
+\int_new:N \g_ceur_tnote_int
 
 \NewDocumentCommand \tnotetext { O{} m }
    {
      \tl_if_head_eq_catcode:nNTF { #1 } a
        {
          \msg_term:n { [TNOTE:~alpha] }%
-         \seq_gput_right:Nn \g_stm_tnote_seq
-           { \int_incr:N \g_stm_tnote_int
-             \str_set:Nx \@currentlabel { \int_use:N \g_stm_tnote_int }
-              \stmLabel { #1 }
+         \seq_gput_right:Nn \g_ceur_tnote_seq
+           { \int_incr:N \g_ceur_tnote_int
+             \str_set:Nx \@currentlabel { \int_use:N \g_ceur_tnote_int }
+              \ceurLabel { #1 }
              \renewcommand\thefootnote
-              { \int_case:nn { \g_stm_tnote_int }
+              { \int_case:nn { \g_ceur_tnote_int }
                  {
                    { 1 } { $^\star$ }
                    { 2 }  { $^{\star\star}$ }
@@ -757,7 +764,7 @@
           }
         {
           \msg_term:n { [TNOTE:~Number] }
-          \seq_gput_right:Nn \g_stm_tnote_seq
+          \seq_gput_right:Nn \g_ceur_tnote_seq
           {
             \int_set:Nn \l_tmpa_int { #1 }
             \renewcommand\thefootnote
@@ -773,14 +780,14 @@
          }
        }
 
-\newcommand \printtnotes { \seq_use:Nn \g_stm_tnote_seq { \par } }
+\newcommand \printtnotes { \seq_use:Nn \g_ceur_tnote_seq { \par } }
 
-\seq_new:N \g_stm_nonumnote_seq
+\seq_new:N \g_ceur_nonumnote_seq
 
 \NewDocumentCommand \nonumnote { m }
 {
   \group_begin:
-  \seq_gput_right:Nn \g_stm_nonumnote_seq
+  \seq_gput_right:Nn \g_ceur_nonumnote_seq
   {
     \tex_def:D \thefootnote { }
     \footnotetext{%
@@ -793,27 +800,27 @@
   \group_end:
 }
 
-\newcommand \printnonumnotes { \seq_use:Nn \g_stm_nonumnote_seq { \par } }
+\newcommand \printnonumnotes { \seq_use:Nn \g_ceur_nonumnote_seq { \par } }
 
-\seq_new:N \g_stm_fnote_seq
-\int_new:N \g_stm_fnote_int
+\seq_new:N \g_ceur_fnote_seq
+\int_new:N \g_ceur_fnote_int
 
 \NewDocumentCommand \fntext { O{} m }
 {
   \tl_if_head_eq_catcode:nNTF { #1 } a
   {
     \msg_term:n { [FN:~alpha] }%
-    \seq_gput_right:Nn \g_stm_fnote_seq
-    { \int_incr:N \g_stm_fnote_int
-      \str_set:Nx \@currentlabel { \int_use:N \g_stm_fnote_int }
-      \stmLabel { #1 }
-      \tex_def:D \thefootnote { \int_use:N \g_stm_fnote_int }
+    \seq_gput_right:Nn \g_ceur_fnote_seq
+    { \int_incr:N \g_ceur_fnote_int
+      \str_set:Nx \@currentlabel { \int_use:N \g_ceur_fnote_int }
+      \ceurLabel { #1 }
+      \tex_def:D \thefootnote { \int_use:N \g_ceur_fnote_int }
       \footnotetext { #2 }
     }
   }
   {
     \msg_term:n { [FN:~Number] }
-    \seq_gput_right:Nn \g_stm_fnote_seq
+    \seq_gput_right:Nn \g_ceur_fnote_seq
     {
       \int_set:Nn \l_tmpa_int { #1 }
       \tex_def:D \thefootnote { \int_use:N \l_tmpa_int }
@@ -822,22 +829,22 @@
   }
 }
 
-\newcommand \printfnotes { \seq_use:Nn \g_stm_fnote_seq { \par } }
+\newcommand \printfnotes { \seq_use:Nn \g_ceur_fnote_seq { \par } }
 
-\seq_new:N \g_stm_cor_seq
-\int_new:N \g_stm_cor_int
+\seq_new:N \g_ceur_cor_seq
+\int_new:N \g_ceur_cor_int
 
 \NewDocumentCommand \cortext { O{} m }
 {
   \tl_if_head_eq_catcode:nNTF { #1 } a
   {
     \msg_term:n { [COR:~alpha] }%
-    \seq_gput_right:Nn \g_stm_cor_seq
-    { \int_incr:N \g_stm_cor_int
-      \str_set:Nx \@currentlabel { \int_use:N \g_stm_cor_int }
-      \stmLabel { #1 }
+    \seq_gput_right:Nn \g_ceur_cor_seq
+    { \int_incr:N \g_ceur_cor_int
+      \str_set:Nx \@currentlabel { \int_use:N \g_ceur_cor_int }
+      \ceurLabel { #1 }
       \tex_def:D \thefootnote
-      { \int_case:nn { \g_stm_cor_int }
+      { \int_case:nn { \g_ceur_cor_int }
         {
           { 1 } { $\ast$ }
           { 2 } { $\ast\!\ast$ }
@@ -849,7 +856,7 @@
   }
   {
     \msg_term:n { [COR:~Number] }
-    \seq_gput_right:Nn \g_stm_cor_seq
+    \seq_gput_right:Nn \g_ceur_cor_seq
     {
       \int_set:Nn \l_tmpa_int { #1 }
       \tex_def:D \thefootnote
@@ -865,7 +872,7 @@
   }
 }
 
-\newcommand \printcornotes { \seq_use:Nn \g_stm_cor_seq { \par } }
+\newcommand \printcornotes { \seq_use:Nn \g_ceur_cor_seq { \par } }
 
 \NewDocumentCommand \process@marks { }
    {
@@ -892,92 +899,94 @@
 %% Author macros
 %%
 
-\seq_new:c { g_stm_au0_seq }
-\seq_new:c { g_stm_clau0_seq }
-\int_new:N \g_stm_au_int
-\int_new:N \g_stm_aau_int
+\seq_new:c { g_ceur_au0_seq }
+\seq_new:c { g_ceur_clau0_seq }
+\int_new:N \g_ceur_au_int
+\int_new:N \g_ceur_aau_int
 
-\NewDocumentCommand \ResetMarks { }
-   {
-     \keys_set:nn { stm / author }
-     {
-       auid       = {} ,
-       bioid      = {} ,
-       alt        = {} ,
-       style      = { normal } ,
-       prefix     = {} ,
-       suffix     = {} ,
-       degree     = {} ,
-       role       = {} ,
-       orcid      = {} ,
-       collab     = { false }  ,
-       type       = { author } ,
-       anon       = { false }  ,
-       deceased   = { false }  ,
-       twitter    = {} ,
-       facebook   = {} ,
-       linkedin   = {} ,
-       plus       = {} ,
-       gplus      = {} ,
-     }
-      \tex_gdef:D \sep{}
-      \tex_gdef:D \stm@corref{}
-      \tex_gdef:D \@fnmark {}
-    }
+\NewDocumentCommand \ResetMarks { } {
+  \keys_set:nn { ceur / author } {
+    auid       = {} ,
+    bioid      = {} ,
+    alt        = {} ,
+    style      = { normal } ,
+    prefix     = {} ,
+    suffix     = {} ,
+    degree     = {} ,
+    role       = {} ,
+    orcid      = {} ,
+    collab     = { false }  ,
+    type       = { author } ,
+    anon       = { false }  ,
+    deceased   = { false }  ,
+    twitter    = {} ,
+    facebook   = {} ,
+    linkedin   = {} ,
+    plus       = {} ,
+    gplus      = {} ,
+    email      = {} ,
+    url        = {} ,
+  }
+  \tex_gdef:D \sep{}
+  \tex_gdef:D \ceur@corref{}
+  \tex_gdef:D \@fnmark {}
+}
 
 
 \int_new:N \l_autype_int
-\keys_define:nn { stm / author }
-   {
-     auid     .tl_set:N   = \l_stm_au_id_tl             ,
-     bioid    .tl_set:N   = \l_stm_au_bioid_tl          ,
-     alt      .tl_set:N   = \l_stm_au_alt_tl            ,
-     style    .tl_set:N   = \l_stm_au_style_tl          ,
-     prefix   .tl_set:N   = \l_stm_au_prefix_tl         ,
-     suffix   .tl_set:N   = \l_stm_au_suffix_tl         ,
-     degree   .tl_set:N   = \l_stm_au_degree_tl         ,
-     role     .tl_set:N   = \l_stm_au_role_tl           ,
-     orcid    .tl_set:N   = \l_stm_au_orcid_tl          ,
-     collab   .bool_set:N = \l_stm_au_collab_bool       ,
-     type     .multichoice:,
-      type/author    .code:n = { \int_set:Nn \l_autype_int { 0 } },
-      type/editor    .code:n = { \int_set:Nn \l_autype_int { 1 } },
-      type/collab    .code:n = { \int_set:Nn \l_autype_int { 2 } },
-      type/anon      .code:n = { \int_set:Nn \l_autype_int { 3 } },
-%      type/collab    .bool_set:N = \l_stm_au_collab_bool          ,
-%      type/anon      .bool_set:N = \l_stm_au_anon_bool            ,
-     anon      .bool_set:N = \l_stm_au_anon_bool     ,
-     deceased  .bool_set:N = \l_stm_au_deceased_bool ,
-     twitter   .tl_set:N   = \l_stm_au_twitter_tl    ,
-     facebook  .tl_set:N   = \l_stm_au_facebook_tl   ,
-     linkedin  .tl_set:N   = \l_stm_au_linkedin_tl   ,
-     plus      .tl_set:N   = \l_stm_au_gplus_tl      ,
-     gplus     .tl_set:N   = \l_stm_au_gplus_tl      ,
-   }
+\keys_define:nn { ceur / author } {
+  auid     .tl_set:N   = \l_ceur_au_id_tl             ,
+  bioid    .tl_set:N   = \l_ceur_au_bioid_tl          ,
+  alt      .tl_set:N   = \l_ceur_au_alt_tl            ,
+  style    .tl_set:N   = \l_ceur_au_style_tl          ,
+  prefix   .tl_set:N   = \l_ceur_au_prefix_tl         ,
+  suffix   .tl_set:N   = \l_ceur_au_suffix_tl         ,
+  degree   .tl_set:N   = \l_ceur_au_degree_tl         ,
+  role     .tl_set:N   = \l_ceur_au_role_tl           ,
+  orcid    .tl_set:N   = \l_ceur_au_orcid_tl          ,
+  collab   .bool_set:N = \l_ceur_au_collab_bool       ,
+  type     .multichoice:,
+  type/author    .code:n = { \int_set:Nn \l_autype_int { 0 } },
+  type/editor    .code:n = { \int_set:Nn \l_autype_int { 1 } },
+  type/collab    .code:n = { \int_set:Nn \l_autype_int { 2 } },
+  type/anon      .code:n = { \int_set:Nn \l_autype_int { 3 } },
+  % type/collab    .bool_set:N = \l_ceur_au_collab_bool          ,
+  % type/anon      .bool_set:N = \l_ceur_au_anon_bool            ,
+  anon      .bool_set:N = \l_ceur_au_anon_bool     ,
+  deceased  .bool_set:N = \l_ceur_au_deceased_bool ,
+  twitter   .tl_set:N   = \l_ceur_au_twitter_tl    ,
+  facebook  .tl_set:N   = \l_ceur_au_facebook_tl   ,
+  linkedin  .tl_set:N   = \l_ceur_au_linkedin_tl   ,
+  plus      .tl_set:N   = \l_ceur_au_gplus_tl      ,
+  gplus     .tl_set:N   = \l_ceur_au_gplus_tl      ,
+  email     .tl_set:N   = \l_ceur_au_email_tl      ,
+  url       .tl_set:N   = \l_ceur_au_url_tl        ,
+}
 
-\keys_set:nn { stm / author }
-   {
-     auid       = {} ,
-     bioid      = {} ,
-     alt        = {} ,
-     style      = { normal } ,
-     prefix     = {} ,
-     suffix     = {} ,
-     degree     = {} ,
-     role       = {} ,
-     orcid      = {} ,
-     collab     = { false }  ,
-     type       = { author } ,
-     anon       = { false }  ,
-     deceased   = { false }  ,
-     twitter    = {} ,
-     facebook   = {} ,
-     linkedin   = {} ,
-     plus       = {} ,
-     gplus      = {} ,
-   }
+\keys_set:nn { ceur / author } {
+  auid       = {} ,
+  bioid      = {} ,
+  alt        = {} ,
+  style      = { normal } ,
+  prefix     = {} ,
+  suffix     = {} ,
+  degree     = {} ,
+  role       = {} ,
+  orcid      = {} ,
+  collab     = { false }  ,
+  type       = { author } ,
+  anon       = { false }  ,
+  deceased   = { false }  ,
+  twitter    = {} ,
+  facebook   = {} ,
+  linkedin   = {} ,
+  plus       = {} ,
+  gplus      = {} ,
+  email      = {} ,
+  url        = {} ,
+}
 
-\keys_define:nn { stm / ausetup }
+\keys_define:nn { ceur / ausetup }
    {
      type      .choice: ,
      type / authors .meta:n =
@@ -1004,40 +1013,40 @@
          lskip  =  0pt            ,
          rskip  =  0pt            ,
        } ,
-     size      .tl_set:N    = \l_stm_augroup_size_tl      ,
-     shape     .tl_set:N    = \l_stm_augroup_shape_tl     ,
-     weight    .tl_set:N    = \l_stm_augroup_weight_tl    ,
-     before    .dim_set:N   = \l_stm_augroup_before_dim   ,
-     after     .dim_set:N   = \l_stm_augroup_after_dim    ,
-     align     .tl_set:N    = \l_stm_augroup_align_tl     ,
-     color     .tl_set:N    = \l_stm_augroup_color_tl     ,
-     lskip     .dim_set:N   = \l_stm_augroup_lskip_tl     ,
-     rskip     .dim_set:N   = \l_stm_augroup_rskip_tl     ,
+     size      .tl_set:N    = \l_ceur_augroup_size_tl      ,
+     shape     .tl_set:N    = \l_ceur_augroup_shape_tl     ,
+     weight    .tl_set:N    = \l_ceur_augroup_weight_tl    ,
+     before    .dim_set:N   = \l_ceur_augroup_before_dim   ,
+     after     .dim_set:N   = \l_ceur_augroup_after_dim    ,
+     align     .tl_set:N    = \l_ceur_augroup_align_tl     ,
+     color     .tl_set:N    = \l_ceur_augroup_color_tl     ,
+     lskip     .dim_set:N   = \l_ceur_augroup_lskip_tl     ,
+     rskip     .dim_set:N   = \l_ceur_augroup_rskip_tl     ,
    }
 
-\DeclareDocumentCommand \stmAuthorSetup { m }
-   { \keys_set:nn { stm / ausetup } { #1 } }
-\DeclareDocumentCommand \stmausetup { m }
-   { \tl_set:Nn \l_stm_au_setup_tl
-     { \keys_set:nn { stm / ausetup } { #1 } }
+\DeclareDocumentCommand \ceurAuthorSetup { m }
+   { \keys_set:nn { ceur / ausetup } { #1 } }
+\DeclareDocumentCommand \ceurausetup { m }
+   { \tl_set:Nn \l_ceur_au_setup_tl
+     { \keys_set:nn { ceur / ausetup } { #1 } }
    }
-\DeclareDocumentCommand \stmclbsetup { m }
-   { \tl_set:Nn \l_stm_clb_setup_tl
-     { \keys_set:nn { stm / ausetup } { #1 } }
+\DeclareDocumentCommand \ceurclbsetup { m }
+   { \tl_set:Nn \l_ceur_clb_setup_tl
+     { \keys_set:nn { ceur / ausetup } { #1 } }
    }
 
-\stmausetup { }
-\stmclbsetup { }
+\ceurausetup { }
+\ceurclbsetup { }
 
-\seq_new:N  \g_stm_maltese_seq
-\seq_new:N  \g_stm_facebook_seq
-\seq_new:N  \g_stm_twitter_seq
-\seq_new:N  \g_stm_gplus_seq
-\seq_new:N  \g_stm_linkedin_seq
+\seq_new:N  \g_ceur_maltese_seq
+\seq_new:N  \g_ceur_facebook_seq
+\seq_new:N  \g_ceur_twitter_seq
+\seq_new:N  \g_ceur_gplus_seq
+\seq_new:N  \g_ceur_linkedin_seq
 
 \NewDocumentCommand \twitterauthor { m m }
    {
-     \seq_gput_right:Nn \g_stm_twitter_seq
+     \seq_gput_right:Nn \g_ceur_twitter_seq
        {
          \parsename { #2 }
          \url{https://twitter.com/\tl_to_str:n{#1}}\space(\eadauthor)
@@ -1045,7 +1054,7 @@
      }
 \NewDocumentCommand \facebookauthor { m m }
    {
-     \seq_gput_right:Nn \g_stm_facebook_seq
+     \seq_gput_right:Nn \g_ceur_facebook_seq
        {
          \parsename { #2 }
          \url{https://www.facebook.com/\tl_to_str:n{#1}}\space(\eadauthor) %
@@ -1053,7 +1062,7 @@
      }
 \NewDocumentCommand \gplusauthor { m m }
    {
-     \seq_gput_right:Nn \g_stm_gplus_seq
+     \seq_gput_right:Nn \g_ceur_gplus_seq
        {
          \parsename { #2 }
          \url{https://plus.google.com/\tl_to_str:n{#1}}\space(\eadauthor)%
@@ -1061,7 +1070,7 @@
      }
 \NewDocumentCommand \linkedinauthor { m m }
    {
-     \seq_gput_right:Nn \g_stm_linkedin_seq
+     \seq_gput_right:Nn \g_ceur_linkedin_seq
        {
          \parsename { #2 }
          \url{https://www.linkedin.com/profile/view?id=\tl_to_str:n{#1}}%
@@ -1071,11 +1080,11 @@
 
 \NewDocumentCommand \printmaltese { }
     {
-      \seq_use:Nn { \g_stm_maltese_seq } { }
+      \seq_use:Nn { \g_ceur_maltese_seq } { }
     }
 \NewDocumentCommand \printfacebook { }
     {
-      \seq_if_empty:NTF \g_stm_facebook_seq { }
+      \seq_if_empty:NTF \g_ceur_facebook_seq { }
         {
           \tex_def:D \thefootnote{}
           \footnotetext
@@ -1083,13 +1092,13 @@
             \bool_if:NTF \g_ceur_nologo_bool
              { Facebook:\c_space_token }
              { \faIcon{facebook-f}\c_space_token }
-            \seq_use:Nn \g_stm_facebook_seq {,\c_space_token }
+            \seq_use:Nn \g_ceur_facebook_seq {,\c_space_token }
           }
         }
       }
 \NewDocumentCommand \printtwitter { }
     {
-      \seq_if_empty:NTF \g_stm_twitter_seq { }
+      \seq_if_empty:NTF \g_ceur_twitter_seq { }
         {
           \tex_def:D \thefootnote{}
           \footnotetext
@@ -1097,13 +1106,13 @@
             \bool_if:NTF \g_ceur_nologo_bool
              { Twitter:\c_space_token }
              { \faIcon{twitter}\c_space_token }
-            \seq_use:Nn \g_stm_twitter_seq {,\c_space_token }
+            \seq_use:Nn \g_ceur_twitter_seq {,\c_space_token }
           }
         }
       }
 \NewDocumentCommand \printgplus { }
     {
-      \seq_if_empty:NTF \g_stm_gplus_seq { }
+      \seq_if_empty:NTF \g_ceur_gplus_seq { }
         {
           \tex_def:D \thefootnote{}
           \footnotetext
@@ -1111,13 +1120,13 @@
             \bool_if:NTF \g_ceur_nologo_bool
              { Google+:\c_space_token }
              { \faIcon{google-plus-g}\c_space_token }
-            \seq_use:Nn \g_stm_gplus_seq {,\c_space_token }
+            \seq_use:Nn \g_ceur_gplus_seq {,\c_space_token }
           }
         }
       }
 \NewDocumentCommand \printlinkedin { }
     {
-      \seq_if_empty:NTF \g_stm_linkedin_seq { }
+      \seq_if_empty:NTF \g_ceur_linkedin_seq { }
         {
           \tex_def:D \thefootnote{}
           \footnotetext
@@ -1125,175 +1134,178 @@
             \bool_if:NTF \g_ceur_nologo_bool
              { LinkedIn:\c_space_token }
              { \faIcon{linkedin-in}\c_space_token }
-            \seq_use:Nn \g_stm_linkedin_seq {,\c_space_token }
+            \seq_use:Nn \g_ceur_linkedin_seq {,\c_space_token }
           }
         }
       }
 
-\seq_new:N \g_stm_prelimsau_seq
+\seq_new:N \g_ceur_prelimsau_seq
 
 \csxdef{infoauthors}{}
 \csgdef { pdfxauthors } { }
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
-\RenewDocumentCommand \author { O{} m O{} }
-   {
-     \ResetMarks
-     \tl_if_blank:nTF { #3 } { }
-       { \keys_set:nn { stm / author } { #3 } }
-%
-     \int_gincr:N \g_stm_au_int
-     \tex_gdef:D \theau@ { \int_use:N \g_stm_au_int }
-%
-     \seq_gput_right:Nn \g_stm_prelimsau_seq { #2 }
-     \bool_if:NTF \l_stm_au_collab_bool
-       { \seq_gput_right:cn { g_stm_clau\int_use:N \g_stm_augr_int _seq } }
-       { \seq_gput_right:cn { g_stm_au\int_use:N \g_stm_augr_int _seq } }
-       {
-         \int_gincr:N \g_stm_aau_int
-         \tex_gdef:D \theauthor {\int_use:N \g_stm_aau_int }
-         \keys_set:nn { stm /author } { #3 }
-         \tl_if_head_eq_catcode:nNTF { #1 } a
-            { \processAffRef { #1 } }
-            { \processAffNum { #1 } }
-         \tl_if_empty:NF \l_stm_au_prefix
-            { \l_stm_au_prefix_tl \c_space_token }
-         \str_if_eq:VnTF \l_stm_au_style_tl  { chinese }
-            { %\msg_term:n {STYLE~T=\l_stm_au_style_tl........}
-              \invparsename { #2 }
-              \textcolor{\l_stm_augroup_color_tl}{\surname}
-              \no_break_space:
-              \textcolor{\l_stm_augroup_color_tl !50}{\firstname}
-            }
-            { %\msg_term:n {STYLE~F=\l_stm_au_style_tl........}
-              \parsename { #2 }
-              \textcolor{\l_stm_augroup_color_tl !50}{\firstname}
-              \no_break_space:
-              \textcolor{\l_stm_augroup_color_tl}{\surname}
-            }
-        \tl_if_empty:NF \l_stm_au_suffix_tl
-        { \c_space_token \l_stm_au_suffix_tl }
-         \unskip
-         \textsuperscript
-         {
-           \tl_if_blank:nTF { #1 }
-           { \tex_def:D \sep{} }
-           { {\itshape\listAff} \tex_def:D \sep{\unskip,} }
-           \process@marks
-           \bool_if:NT \l_stm_au_deceased_bool
-           { \sep \maltese
-             \tex_def:D \sep { \unksip, }
-           }
-         }
-        \tl_if_empty:NF \l_stm_au_degree_tl
-        { ,\c_space_token \l_stm_au_degree_tl }
-        \tl_if_empty:NF \l_stm_au_role_tl
-        { \c_space_token (\l_stm_au_role_tl) }
-%
-       \ResetMarks
-      }
-%
-      \bool_if:NT \l_stm_au_deceased_bool
-       {
-        \seq_gput_right:Nn \g_stm_maltese_seq
-         {
-          \tex_def:D \thefootnote { \maltese }
-          \footnotetext{Deceased~author.}
-         }
-       }
-% various social media
-      \tl_if_empty:NTF \l_stm_au_facebook_tl { }
-        {
-          \wrAux { \token_to_str:N \facebookauthor
-            { \l_stm_au_facebook_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_stm_au_twitter_tl
-        {
-          \wrAux { \token_to_str:N \twitterauthor
-            { \l_stm_au_twitter_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_stm_au_gplus_tl
-        {
-          \wrAux { \token_to_str:N \gplusauthor
-            { \l_stm_au_gplus_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_stm_au_linkedin_tl
-        {
-          \wrAux { \token_to_str:N \linkedinauthor
-            { \l_stm_au_linkedin_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_stm_au_orcid_tl
-        {
-          \wrAux { \token_to_str:N \orcidauthor
-            { \l_stm_au_orcid_tl } { \exp_not:n {#2} } }
-        }
-%
-        \@eadauthor={#2}
-        \pdfstringdef\__info_au: { #2 }
-        \int_compare:nNnTF { \theau@ } < { 4 }
-        { \xappto \infoauthors { \__info_au: , ~ } }
-        {
-          \int_compare:nNnTF { \theau@ } = { 4 }
-          { \xappto \infoauthors { et~al. } }
-          { }
-        }
-        %
-        \csgdef { __pdfxauthor } { #2 }
-        \xappto \pdfxauthors { \__pdfxauthor , ~ }
-
+\RenewDocumentCommand \author { O{} m O{} } {
+  \ResetMarks
+  \tl_if_blank:nTF { #3 } { }
+  { \keys_set:nn { ceur / author } { #3 } }
+  % 
+  \int_gincr:N \g_ceur_au_int
+  \tex_gdef:D \theau@ { \int_use:N \g_ceur_au_int }
+  % 
+  \seq_gput_right:Nn \g_ceur_prelimsau_seq { #2 }
+  \bool_if:NTF \l_ceur_au_collab_bool
+  { \seq_gput_right:cn { g_ceur_clau\int_use:N \g_ceur_augr_int _seq } }
+  { \seq_gput_right:cn { g_ceur_au\int_use:N \g_ceur_augr_int _seq } }
+  {
+    \int_gincr:N \g_ceur_aau_int
+    \tex_gdef:D \theauthor {\int_use:N \g_ceur_aau_int }
+    \keys_set:nn { ceur /author } { #3 }
+    \tl_if_head_eq_catcode:nNTF { #1 } a
+    { \processAffRef { #1 } }
+    { \processAffNum { #1 } }
+    \tl_if_empty:NF \l_ceur_au_prefix
+    { \l_ceur_au_prefix_tl \c_space_token }
+    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese }
+    { %\msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
+      \invparsename { #2 }
+      \textcolor{\l_ceur_augroup_color_tl}{\surname}
+      \no_break_space:
+      \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
     }
-
-\NewDocumentCommand \stmauthors { }
-   {
-     \group_begin:
-     \stmAuthorSetup { type = authors }
-     \l_stm_au_setup_tl
-     \par \vskip\l_stm_augroup_before_dim
-     \l_stm_augroup_align_tl
-     \l_stm_augroup_size_tl
-     \l_stm_augroup_shape_tl
-     \l_stm_augroup_weight_tl
-     \color{ \l_stm_augroup_color_tl }
-     \bool_if:NTF \g_stm_augr_bool
-       { \seq_use:Nn \g_stm_augr_seq { \par } }
-       {
-         \seq_use:cnnn { g_stm_au\int_use:N\g_stm_augr_int _seq }
-         { ,~ } { ,~ } { ~and~ }
-       }
-     \par\vskip\l_stm_augroup_after_dim
-     \group_end:
-   }
-
-\seq_new:c { g_stm_collab0_seq }
-\bool_new:N \g_stm_in_clau_bool
-
-\NewDocumentCommand \stmcollab { }
-   {
-     \bool_if:NTF \g_stm_augr_bool
-     { }
-     {
-       \group_begin:
-       \stmAuthorSetup { type = collaboration }
-       \l_stm_clb_setup_tl
-       \par \vskip \l_stm_augroup_before_dim
-       \l_stm_augroup_align_tl
-       \l_stm_augroup_size_tl
-       \l_stm_augroup_shape_tl
-       \l_stm_augroup_weight_tl
-       \color{ \l_stm_augroup_color_tl }
-       \seq_use:cn {g_stm_collab\int_use:N \g_stm_aaugr_int _seq} { }
-       \seq_use:cnnn {g_stm_clau\int_use:N \g_stm_aaugr_int _seq}
-        { ~and~ } { ,~ } { ~and~ }
-        \par \vskip \l_stm_augroup_after_dim
-        \group_end:
-      }
+    { %\msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
+      \parsename { #2 }
+      \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
+      \no_break_space:
+      \textcolor{\l_ceur_augroup_color_tl}{\surname}
     }
-
-\newenvironment{collaboration}[1][]
+    \tl_if_empty:NF \l_ceur_au_suffix_tl
+    { \c_space_token \l_ceur_au_suffix_tl }
+    \unskip
+    \textsuperscript
     {
-      \seq_gput_right:cn {g_stm_collab\int_use:N \g_stm_augr_int _seq}
-      { \textit{Collaboration:~} #1 \par \smallskip }
+      \tl_if_blank:nTF { #1 }
+      { \tex_def:D \sep{} }
+      { {\itshape\listAff} \tex_def:D \sep{\unskip,} }
+      \process@marks
+      \bool_if:NT \l_ceur_au_deceased_bool
+      { \sep \maltese
+        \tex_def:D \sep { \unksip, }
+      }
     }
-    {  }
+    \tl_if_empty:NF \l_ceur_au_degree_tl
+    { ,\c_space_token \l_ceur_au_degree_tl }
+    \tl_if_empty:NF \l_ceur_au_role_tl
+    { \c_space_token (\l_ceur_au_role_tl) }
+    % 
+    \ResetMarks
+  }
+  % 
+  \bool_if:NT \l_ceur_au_deceased_bool
+  {
+    \seq_gput_right:Nn \g_ceur_maltese_seq
+    {
+      \tex_def:D \thefootnote { \maltese }
+      \footnotetext{Deceased~author.}
+    }
+  }
+  \tl_if_empty:NF \l_ceur_au_email_tl {
+    \wrAux { \token_to_str:N \emailauthor
+      { \l_ceur_au_email_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_url_tl {
+    \wrAux { \token_to_str:N \urlauthor
+      { \l_ceur_au_url_tl } { \exp_not:n {#2} } }
+  }
+  % various social media
+  \tl_if_empty:NTF \l_ceur_au_facebook_tl { }
+  {
+    \wrAux { \token_to_str:N \facebookauthor
+      { \l_ceur_au_facebook_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_twitter_tl
+  {
+    \wrAux { \token_to_str:N \twitterauthor
+      { \l_ceur_au_twitter_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_gplus_tl
+  {
+    \wrAux { \token_to_str:N \gplusauthor
+      { \l_ceur_au_gplus_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_linkedin_tl
+  {
+    \wrAux { \token_to_str:N \linkedinauthor
+      { \l_ceur_au_linkedin_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_orcid_tl
+  {
+    \wrAux { \token_to_str:N \orcidauthor
+      { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
+  }
+  % 
+  \@eadauthor={#2}
+  \pdfstringdef\__info_au: { #2 }
+  \int_compare:nNnTF { \theau@ } < { 4 }
+  { \xappto \infoauthors { \__info_au: , ~ } }
+  {
+    \int_compare:nNnTF { \theau@ } = { 4 }
+    { \xappto \infoauthors { et~al. } }
+    { }
+  }
+  % 
+  \csgdef { __pdfxauthor } { #2 }
+  \xappto \pdfxauthors { \__pdfxauthor , ~ }
+}
+
+\NewDocumentCommand \ceurauthors { } {
+  \group_begin:
+  \ceurAuthorSetup { type = authors }
+  \l_ceur_au_setup_tl
+  \par \vskip\l_ceur_augroup_before_dim
+  \l_ceur_augroup_align_tl
+  \l_ceur_augroup_size_tl
+  \l_ceur_augroup_shape_tl
+  \l_ceur_augroup_weight_tl
+  \color{ \l_ceur_augroup_color_tl }
+  \bool_if:NTF \g_ceur_augr_bool
+  { \seq_use:Nn \g_ceur_augr_seq { \par } }
+  {
+    \seq_use:cnnn { g_ceur_au\int_use:N\g_ceur_augr_int _seq }
+    { ,~ } { ,~ } { ~and~ }
+  }
+  \par\vskip\l_ceur_augroup_after_dim
+  \group_end:
+}
+
+\seq_new:c { g_ceur_collab0_seq }
+\bool_new:N \g_ceur_in_clau_bool
+
+\NewDocumentCommand \ceurcollab { } {
+  \bool_if:NTF \g_ceur_augr_bool
+  { }
+  {
+    \group_begin:
+    \ceurAuthorSetup { type = collaboration }
+    \l_ceur_clb_setup_tl
+    \par \vskip \l_ceur_augroup_before_dim
+    \l_ceur_augroup_align_tl
+    \l_ceur_augroup_size_tl
+    \l_ceur_augroup_shape_tl
+    \l_ceur_augroup_weight_tl
+    \color{ \l_ceur_augroup_color_tl }
+    \seq_use:cn {g_ceur_collab\int_use:N \g_ceur_aaugr_int _seq} { }
+    \seq_use:cnnn {g_ceur_clau\int_use:N \g_ceur_aaugr_int _seq}
+    { ~and~ } { ,~ } { ~and~ }
+    \par \vskip \l_ceur_augroup_after_dim
+    \group_end:
+  }
+}
+
+\newenvironment{collaboration}[1][] {
+  \seq_gput_right:cn {g_ceur_collab\int_use:N \g_ceur_augr_int _seq}
+  { \textit{Collaboration:~} #1 \par \smallskip }
+}{
+}
 
 \NewDocumentCommand \dept  { m } { #1 }
 \NewDocumentCommand \divn  { m } { #1 }
@@ -1304,28 +1316,28 @@
 \NewDocumentCommand \fax   { m } { #1 }
 \NewDocumentCommand \aurl  { m } { #1 }
 
-\seq_new:c { g_stm_aff0_seq }
-\int_new:N \g_stm_aff_int
+\seq_new:c { g_ceur_aff0_seq }
+\int_new:N \g_ceur_aff_int
 \tl_new:N \l_addrtype_tl
 
-\keys_define:nn { stm / address }
+\keys_define:nn { ceur / address }
    {
-     foot     .bool_gset:N  = \g_stm_addr_foot_bool       ,
-     name     .tl_set:N    = \l_stm_addr_name_tl          ,
+     foot     .bool_gset:N  = \g_ceur_addr_foot_bool       ,
+     name     .tl_set:N    = \l_ceur_addr_name_tl          ,
      type     .multichoice:                               ,
-      type/alt     .code:n = { \tl_set:Nn \l_stm_addr_type_tl
+      type/alt     .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
           { Alternate~address } }  ,
-      type/addl    .code:n = { \tl_set:Nn \l_stm_addr_type_tl
+      type/addl    .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
           { Additional~address } } ,
-      type/regular .code:n = { \tl_set:Nn \l_stm_addr_type_tl
+      type/regular .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
           {  } } ,
-      type/custom  .code:n = { \tl_set:Nn \l_stm_addr_type_tl
-          { \l_stm_addr_name_tl } } ,
+      type/custom  .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
+          { \l_ceur_addr_name_tl } } ,
    }
-\DeclareDocumentCommand \stmAddrSetup { m  }
-   { \keys_set:nn { stm / address } { #1 } }
+\DeclareDocumentCommand \ceurAddrSetup { m  }
+   { \keys_set:nn { ceur / address } { #1 } }
 
-\keys_set:nn { stm / address }
+\keys_set:nn { ceur / address }
 {
   foot       = { false }   ,
   type       = { regular } ,
@@ -1334,26 +1346,26 @@
 
 \cs_new:Nn \__reset_addr:
 {
-  \bool_gset_false:N \g_stm_addr_foot_bool
-  \tl_set:Nn \l_stm_addr_type_tl {  }
-  \tl_set:Nn \l_stm_addr_name_tl { Alternate~address }
+  \bool_gset_false:N \g_ceur_addr_foot_bool
+  \tl_set:Nn \l_ceur_addr_type_tl {  }
+  \tl_set:Nn \l_ceur_addr_name_tl { Alternate~address }
 }
 
-\seq_new:N \g_stm_aff_foot_seq
+\seq_new:N \g_ceur_aff_foot_seq
 
 \NewDocumentCommand \printaddrinfoot { }
    {
-     { \seq_use:Nn \g_stm_aff_foot_seq { \par } }
+     { \seq_use:Nn \g_ceur_aff_foot_seq { \par } }
    }
 
 \NewDocumentCommand \address { O{} m O{} }
    {
      \__reset_addr:
-     \keys_set:nn { stm / address } { #3 }
-     \bool_if:NTF \g_stm_addr_foot_bool
+     \keys_set:nn { ceur / address } { #3 }
+     \bool_if:NTF \g_ceur_addr_foot_bool
      { \__foot_address:nnn [#1]{#2}[#3] }
      {
-       \seq_gput_right:cn { g_stm_aff\int_use:N \g_stm_augr_int _seq }
+       \seq_gput_right:cn { g_ceur_aff\int_use:N \g_ceur_augr_int _seq }
        { \tl_if_blank:nTF { #1 }
          {
            \tex_xdef:D \thefootnote{}
@@ -1362,16 +1374,16 @@
          {
            \tl_if_head_eq_catcode:nNTF { #1 } a
            {
-             \int_gincr:N \g_stm_aff_int
+             \int_gincr:N \g_ceur_aff_int
              \tex_xdef:D \@currentlabel
-             { \int_to_alph:n { \int_use:N \g_stm_aff_int } }
-             \stmLabel {#1}
+             { \int_to_alph:n { \int_use:N \g_ceur_aff_int } }
+             \ceurLabel {#1}
              \textsuperscript{\itshape\@currentlabel} #2
          }
          {
-           \int_gset:Nn \g_stm_aff_int { #1 }
+           \int_gset:Nn \g_ceur_aff_int { #1 }
            \tex_xdef:D \@currentlabel
-           { \int_to_alph:n {  \int_use:N \g_stm_aff_int } }
+           { \int_to_alph:n {  \int_use:N \g_ceur_aff_int } }
            \textsuperscript{\itshape\@currentlabel} #2
          }
        }
@@ -1381,15 +1393,15 @@
 
 \cs_new:Npn \__foot_address:nnn [#1]#2[#3]
 {
-  \keys_set:nn { stm / address } { #3 }
-  \seq_gput_right:cn { g_stm_aff_foot_seq }
+  \keys_set:nn { ceur / address } { #3 }
+  \seq_gput_right:cn { g_ceur_aff_foot_seq }
   {
     \tl_if_empty:nTF { #1 }
     {
-      \tl_if_empty:NTF \l_stm_addr_type_tl
+      \tl_if_empty:NTF \l_ceur_addr_type_tl
       { \footnotetext{#2} }
       {
-        \footnotetext{\textit{\l_stm_addr_type_tl}:
+        \footnotetext{\textit{\l_ceur_addr_type_tl}:
           \c_space_token #2 }
       }
     }
@@ -1398,47 +1410,47 @@
       %
       {
         \tex_def:D \thefootnote{\itshape\@currentlabel}
-        \tl_if_empty:NTF \l_stm_addr_type_tl
+        \tl_if_empty:NTF \l_ceur_addr_type_tl
         { \footnotetext{#2} }
-        { \footnotetext{\textit{\l_stm_addr_type_tl}: \c_space_token #2} }
+        { \footnotetext{\textit{\l_ceur_addr_type_tl}: \c_space_token #2} }
       }
       {
         \tex_def:D \thefootnote { \itshape\int_to_alph:n { #1 } }
-        \tl_if_empty:NTF \l_stm_addr_type_tl
+        \tl_if_empty:NTF \l_ceur_addr_type_tl
         { \footnotetext{#2} }
-        { \footnotetext{\textit{\l_stm_addr_type_tl}:
+        { \footnotetext{\textit{\l_ceur_addr_type_tl}:
             \c_space_token #2 } }
       }
     }
   }
 }
 
-\keys_define:nn { stm / affsetup }
+\keys_define:nn { ceur / affsetup }
    {
      type      .choice: ,
      type / normal .code:n =
-       { \tl_set:Nn \l_stm_aff_type_tl { 0 } } ,
+       { \tl_set:Nn \l_ceur_aff_type_tl { 0 } } ,
      type / nonum .code:n =
-       { \tl_set:Nn \l_stm_aff_type_tl { 1 } } ,
+       { \tl_set:Nn \l_ceur_aff_type_tl { 1 } } ,
 
-     size      .tl_set:N    = \l_stm_aff_size_tl      ,
-     shape     .tl_set:N    = \l_stm_aff_shape_tl     ,
-     weight    .tl_set:N    = \l_stm_aff_weight_tl    ,
-     before    .dim_set:N   = \l_stm_aff_before_dim   ,
-     after     .dim_set:N   = \l_stm_aff_after_dim    ,
-     align     .tl_set:N    = \l_stm_aff_align_tl     ,
-     color     .tl_set:N    = \l_stm_aff_color_tl     ,
-     lskip     .dim_set:N   = \l_stm_aff_lskip_dim    ,
-     rskip     .dim_set:N   = \l_stm_aff_rskip_dim    ,
+     size      .tl_set:N    = \l_ceur_aff_size_tl      ,
+     shape     .tl_set:N    = \l_ceur_aff_shape_tl     ,
+     weight    .tl_set:N    = \l_ceur_aff_weight_tl    ,
+     before    .dim_set:N   = \l_ceur_aff_before_dim   ,
+     after     .dim_set:N   = \l_ceur_aff_after_dim    ,
+     align     .tl_set:N    = \l_ceur_aff_align_tl     ,
+     color     .tl_set:N    = \l_ceur_aff_color_tl     ,
+     lskip     .dim_set:N   = \l_ceur_aff_lskip_dim    ,
+     rskip     .dim_set:N   = \l_ceur_aff_rskip_dim    ,
    }
 
-\DeclareDocumentCommand \stmAffSetup { m }
-   { \keys_set:nn { stm / affsetup } { #1 } }
-\DeclareDocumentCommand \stmaffsetup { m }
-   { \tl_set:Nn \l_stm_aff_setup_tl
-     { \keys_set:nn { stm / affsetup } { #1 } }
+\DeclareDocumentCommand \ceurAffSetup { m }
+   { \keys_set:nn { ceur / affsetup } { #1 } }
+\DeclareDocumentCommand \ceuraffsetup { m }
+   { \tl_set:Nn \l_ceur_aff_setup_tl
+     { \keys_set:nn { ceur / affsetup } { #1 } }
    }
-\stmaffsetup {
+\ceuraffsetup {
     size   = \footnotesize,
     shape  = \itshape,
     color  = black,
@@ -1447,88 +1459,88 @@
     align  = \raggedright,
     }
 
-\NewDocumentCommand \stmaddress { }
+\NewDocumentCommand \ceuraddress { }
    {
-     \bool_if:NTF \g_stm_augr_bool
+     \bool_if:NTF \g_ceur_augr_bool
      { }
      {
        \group_begin:
-       \stmAffSetup { type = normal }
-       \l_stm_aff_setup_tl
-       \par \vskip\l_stm_aff_before_dim
-       \l_stm_aff_align_tl
-       \l_stm_aff_size_tl
-       \l_stm_aff_shape_tl
-       \l_stm_aff_weight_tl
-       \color{ \l_stm_aff_color_tl }
-       \seq_use:cn { g_stm_aff\int_use:N \g_stm_aaugr_int _seq }
+       \ceurAffSetup { type = normal }
+       \l_ceur_aff_setup_tl
+       \par \vskip\l_ceur_aff_before_dim
+       \l_ceur_aff_align_tl
+       \l_ceur_aff_size_tl
+       \l_ceur_aff_shape_tl
+       \l_ceur_aff_weight_tl
+       \color{ \l_ceur_aff_color_tl }
+       \seq_use:cn { g_ceur_aff\int_use:N \g_ceur_aaugr_int _seq }
        { \par\vskip2pt  }
-       \par\vskip\l_stm_aff_after_dim
+       \par\vskip\l_ceur_aff_after_dim
        \group_end:
      }
    }
 
-\int_new:N \g_stm_augr_int
-\seq_new:N \g_stm_augr_seq
-\int_new:N \g_stm_aaugr_int
-\bool_new:N \g_stm_augr_bool
+\int_new:N \g_ceur_augr_int
+\seq_new:N \g_ceur_augr_seq
+\int_new:N \g_ceur_aaugr_int
+\bool_new:N \g_ceur_augr_bool
 
 \NewDocumentEnvironment { augroup } { }
 {
-  \bool_gset_true:N \g_stm_augr_bool
-  \int_gincr:N \g_stm_augr_int
-  \seq_new:c {g_stm_au\int_use:N \g_stm_augr_int _seq}
-  \seq_new:c {g_stm_aff\int_use:N \g_stm_augr_int _seq}
-  \seq_new:c {g_stm_collab\int_use:N \g_stm_augr_int _seq}
-  \seq_new:c {g_stm_clau\int_use:N \g_stm_augr_int _seq}
-  \msg_term:n { AUGR:~\int_use:N \g_stm_augr_int ... }
+  \bool_gset_true:N \g_ceur_augr_bool
+  \int_gincr:N \g_ceur_augr_int
+  \seq_new:c {g_ceur_au\int_use:N \g_ceur_augr_int _seq}
+  \seq_new:c {g_ceur_aff\int_use:N \g_ceur_augr_int _seq}
+  \seq_new:c {g_ceur_collab\int_use:N \g_ceur_augr_int _seq}
+  \seq_new:c {g_ceur_clau\int_use:N \g_ceur_augr_int _seq}
+  \msg_term:n { AUGR:~\int_use:N \g_ceur_augr_int ... }
 }
 {
-  \seq_gput_right:Nn \g_stm_augr_seq
+  \seq_gput_right:Nn \g_ceur_augr_seq
   {
-    \int_gincr:N \g_stm_aaugr_int
+    \int_gincr:N \g_ceur_aaugr_int
     \group_begin:
-    \stmAuthorSetup { type = collaboration }
-    \l_stm_clb_setup_tl
-    \par \vskip \l_stm_augroup_before_dim
-    \l_stm_augroup_align_tl
-    \l_stm_augroup_size_tl
-    \l_stm_augroup_shape_tl
-    \l_stm_augroup_weight_tl
-    \color{ \l_stm_augroup_color_tl }
-    \seq_use:cnnn { g_stm_au\int_use:N \g_stm_aaugr_int _seq }
+    \ceurAuthorSetup { type = collaboration }
+    \l_ceur_clb_setup_tl
+    \par \vskip \l_ceur_augroup_before_dim
+    \l_ceur_augroup_align_tl
+    \l_ceur_augroup_size_tl
+    \l_ceur_augroup_shape_tl
+    \l_ceur_augroup_weight_tl
+    \color{ \l_ceur_augroup_color_tl }
+    \seq_use:cnnn { g_ceur_au\int_use:N \g_ceur_aaugr_int _seq }
     { ~and~ } { ,~ } { ~and~ }
-    \par \vskip \l_stm_augroup_after_dim
+    \par \vskip \l_ceur_augroup_after_dim
     \group_end:
     %
     \group_begin:
-    \stmAffSetup { type = normal }
-    \l_stm_aff_setup_tl
-    \par \vskip\l_stm_aff_before_dim
-    \l_stm_aff_align_tl
-    \l_stm_aff_size_tl
-    \l_stm_aff_shape_tl
-    \l_stm_aff_weight_tl
-    \color{ \l_stm_aff_color_tl }
-    \seq_use:cn { g_stm_aff\int_use:N \g_stm_aaugr_int _seq }
+    \ceurAffSetup { type = normal }
+    \l_ceur_aff_setup_tl
+    \par \vskip\l_ceur_aff_before_dim
+    \l_ceur_aff_align_tl
+    \l_ceur_aff_size_tl
+    \l_ceur_aff_shape_tl
+    \l_ceur_aff_weight_tl
+    \color{ \l_ceur_aff_color_tl }
+    \seq_use:cn { g_ceur_aff\int_use:N \g_ceur_aaugr_int _seq }
     { \par \smallskip }
-    \par\vskip\l_stm_aff_after_dim
-    \msg_term:n { AAUGR:~\int_use:N \g_stm_aaugr_int ... }
+    \par\vskip\l_ceur_aff_after_dim
+    \msg_term:n { AAUGR:~\int_use:N \g_ceur_aaugr_int ... }
     \group_end:
     %
     \group_begin:
-    \stmAuthorSetup { type = collaboration }
-    \l_stm_clb_setup_tl
-    \par \vskip \l_stm_augroup_before_dim
-    \l_stm_augroup_align_tl
-    \l_stm_augroup_size_tl
-    \l_stm_augroup_shape_tl
-    \l_stm_augroup_weight_tl
-    \color{ \l_stm_augroup_color_tl }
-    \seq_use:cn {g_stm_collab\int_use:N \g_stm_aaugr_int _seq} { }
-    \seq_use:cnnn {g_stm_clau\int_use:N \g_stm_aaugr_int _seq}
+    \ceurAuthorSetup { type = collaboration }
+    \l_ceur_clb_setup_tl
+    \par \vskip \l_ceur_augroup_before_dim
+    \l_ceur_augroup_align_tl
+    \l_ceur_augroup_size_tl
+    \l_ceur_augroup_shape_tl
+    \l_ceur_augroup_weight_tl
+    \color{ \l_ceur_augroup_color_tl }
+    \seq_use:cn {g_ceur_collab\int_use:N \g_ceur_aaugr_int _seq} { }
+    \seq_use:cnnn {g_ceur_clau\int_use:N \g_ceur_aaugr_int _seq}
     { ~and~ } { ,~ } { ~and~ }
-    \par\vskip \l_stm_augroup_after_dim
+    \par\vskip \l_ceur_augroup_after_dim
     \group_end:
   }
 }
@@ -1539,27 +1551,27 @@
 
 \RequirePackage{moreverb}
 
-\tl_new:N \l_stm_abs_title_tl
-\box_new:N \g_stm_abs_box
+\tl_new:N \l_ceur_abs_title_tl
+\box_new:N \g_ceur_abs_box
 
 \tex_gdef:D \abstractname { \textbf{\sffamily Abstract} }
 
 \NewDocumentEnvironment { Abstract } { o } {
-  % \global\setbox \g_stm_abs_box = \vtop \bgroup
+  % \global\setbox \g_ceur_abs_box = \vtop \bgroup
   % \hsize = .65 \textwidth \parindent \z@
   \group_begin:
   \IfNoValueTF { #1 } { }
   { \tex_gdef:D \abstractname { #1 } }
   \parindent \z@
   \leftskip = .1 \textwidth
-  % \box_if_empty:NTF \g_stm_key_box
+  % \box_if_empty:NTF \g_ceur_key_box
   % { \leftskip = .1 \textwidth }
   % {
-  % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_stm_key_box }
-  % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_stm_key_box }
+  % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_ceur_key_box }
+  % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_ceur_key_box }
   % \leftskip .1\textwidth
   % \hspace*{-.1 \textwidth }
-  % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_stm_key_box }
+  % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_ceur_key_box }
   % \skip_vertical:n { - \l_tmpa_dim }
   % }
   \skip_vertical:n { \baselineskip }
@@ -1570,7 +1582,7 @@
   \ignorespaces \everypar { \parindent=1.5em }
 }{
   \par
-  \noindent\hbox_to_wd:nn { \z@ } { \box \g_stm_key_box }
+  \noindent\hbox_to_wd:nn { \z@ } { \box \g_ceur_key_box }
   \par \group_end:
 }
 
@@ -1580,7 +1592,7 @@
    \vskip12pt
    { \fontsize{12pt}{14pt}\bfseries\selectfont\casprelimstitle } \par
    \vskip6pt
-   \seq_use:Nn \g_stm_prelimsau_seq { , }
+   \seq_use:Nn \g_ceur_prelimsau_seq { , }
    \vskip12pt
    \par
   }
@@ -1635,7 +1647,7 @@
 
 \NewDocumentCommand \keywordtitle { } { Keywords }
 \NewDocumentCommand \keywordtitlesep { } {:\c_space_token }
-\box_new:N \g_stm_key_box
+\box_new:N \g_ceur_key_box
 
 \NewDocumentCommand \MSC { O{} m }
    {
@@ -1651,7 +1663,7 @@
    }
 
 \NewDocumentEnvironment { keywords } { O{ Keywords } } {
-  \tex_global:D \tex_setbox:D \g_stm_key_box = \vtop \bgroup
+  \tex_global:D \tex_setbox:D \g_ceur_key_box = \vtop \bgroup
   \hsize=.9 \textwidth
   \vspace*{0pt}
   \cs_new:Nn \sep: {\unskip,~}
@@ -1733,12 +1745,12 @@
   \end{minipage}
 }
 
-\seq_new:N \g_stm_logonote_seq
+\seq_new:N \g_ceur_logonote_seq
 
 \NewDocumentCommand \logonote { m }
 {
   \group_begin:
-  \seq_gput_right:Nn \g_stm_logonote_seq
+  \seq_gput_right:Nn \g_ceur_logonote_seq
   {
     \tex_def:D \thefootnote { }
     \footnotetext{%
@@ -1751,27 +1763,27 @@
   \group_end:
 }
 
-\newcommand \printlogonotes { \seq_use:Nn \g_stm_logonote_seq { \par } }
+\newcommand \printlogonotes { \seq_use:Nn \g_ceur_logonote_seq { \par } }
 
 %
 % Print all footnotes in the title page
 %
 
-\bool_new:N \g_stm_longmktitle_bool
-\int_new:N \g_stm_jtype_int
-\int_new:N \g_stm_blind_int
+\bool_new:N \g_ceur_longmktitle_bool
+\int_new:N \g_ceur_jtype_int
+\int_new:N \g_ceur_blind_int
 
 \NewDocumentCommand \printFirstPageNotes { }
    {
-     \bool_if:NTF \g_stm_longmktitle_bool
+     \bool_if:NTF \g_ceur_longmktitle_bool
        { \tex_let:D \columnwidth = \textwidth }
        { }
-     \int_compare:nTF { \g_stm_jtype_int > 5 }
-       { \stmaddress }
+     \int_compare:nTF { \g_ceur_jtype_int > 5 }
+       { \ceuraddress }
        { }
      \printtnotes
      \printnonumnotes
-     \bool_if:NTF \g_stm_blind_bool
+     \bool_if:NTF \g_ceur_blind_bool
        { }
        {
          \printcornotes
@@ -1787,7 +1799,7 @@
          \printfnotes
        }
        \printlogonotes
-     \bool_if:NTF \g_stm_longmktitle_bool
+     \bool_if:NTF \g_ceur_longmktitle_bool
        {
          \if@twocolumn
          \tex_let:D \columnwidth = \Columnwidth \fi
@@ -1799,39 +1811,39 @@
 %
 % Date History
 %
-\tl_new:N \g_stm_recd_tl
-\tl_new:N \g_stm_accd_tl
-\tl_new:N \g_stm_revd_tl
-\tl_new:N \g_stm_pub_online_tl
-\tl_new:N \g_stm_pub_print_tl
+\tl_new:N \g_ceur_recd_tl
+\tl_new:N \g_ceur_accd_tl
+\tl_new:N \g_ceur_revd_tl
+\tl_new:N \g_ceur_pub_online_tl
+\tl_new:N \g_ceur_pub_print_tl
 
 \cs_new:Npn \date_parse:n #1 { \date_parse_aux:w #1 \q_stop }
 \cs_new:Npn \date_parse_aux:w #1 / #2 / #3 \q_stop
 { <do something with the date> }
 
 \NewDocumentCommand \received { m }
-    { \tl_gput_right:Nn \g_stm_recd_tl { #1 } }
+    { \tl_gput_right:Nn \g_ceur_recd_tl { #1 } }
 \NewDocumentCommand \accepted { m }
-    { \tl_gput_right:Nn \g_stm_accd_tl { #1 } }
+    { \tl_gput_right:Nn \g_ceur_accd_tl { #1 } }
 \NewDocumentCommand \revised { m }
-    { \tl_gput_right:Nn \g_stm_revd_tl { #1 } }
+    { \tl_gput_right:Nn \g_ceur_revd_tl { #1 } }
 \NewDocumentCommand \published { O{} m }
 {
   \tl_if_eq:nnTF { #1 } { online }
-  { \tl_if_gput_right:Nn \g_stm_pub_online_tl { #2 } }
-  { \tl_if_gput_right:Nn \g_stm_pub_print_tl { #2 } }
+  { \tl_if_gput_right:Nn \g_ceur_pub_online_tl { #2 } }
+  { \tl_if_gput_right:Nn \g_ceur_pub_print_tl { #2 } }
 }
 
 %
 % Verse/Recto
 %
-\tl_new:N \l_stm_verso_tl
-\tl_new:N \l_stm_recto_tl
+\tl_new:N \l_ceur_verso_tl
+\tl_new:N \l_ceur_recto_tl
 
 \NewDocumentCommand \verso { m }
-{ \tl_set:Nn \l_stm_verso_tl { #1 } }
+{ \tl_set:Nn \l_ceur_verso_tl { #1 } }
 \NewDocumentCommand \recto { m }
-{ \tl_set:Nn \l_stm_recto_tl { #1 } }
+{ \tl_set:Nn \l_ceur_recto_tl { #1 } }
 
 %
 % Maketitle
@@ -1851,35 +1863,35 @@
   \setcounter{footnote}{0}
 }
 
-\keys_define:nn { stm / mktitle }
+\keys_define:nn { ceur / mktitle }
 {
-  blind        .bool_gset:N     = \g_stm_blind_bool        ,
+  blind        .bool_gset:N     = \g_ceur_blind_bool        ,
   footer       .multichoice:,
-       footer/default  .tl_gset:N  = \g_stm_footer_default_tl ,
-       footer/custom   .tl_gset:N  = \g_stm_footer_custom_tl  ,
-  longtitle     .bool_gset:N    = \g_stm_longtitle_bool    ,
-  longabstract  .bool_gset:N    = \g_stm_longtitle_bool    ,
-  breakafter    .clist_gset:N   = \g_stm_breakafter_clist  ,
+       footer/default  .tl_gset:N  = \g_ceur_footer_default_tl ,
+       footer/custom   .tl_gset:N  = \g_ceur_footer_custom_tl  ,
+  longtitle     .bool_gset:N    = \g_ceur_longtitle_bool    ,
+  longabstract  .bool_gset:N    = \g_ceur_longtitle_bool    ,
+  breakafter    .clist_gset:N   = \g_ceur_breakafter_clist  ,
   nologo        .bool_gset:N    = \g_ceur_nologo_bool       ,
 }
 
-\bool_new:N \g_stm_breakafter_title_bool
-\bool_new:N \g_stm_breakafter_auaff_bool
-\bool_new:N \g_stm_breakafter_abstract_bool
+\bool_new:N \g_ceur_breakafter_title_bool
+\bool_new:N \g_ceur_breakafter_auaff_bool
+\bool_new:N \g_ceur_breakafter_abstract_bool
 
 \NewDocumentCommand \processbreakafter { }
 {
-  \clist_if_empty:NTF \g_stm_breakafter_clist { }
+  \clist_if_empty:NTF \g_ceur_breakafter_clist { }
   {
-    \clist_map_inline:Nn \g_stm_breakafter_clist
-    { \bool_gset_true:c { g_stm_breakafter_##1_bool } }
+    \clist_map_inline:Nn \g_ceur_breakafter_clist
+    { \bool_gset_true:c { g_ceur_breakafter_##1_bool } }
   }
 }
 
 \NewDocumentCommand \pprintMaketitle { O{} }
 {
   \tl_if_blank:nTF { #1 } { }
-  { \keys_set:nn { stm / mktitle } { #1 } }
+  { \keys_set:nn { ceur / mktitle } { #1 } }
   \processbreakafter
   \clearpage
   \__reset_title_counters:
@@ -1889,24 +1901,24 @@
   \group_begin:
   \@title
   \group_end:
-  \bool_if:NTF \g_stm_breakafter_title_bool
+  \bool_if:NTF \g_ceur_breakafter_title_bool
   { \newpage } { }
   %
-  \bool_if:NTF \g_stm_blind_bool
+  \bool_if:NTF \g_ceur_blind_bool
   { \vspace* { 10 mm } }
   {
     \group_begin:
-    \normalsize \stmauthors \par
-    \stmcollab \par
-    \footnotesize \itshape \stmaddress \par \vskip36pt
+    \normalsize \ceurauthors \par
+    \ceurcollab \par
+    \footnotesize \itshape \ceuraddress \par \vskip36pt
     \group_end:
-    \bool_if:NTF \g_stm_breakafter_auaff_bool
+    \bool_if:NTF \g_ceur_breakafter_auaff_bool
     { \newpage } { }
   }
   %
   \printabsbox
   \printkeybox
-  \bool_if:NTF \g_stm_breakafter_abstract_bool
+  \bool_if:NTF \g_ceur_breakafter_abstract_bool
   { \newpage } { }
   %
   \setcounter{footnote}{\c@fnote}
@@ -1922,15 +1934,15 @@
   \@title
   \group_end:
   %
-  \bool_if:NTF \g_stm_blind_bool
+  \bool_if:NTF \g_ceur_blind_bool
   { \vspace* { 10 mm } }
   {
     \group_begin:
-    \normalsize \stmauthors \par
-    \stmcollab \par
-    \footnotesize \itshape \stmaddress \par
+    \normalsize \ceurauthors \par
+    \ceurcollab \par
+    \footnotesize \itshape \ceuraddress \par
     \group_end:
-    \bool_if:NTF \g_stm_breakafter_auaff_bool
+    \bool_if:NTF \g_ceur_breakafter_auaff_bool
     { \newpage } { }
   }
   % \printFirstPageNotes
@@ -1941,18 +1953,18 @@
     \file_if_exist:nT { \jobname.abs } { \file_input:n { \jobname.abs } }
   \end{Abstract}
   \dashrule{6pt}{3pt}
-  \bool_if:NTF \g_stm_breakafter_abstract_bool
+  \bool_if:NTF \g_ceur_breakafter_abstract_bool
   { \newpage } { }
 }
 
-\box_new:N \g_stm_notes_box
-\box_new:N \g_stm_front_box
+\box_new:N \g_ceur_notes_box
+\box_new:N \g_ceur_front_box
 \cs_set:Npn \__fn_text:n #1
 { \group_begin:\vbox_top:n { \footnotesize #1 } \group_end:\par}
 
 \NewDocumentCommand \LongMaketitleBox { }
 {
-  \vbox_gset:Nn \g_stm_front_box
+  \vbox_gset:Nn \g_ceur_front_box
   {
     \tex_def:D \baselinestretch{1}
     \group_begin:
@@ -1960,9 +1972,9 @@
     \group_end:
     %
     \group_begin:
-    \normalsize \stmauthors \par
-    \stmcollab \par
-    \footnotesize \itshape \stmaddress \par
+    \normalsize \ceurauthors \par
+    \ceurcollab \par
+    \footnotesize \itshape \ceuraddress \par
     \group_end:
   %
   \dashrule{0pt}{3pt}
@@ -1972,11 +1984,11 @@
   \end{Abstract}
   \dashrule{3pt}{3pt}
   }
-  \vbox_gset:Nn \g_stm_notes_box
+  \vbox_gset:Nn \g_ceur_notes_box
   {  \cs_set_eq:NN \footnotetext \__fn_text:n  \printFirstPageNotes }
-   \dim_gset:Nn \g_tmpb_dim { \box_ht:N \g_stm_notes_box }
+   \dim_gset:Nn \g_tmpb_dim { \box_ht:N \g_ceur_notes_box }
    % \iow_term:x { ...~[ht: \dim_use:N \g_tmpb_dim  ] }
-   \dim_gadd:Nn \g_tmpb_dim { \box_dp:N \g_stm_notes_box }
+   \dim_gadd:Nn \g_tmpb_dim { \box_dp:N \g_ceur_notes_box }
    % \iow_term:x { ...~[ht+dp: \dim_use:N \g_tmpb_dim  ] }
    \ifbool{sc}{\dim_gadd:Nn \g_tmpb_dim { 12pt } } { }
 
@@ -1984,41 +1996,41 @@
 
 \NewDocumentCommand \ProcessLongTitleBox { }
 {
-  % \vbox_gset:Nn \g_stm_notes_box
+  % \vbox_gset:Nn \g_ceur_notes_box
   % {  \cs_set_eq:NN \footnotetext \__fn_text:n \printFirstPageNotes }
-  %  \dim_gset:Nn \g_tmpb_dim { \box_ht:N \g_stm_notes_box }
+  %  \dim_gset:Nn \g_tmpb_dim { \box_ht:N \g_ceur_notes_box }
   % % \iow_term:x { ...~[ht: \dim_use:N \g_tmpb_dim  ] }
-  %  \dim_gadd:Nn \g_tmpb_dim { \box_dp:N \g_stm_notes_box }
+  %  \dim_gadd:Nn \g_tmpb_dim { \box_dp:N \g_ceur_notes_box }
   % % \iow_term:x { ...~[ht+dp: \dim_use:N \g_tmpb_dim  ] }
   %
   \dim_gset:Nn \g_tmpa_dim { \textheight }
-%  \vbox_unpack:N \g_stm_notes_box
+%  \vbox_unpack:N \g_ceur_notes_box
   % \iow_term:x { ...~[tmpa:~ \dim_use:N \g_tmpa_dim ] }
-  % \dim_gsub:Nn \g_tmpa_dim { \box_ht:N \g_stm_notes_box }
+  % \dim_gsub:Nn \g_tmpa_dim { \box_ht:N \g_ceur_notes_box }
   % \iow_term:x { ...~[tmpa-noteht:~ \dim_use:N \g_tmpa_dim ] }
-  % \dim_gsub:Nn \g_tmpa_dim { \box_dp:N \g_stm_notes_box }
+  % \dim_gsub:Nn \g_tmpa_dim { \box_dp:N \g_ceur_notes_box }
   % \iow_term:x { ...~[tmpa-notedp:~ \dim_use:N \g_tmpa_dim ] }
   \dim_gsub:Nn \g_tmpa_dim { \g_tmpb_dim }
-  \vbox_set_split_to_ht:NNn \g_tmpb_box \g_stm_front_box { \g_tmpa_dim }
+  \vbox_set_split_to_ht:NNn \g_tmpb_box \g_ceur_front_box { \g_tmpa_dim }
   \noindent \vbox_unpack_clear:N \g_tmpb_box
   \printFirstPageNotes
   \dim_gzero:N \g_tmpa_dim
-  \dim_gset:Nn \g_tmpa_dim { \box_ht:N \g_stm_front_box }
+  \dim_gset:Nn \g_tmpa_dim { \box_ht:N \g_ceur_front_box }
   % \iow_term:x { ...~[tmpa-ht:~ \dim_use:N \g_tmpa_dim ] }
-  \dim_gadd:Nn \g_tmpa_dim { \box_dp:N \g_stm_front_box }
+  \dim_gadd:Nn \g_tmpa_dim { \box_dp:N \g_ceur_front_box }
   % \iow_term:x { ...~[tmpa-ht+dp:~ \dim_use:N \g_tmpa_dim ~+~\the\textheight] }
   \dim_compare:nNnTF { \dim_use:N \g_tmpa_dim } > { \the\textheight }
   {
-    \vbox_set_split_to_ht:NNn \g_tmpb_box \g_stm_front_box { \textheight }
+    \vbox_set_split_to_ht:NNn \g_tmpb_box \g_ceur_front_box { \textheight }
     \vbox_unpack_clear:N \g_tmpb_box
     \ifbool{dc}
-    { \twocolumn[{\vbox_unpack_clear:N \g_stm_front_box}] }
-    { \vbox_unpack_clear:N \g_stm_front_box }
+    { \twocolumn[{\vbox_unpack_clear:N \g_ceur_front_box}] }
+    { \vbox_unpack_clear:N \g_ceur_front_box }
   }
   {
     \ifbool{dc}
-    { \twocolumn[{\vbox_unpack_clear:N \g_stm_front_box}] }
-    { \vbox_unpack_clear:N \g_stm_front_box }
+    { \twocolumn[{\vbox_unpack_clear:N \g_ceur_front_box}] }
+    { \vbox_unpack_clear:N \g_ceur_front_box }
   }
  \normalcolor \normalfont
 }
