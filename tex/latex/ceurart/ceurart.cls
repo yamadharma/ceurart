@@ -467,6 +467,8 @@
 \seq_new:N \l_ceur_au_fn_seq
 \seq_new:N \l_ceur_au_ead_seq
 \seq_new:N \l_ceur_au_orcid_seq
+\seq_new:N \l_ceur_au_email_seq
+\seq_new:N \l_ceur_au_url_seq
 \seq_new:N \l_ceur_au_contrib_role_seq
 
 \NewDocumentCommand \parsename { m }
@@ -896,85 +898,87 @@
 \int_new:N \g_ceur_au_int
 \int_new:N \g_ceur_aau_int
 
-\NewDocumentCommand \ResetMarks { }
-   {
-     \keys_set:nn { ceur / author }
-     {
-       auid       = {} ,
-       bioid      = {} ,
-       alt        = {} ,
-       style      = { normal } ,
-       prefix     = {} ,
-       suffix     = {} ,
-       degree     = {} ,
-       role       = {} ,
-       orcid      = {} ,
-       collab     = { false }  ,
-       type       = { author } ,
-       anon       = { false }  ,
-       deceased   = { false }  ,
-       twitter    = {} ,
-       facebook   = {} ,
-       linkedin   = {} ,
-       plus       = {} ,
-       gplus      = {} ,
-     }
-      \tex_gdef:D \sep{}
-      \tex_gdef:D \ceur@corref{}
-      \tex_gdef:D \@fnmark {}
-    }
+\NewDocumentCommand \ResetMarks { } {
+  \keys_set:nn { ceur / author } {
+    auid       = {} ,
+    bioid      = {} ,
+    alt        = {} ,
+    style      = { normal } ,
+    prefix     = {} ,
+    suffix     = {} ,
+    degree     = {} ,
+    role       = {} ,
+    orcid      = {} ,
+    collab     = { false }  ,
+    type       = { author } ,
+    anon       = { false }  ,
+    deceased   = { false }  ,
+    twitter    = {} ,
+    facebook   = {} ,
+    linkedin   = {} ,
+    plus       = {} ,
+    gplus      = {} ,
+    email      = {} ,
+    url        = {} ,
+  }
+  \tex_gdef:D \sep{}
+  \tex_gdef:D \ceur@corref{}
+  \tex_gdef:D \@fnmark {}
+}
 
 
 \int_new:N \l_autype_int
-\keys_define:nn { ceur / author }
-   {
-     auid     .tl_set:N   = \l_ceur_au_id_tl             ,
-     bioid    .tl_set:N   = \l_ceur_au_bioid_tl          ,
-     alt      .tl_set:N   = \l_ceur_au_alt_tl            ,
-     style    .tl_set:N   = \l_ceur_au_style_tl          ,
-     prefix   .tl_set:N   = \l_ceur_au_prefix_tl         ,
-     suffix   .tl_set:N   = \l_ceur_au_suffix_tl         ,
-     degree   .tl_set:N   = \l_ceur_au_degree_tl         ,
-     role     .tl_set:N   = \l_ceur_au_role_tl           ,
-     orcid    .tl_set:N   = \l_ceur_au_orcid_tl          ,
-     collab   .bool_set:N = \l_ceur_au_collab_bool       ,
-     type     .multichoice:,
-      type/author    .code:n = { \int_set:Nn \l_autype_int { 0 } },
-      type/editor    .code:n = { \int_set:Nn \l_autype_int { 1 } },
-      type/collab    .code:n = { \int_set:Nn \l_autype_int { 2 } },
-      type/anon      .code:n = { \int_set:Nn \l_autype_int { 3 } },
-%      type/collab    .bool_set:N = \l_ceur_au_collab_bool          ,
-%      type/anon      .bool_set:N = \l_ceur_au_anon_bool            ,
-     anon      .bool_set:N = \l_ceur_au_anon_bool     ,
-     deceased  .bool_set:N = \l_ceur_au_deceased_bool ,
-     twitter   .tl_set:N   = \l_ceur_au_twitter_tl    ,
-     facebook  .tl_set:N   = \l_ceur_au_facebook_tl   ,
-     linkedin  .tl_set:N   = \l_ceur_au_linkedin_tl   ,
-     plus      .tl_set:N   = \l_ceur_au_gplus_tl      ,
-     gplus     .tl_set:N   = \l_ceur_au_gplus_tl      ,
-   }
+\keys_define:nn { ceur / author } {
+  auid     .tl_set:N   = \l_ceur_au_id_tl             ,
+  bioid    .tl_set:N   = \l_ceur_au_bioid_tl          ,
+  alt      .tl_set:N   = \l_ceur_au_alt_tl            ,
+  style    .tl_set:N   = \l_ceur_au_style_tl          ,
+  prefix   .tl_set:N   = \l_ceur_au_prefix_tl         ,
+  suffix   .tl_set:N   = \l_ceur_au_suffix_tl         ,
+  degree   .tl_set:N   = \l_ceur_au_degree_tl         ,
+  role     .tl_set:N   = \l_ceur_au_role_tl           ,
+  orcid    .tl_set:N   = \l_ceur_au_orcid_tl          ,
+  collab   .bool_set:N = \l_ceur_au_collab_bool       ,
+  type     .multichoice:,
+  type/author    .code:n = { \int_set:Nn \l_autype_int { 0 } },
+  type/editor    .code:n = { \int_set:Nn \l_autype_int { 1 } },
+  type/collab    .code:n = { \int_set:Nn \l_autype_int { 2 } },
+  type/anon      .code:n = { \int_set:Nn \l_autype_int { 3 } },
+  % type/collab    .bool_set:N = \l_ceur_au_collab_bool          ,
+  % type/anon      .bool_set:N = \l_ceur_au_anon_bool            ,
+  anon      .bool_set:N = \l_ceur_au_anon_bool     ,
+  deceased  .bool_set:N = \l_ceur_au_deceased_bool ,
+  twitter   .tl_set:N   = \l_ceur_au_twitter_tl    ,
+  facebook  .tl_set:N   = \l_ceur_au_facebook_tl   ,
+  linkedin  .tl_set:N   = \l_ceur_au_linkedin_tl   ,
+  plus      .tl_set:N   = \l_ceur_au_gplus_tl      ,
+  gplus     .tl_set:N   = \l_ceur_au_gplus_tl      ,
+  email     .tl_set:N   = \l_ceur_au_email_tl      ,
+  url       .tl_set:N   = \l_ceur_au_url_tl        ,
+}
 
-\keys_set:nn { ceur / author }
-   {
-     auid       = {} ,
-     bioid      = {} ,
-     alt        = {} ,
-     style      = { normal } ,
-     prefix     = {} ,
-     suffix     = {} ,
-     degree     = {} ,
-     role       = {} ,
-     orcid      = {} ,
-     collab     = { false }  ,
-     type       = { author } ,
-     anon       = { false }  ,
-     deceased   = { false }  ,
-     twitter    = {} ,
-     facebook   = {} ,
-     linkedin   = {} ,
-     plus       = {} ,
-     gplus      = {} ,
-   }
+\keys_set:nn { ceur / author } {
+  auid       = {} ,
+  bioid      = {} ,
+  alt        = {} ,
+  style      = { normal } ,
+  prefix     = {} ,
+  suffix     = {} ,
+  degree     = {} ,
+  role       = {} ,
+  orcid      = {} ,
+  collab     = { false }  ,
+  type       = { author } ,
+  anon       = { false }  ,
+  deceased   = { false }  ,
+  twitter    = {} ,
+  facebook   = {} ,
+  linkedin   = {} ,
+  plus       = {} ,
+  gplus      = {} ,
+  email      = {} ,
+  url        = {} ,
+}
 
 \keys_define:nn { ceur / ausetup }
    {
@@ -1134,165 +1138,165 @@
 \csxdef{infoauthors}{}
 \csgdef { pdfxauthors } { }
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
-\RenewDocumentCommand \author { O{} m O{} }
-   {
-     \ResetMarks
-     \tl_if_blank:nTF { #3 } { }
-       { \keys_set:nn { ceur / author } { #3 } }
-%
-     \int_gincr:N \g_ceur_au_int
-     \tex_gdef:D \theau@ { \int_use:N \g_ceur_au_int }
-%
-     \seq_gput_right:Nn \g_ceur_prelimsau_seq { #2 }
-     \bool_if:NTF \l_ceur_au_collab_bool
-       { \seq_gput_right:cn { g_ceur_clau\int_use:N \g_ceur_augr_int _seq } }
-       { \seq_gput_right:cn { g_ceur_au\int_use:N \g_ceur_augr_int _seq } }
-       {
-         \int_gincr:N \g_ceur_aau_int
-         \tex_gdef:D \theauthor {\int_use:N \g_ceur_aau_int }
-         \keys_set:nn { ceur /author } { #3 }
-         \tl_if_head_eq_catcode:nNTF { #1 } a
-            { \processAffRef { #1 } }
-            { \processAffNum { #1 } }
-         \tl_if_empty:NF \l_ceur_au_prefix
-            { \l_ceur_au_prefix_tl \c_space_token }
-         \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese }
-            { %\msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
-              \invparsename { #2 }
-              \textcolor{\l_ceur_augroup_color_tl}{\surname}
-              \no_break_space:
-              \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
-            }
-            { %\msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
-              \parsename { #2 }
-              \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
-              \no_break_space:
-              \textcolor{\l_ceur_augroup_color_tl}{\surname}
-            }
-        \tl_if_empty:NF \l_ceur_au_suffix_tl
-        { \c_space_token \l_ceur_au_suffix_tl }
-         \unskip
-         \textsuperscript
-         {
-           \tl_if_blank:nTF { #1 }
-           { \tex_def:D \sep{} }
-           { {\itshape\listAff} \tex_def:D \sep{\unskip,} }
-           \process@marks
-           \bool_if:NT \l_ceur_au_deceased_bool
-           { \sep \maltese
-             \tex_def:D \sep { \unksip, }
-           }
-         }
-        \tl_if_empty:NF \l_ceur_au_degree_tl
-        { ,\c_space_token \l_ceur_au_degree_tl }
-        \tl_if_empty:NF \l_ceur_au_role_tl
-        { \c_space_token (\l_ceur_au_role_tl) }
-%
-       \ResetMarks
-      }
-%
-      \bool_if:NT \l_ceur_au_deceased_bool
-       {
-        \seq_gput_right:Nn \g_ceur_maltese_seq
-         {
-          \tex_def:D \thefootnote { \maltese }
-          \footnotetext{Deceased~author.}
-         }
-       }
-% various social media
-      \tl_if_empty:NTF \l_ceur_au_facebook_tl { }
-        {
-          \wrAux { \token_to_str:N \facebookauthor
-            { \l_ceur_au_facebook_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_ceur_au_twitter_tl
-        {
-          \wrAux { \token_to_str:N \twitterauthor
-            { \l_ceur_au_twitter_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_ceur_au_gplus_tl
-        {
-          \wrAux { \token_to_str:N \gplusauthor
-            { \l_ceur_au_gplus_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_ceur_au_linkedin_tl
-        {
-          \wrAux { \token_to_str:N \linkedinauthor
-            { \l_ceur_au_linkedin_tl } { \exp_not:n {#2} } }
-        }
-      \tl_if_empty:NF \l_ceur_au_orcid_tl
-        {
-          \wrAux { \token_to_str:N \orcidauthor
-            { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
-        }
-%
-        \@eadauthor={#2}
-        \pdfstringdef\__info_au: { #2 }
-        \int_compare:nNnTF { \theau@ } < { 4 }
-        { \xappto \infoauthors { \__info_au: , ~ } }
-        {
-          \int_compare:nNnTF { \theau@ } = { 4 }
-          { \xappto \infoauthors { et~al. } }
-          { }
-        }
-        %
-        \csgdef { __pdfxauthor } { #2 }
-        \xappto \pdfxauthors { \__pdfxauthor , ~ }
-
+\RenewDocumentCommand \author { O{} m O{} } {
+  \ResetMarks
+  \tl_if_blank:nTF { #3 } { }
+  { \keys_set:nn { ceur / author } { #3 } }
+  % 
+  \int_gincr:N \g_ceur_au_int
+  \tex_gdef:D \theau@ { \int_use:N \g_ceur_au_int }
+  % 
+  \seq_gput_right:Nn \g_ceur_prelimsau_seq { #2 }
+  \bool_if:NTF \l_ceur_au_collab_bool
+  { \seq_gput_right:cn { g_ceur_clau\int_use:N \g_ceur_augr_int _seq } }
+  { \seq_gput_right:cn { g_ceur_au\int_use:N \g_ceur_augr_int _seq } }
+  {
+    \int_gincr:N \g_ceur_aau_int
+    \tex_gdef:D \theauthor {\int_use:N \g_ceur_aau_int }
+    \keys_set:nn { ceur /author } { #3 }
+    \tl_if_head_eq_catcode:nNTF { #1 } a
+    { \processAffRef { #1 } }
+    { \processAffNum { #1 } }
+    \tl_if_empty:NF \l_ceur_au_prefix
+    { \l_ceur_au_prefix_tl \c_space_token }
+    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese }
+    { %\msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
+      \invparsename { #2 }
+      \textcolor{\l_ceur_augroup_color_tl}{\surname}
+      \no_break_space:
+      \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
     }
+    { %\msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
+      \parsename { #2 }
+      \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
+      \no_break_space:
+      \textcolor{\l_ceur_augroup_color_tl}{\surname}
+    }
+    \tl_if_empty:NF \l_ceur_au_suffix_tl
+    { \c_space_token \l_ceur_au_suffix_tl }
+    \unskip
+    \textsuperscript
+    {
+      \tl_if_blank:nTF { #1 }
+      { \tex_def:D \sep{} }
+      { {\itshape\listAff} \tex_def:D \sep{\unskip,} }
+      \process@marks
+      \bool_if:NT \l_ceur_au_deceased_bool
+      { \sep \maltese
+        \tex_def:D \sep { \unksip, }
+      }
+    }
+    \tl_if_empty:NF \l_ceur_au_degree_tl
+    { ,\c_space_token \l_ceur_au_degree_tl }
+    \tl_if_empty:NF \l_ceur_au_role_tl
+    { \c_space_token (\l_ceur_au_role_tl) }
+    % 
+    \ResetMarks
+  }
+  % 
+  \bool_if:NT \l_ceur_au_deceased_bool
+  {
+    \seq_gput_right:Nn \g_ceur_maltese_seq
+    {
+      \tex_def:D \thefootnote { \maltese }
+      \footnotetext{Deceased~author.}
+    }
+  }
+  \tl_if_empty:NF \l_ceur_au_email_tl
+  {
+    \wrAux { \token_to_str:N \emailauthor
+      { \l_ceur_au_email_tl } { \exp_not:n {#2} } }
+  }
+  % various social media
+  \tl_if_empty:NTF \l_ceur_au_facebook_tl { }
+  {
+    \wrAux { \token_to_str:N \facebookauthor
+      { \l_ceur_au_facebook_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_twitter_tl
+  {
+    \wrAux { \token_to_str:N \twitterauthor
+      { \l_ceur_au_twitter_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_gplus_tl
+  {
+    \wrAux { \token_to_str:N \gplusauthor
+      { \l_ceur_au_gplus_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_linkedin_tl
+  {
+    \wrAux { \token_to_str:N \linkedinauthor
+      { \l_ceur_au_linkedin_tl } { \exp_not:n {#2} } }
+  }
+  \tl_if_empty:NF \l_ceur_au_orcid_tl
+  {
+    \wrAux { \token_to_str:N \orcidauthor
+      { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
+  }
+  % 
+  \@eadauthor={#2}
+  \pdfstringdef\__info_au: { #2 }
+  \int_compare:nNnTF { \theau@ } < { 4 }
+  { \xappto \infoauthors { \__info_au: , ~ } }
+  {
+    \int_compare:nNnTF { \theau@ } = { 4 }
+    { \xappto \infoauthors { et~al. } }
+    { }
+  }
+  % 
+  \csgdef { __pdfxauthor } { #2 }
+  \xappto \pdfxauthors { \__pdfxauthor , ~ }
+}
 
-\NewDocumentCommand \ceurauthors { }
-   {
-     \group_begin:
-     \ceurAuthorSetup { type = authors }
-     \l_ceur_au_setup_tl
-     \par \vskip\l_ceur_augroup_before_dim
-     \l_ceur_augroup_align_tl
-     \l_ceur_augroup_size_tl
-     \l_ceur_augroup_shape_tl
-     \l_ceur_augroup_weight_tl
-     \color{ \l_ceur_augroup_color_tl }
-     \bool_if:NTF \g_ceur_augr_bool
-       { \seq_use:Nn \g_ceur_augr_seq { \par } }
-       {
-         \seq_use:cnnn { g_ceur_au\int_use:N\g_ceur_augr_int _seq }
-         { ,~ } { ,~ } { ~and~ }
-       }
-     \par\vskip\l_ceur_augroup_after_dim
-     \group_end:
-   }
+\NewDocumentCommand \ceurauthors { } {
+  \group_begin:
+  \ceurAuthorSetup { type = authors }
+  \l_ceur_au_setup_tl
+  \par \vskip\l_ceur_augroup_before_dim
+  \l_ceur_augroup_align_tl
+  \l_ceur_augroup_size_tl
+  \l_ceur_augroup_shape_tl
+  \l_ceur_augroup_weight_tl
+  \color{ \l_ceur_augroup_color_tl }
+  \bool_if:NTF \g_ceur_augr_bool
+  { \seq_use:Nn \g_ceur_augr_seq { \par } }
+  {
+    \seq_use:cnnn { g_ceur_au\int_use:N\g_ceur_augr_int _seq }
+    { ,~ } { ,~ } { ~and~ }
+  }
+  \par\vskip\l_ceur_augroup_after_dim
+  \group_end:
+}
 
 \seq_new:c { g_ceur_collab0_seq }
 \bool_new:N \g_ceur_in_clau_bool
 
-\NewDocumentCommand \ceurcollab { }
-   {
-     \bool_if:NTF \g_ceur_augr_bool
-     { }
-     {
-       \group_begin:
-       \ceurAuthorSetup { type = collaboration }
-       \l_ceur_clb_setup_tl
-       \par \vskip \l_ceur_augroup_before_dim
-       \l_ceur_augroup_align_tl
-       \l_ceur_augroup_size_tl
-       \l_ceur_augroup_shape_tl
-       \l_ceur_augroup_weight_tl
-       \color{ \l_ceur_augroup_color_tl }
-       \seq_use:cn {g_ceur_collab\int_use:N \g_ceur_aaugr_int _seq} { }
-       \seq_use:cnnn {g_ceur_clau\int_use:N \g_ceur_aaugr_int _seq}
-        { ~and~ } { ,~ } { ~and~ }
-        \par \vskip \l_ceur_augroup_after_dim
-        \group_end:
-      }
-    }
+\NewDocumentCommand \ceurcollab { } {
+  \bool_if:NTF \g_ceur_augr_bool
+  { }
+  {
+    \group_begin:
+    \ceurAuthorSetup { type = collaboration }
+    \l_ceur_clb_setup_tl
+    \par \vskip \l_ceur_augroup_before_dim
+    \l_ceur_augroup_align_tl
+    \l_ceur_augroup_size_tl
+    \l_ceur_augroup_shape_tl
+    \l_ceur_augroup_weight_tl
+    \color{ \l_ceur_augroup_color_tl }
+    \seq_use:cn {g_ceur_collab\int_use:N \g_ceur_aaugr_int _seq} { }
+    \seq_use:cnnn {g_ceur_clau\int_use:N \g_ceur_aaugr_int _seq}
+    { ~and~ } { ,~ } { ~and~ }
+    \par \vskip \l_ceur_augroup_after_dim
+    \group_end:
+  }
+}
 
-\newenvironment{collaboration}[1][]
-    {
-      \seq_gput_right:cn {g_ceur_collab\int_use:N \g_ceur_augr_int _seq}
-      { \textit{Collaboration:~} #1 \par \smallskip }
-    }
-    {  }
+\newenvironment{collaboration}[1][] {
+  \seq_gput_right:cn {g_ceur_collab\int_use:N \g_ceur_augr_int _seq}
+  { \textit{Collaboration:~} #1 \par \smallskip }
+}{
+}
 
 \NewDocumentCommand \dept  { m } { #1 }
 \NewDocumentCommand \divn  { m } { #1 }

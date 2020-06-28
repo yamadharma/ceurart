@@ -18,7 +18,7 @@ twocolumn,
 %% Rights management information.
 %% CC-BY is default license.
 \copyrightyear{2020}
-\copyrightclause{Copyright for this paper by its authors.\\
+\copyrightclause{Copyright for this paper by its authors.
   Use permitted under Creative Commons License Attribution 4.0
   International (CC BY 4.0).}
 
@@ -36,8 +36,8 @@ twocolumn,
 %% the authors and their affiliations.
 \author[1,2]{Dmitry S. Kulyabov}[%
 orcid=0000-0002-0877-7063,
+email=kulyabov-ds@rudn.ru,
 ]
-\ead{kulyabov-ds@rudn.ru}
 \ead[url]{https://yamadharma.github.io/}
 \address[1]{Peoples' Friendship University of Russia (RUDN University),
   6 Miklukho-Maklaya St, Moscow, 117198, Russian Federation}
@@ -46,16 +46,17 @@ orcid=0000-0002-0877-7063,
 
 \author[3]{Ilaria Tiddi}[%
 orcid=0000-0001-7116-9338,
+email=i.tiddi@vu.nl,
 ]
 \address[3]{Vrije Universiteit Amsterdam, De Boelelaan 1105, 1081 HV Amsterdam, The Netherlands}
-\ead{i.tiddi@vu.nl}
+
 \ead[url]{https://kmitd.github.io/ilaria/}
 
 \author[4]{Manfred Jeusfeld}[%
 orcid=0000-0002-9421-8566,
+email=Manfred.Jeusfeld@acm.org,
 ]
 \address[4]{University of Skövde, Högskolevägen 1, 541 28 Skövde, Sweden}
-\ead{Manfred.Jeusfeld@acm.org}
 \ead[url]{http://conceptbase.sourceforge.net/mjf/}
 
 %%
@@ -160,20 +161,21 @@ possible. Include authors' e-mail addresses whenever possible.
 \verb|\author| command have the below options: 
 
 \begin{enumerate}
-\item \verb|style:| Style of author name (chinese)
-\item \verb|prefix:| Prefix
-\item \verb|suffix:| Suffix
-\item \verb|degree:| Degree
-\item \verb|role:| Role
-\item \verb|orcid:| ORCID
+\item \verb|style| Style of author name (chinese)
+\item \verb|prefix| Prefix
+\item \verb|suffix| Suffix
+\item \verb|degree| Degree
+\item \verb|role| Role
+\item \verb|orcid| ORCID
+\item \verb|email| E-mail
 \end{enumerate}
 
-Author names can have many kinds of marks and notes:
-\begin{enumerate}
+Author names can have some kinds of marks and notes:
+\begin{itemize}
 \item affiliation mark: \verb|\author[<num>]|,
-\item email: \verb|\ead{<email>}|,
+% \item email: \verb|\ead{<email>}|,
 \item url: \verb|\ead[url]{<url>}|.
-\end{enumerate}
+\end{itemize}
 
 The author names and affiliations could be formatted in two ways:
 \begin{enumerate}
@@ -187,9 +189,9 @@ Author block example:
     prefix=Prof.,
     degree=D.Sc.,
     role=Researcher,
-    orcid=0000-0000-000-0000
+    orcid=0000-0000-000-0000,
+    email=name@example.com
 ]
-\ead{<email>}
 \ead[url]{<url>}
 
 \address[1]{Affiliation #1}
@@ -253,7 +255,7 @@ Table~\ref{tab:freq} is included in the input file; compare the
 placement of the table here with the table in the printed output of
 this document.
 
-\begin{table}
+\begin{table*}
   \caption{Frequency of Special Characters}
   \label{tab:freq}
   \begin{tabular}{ccl}
@@ -266,7 +268,7 @@ this document.
     $\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
   \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 To set a wider table, which takes up the whole width of the page's
 live area, use the environment \verb|table*| to enclose the table's
@@ -277,7 +279,7 @@ Table~\ref{tab:commands} is included in the input file; again, it is
 instructive to compare the placement of the table here with the table
 in the printed output of this document.
 
-\begin{table*}
+\begin{table}
   \caption{Some Typical Commands}
   \label{tab:commands}
   \begin{tabular}{ccl}
@@ -289,7 +291,7 @@ in the printed output of this document.
     \texttt{{\char'134}table*}& 400& For wider tables\\
     \bottomrule
   \end{tabular}
-\end{table*}
+\end{table}
 
 \section{Math Equations}
 
