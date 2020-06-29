@@ -1,8 +1,21 @@
 
+v0.2.10 / 2020-06-29
+==================
+
+  * Changed: moved ead[url] -> url option
+  * Fixed: DIV for text area size
+  * Changed: moved ead -> email option
+  * Changed: replaced stm -> ceur in ceurart.cls
+  * Old font naming commands for Koma class
+  * Fixed keywords box size
+  * Fixed list of temporary files in Makefile
+  * url added
+
 v0.2.9 / 2020-03-22
 =============
 
-  * Removed natbib sort&compress (this is online publication). Fixed entries' types in bib-file.
+  * Removed natbib sort&compress (this is online publication). 
+  * Fixed entries' types in bib-file.
   * Restored fontencoding T1 for pdflatex
   * Removed some hyperref warnings
   * Copyright info disabled in PDF/X
