@@ -1,0 +1,1 @@
+../../doc/latex/ceurart/sample/Makefile
