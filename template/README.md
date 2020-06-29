@@ -1,22 +1,18 @@
-# LaTeX user template and guide
+# [CEUR-WS.org](http://ceur-ws.org/) proceedings style
 
-To compile user guide:
+## Directories
 
-1. `pdflatex sample-1col`
-2. `bibtex sample-1col`
-3. `pdflatex sample-1col`
-4. `pdflatex sample-1col`
+### docx
 
-and
+Template for MS Word.
 
-1. `pdflatex sample-2col`
-2. `bibtex sample-2col`
-3. `pdflatex sample-2col`
-4. `pdflatex sample-2col`
+### odt
 
-or
+Template for Libreoffice/Openoffice OpenDocument Format.
 
-use the makefile:
+### tex
 
-`make`
+LaTeX user template and guide.
+
+
 

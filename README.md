@@ -6,9 +6,13 @@
 
 Documentation.
 
+### src
+
+Sources for LaTeX class.
+
 ### template
 
-LaTeX user template and guide.
+User templates and guide.
 
 ### tex
 
