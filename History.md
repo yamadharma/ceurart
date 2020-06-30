@@ -2,7 +2,7 @@
 v0.3.0 / 2020-06-29
 ==================
 
-  * Added: docx template
+  * Added: docx template (thank to Aleksandr Ometov aleksandr.ometov@tuni.fi)
 
 v0.2.10 / 2020-06-29
 ==================
