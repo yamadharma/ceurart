@@ -71,22 +71,32 @@
 \RequirePackage{xspace,xstring}
 \RequirePackage{footmisc}
 \RequirePackage[svgnames,dvipsnames]{xcolor}
+\RequirePackage{iftex}
 
 \ExplSyntaxOn
 
-% PDF/A support
+%% PDF/A support
+
+\ifpdftex
+\RequirePackage{cmap}
+\fi
 
 \bool_new:N \g_ceur_pdfx_bool
 \bool_gset_false:N \g_ceur_pdfx_bool
 
 \file_if_exist:nTF { pdfx.sty }
 {
-  \RequirePackage[useBOM]{pdfx}
+  \RequirePackage[useBOM,pdf17]{pdfx}
   \bool_gset_true:N \g_ceur_pdfx_bool
 }{
   \RequirePackage{hyperref}
 }
-\hypersetup{colorlinks,bookmarksnumbered,pdfencoding=unicode,allcolors=DarkSlateGrey}
+\hypersetup{%
+  colorlinks,
+  bookmarksnumbered,
+  pdfencoding=unicode,
+  allcolors=DarkSlateGrey
+}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
@@ -2732,8 +2742,6 @@
 
 \bibliographystyle{elsarticle-num-names}
 % \bibliographystyle{elsarticle-num}
-
-
 
 %%
 %% Fonts
