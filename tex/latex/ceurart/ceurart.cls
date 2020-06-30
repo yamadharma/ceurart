@@ -155,8 +155,7 @@
 \iow_open:Nn \g_xmpdata_output_iow { \c_sys_jobname_str .xmpdata }
 
 %% User interface
-\NewDocumentCommand{\xmpdatawrite}{ m m }
-{
+\NewDocumentCommand{\xmpdatawrite}{ m m } {
   \xmpdata_write:n { \iow_char:N \\ #1 \iow_char:N \{ #2 \iow_char:N \} }
 }
 
@@ -239,7 +238,7 @@
   {
     \xmpdatawrite{Title}{\casprelimstitle}
     \xmpdatawrite{Author}{\pdfxauthors}
-    \xmpdatawrite{Subject}{CEUR Workshop Proceedings (CEUR-WS.org)}
+    \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
 
     \ifx\@copyrightclause\@empty\else
       % \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
@@ -2759,7 +2758,7 @@
   \iow_term:x { Libertinus fonts are not available }
 }
 
-%% Math font for PDFLaTeX
+%% Math font for pdfLaTeX
 \ifpdftex
 \file_if_exist:nTF { libertinust1math.sty }
 {
