@@ -84,11 +84,10 @@
 \bool_new:N \g_ceur_pdfx_bool
 \bool_gset_false:N \g_ceur_pdfx_bool
 
-\file_if_exist:nTF { pdfx.sty }
-{
+\file_if_exist:nTF { pdfx.sty } {%
   \RequirePackage[useBOM,pdf17]{pdfx}
   \bool_gset_true:N \g_ceur_pdfx_bool
-}{
+}{%
   \RequirePackage{hyperref}
 }
 \hypersetup{%
@@ -234,6 +233,50 @@
   % \gdef\@pdfsubject{Complex ~CEUR ~Content}
 
   %% PDF/A
+  
+  % List of supported metadata fields
+  
+  % General information:
+  
+  % \Author           - the document's human author. Separate multiple authors with \sep.
+  % \Title            - the document's title.
+  % \Keywords         - list of keywords, separated with \sep.
+  % \Subject          - the abstract.
+  % \Org              - publishers.
+
+  % Copyright information:
+
+  % \Copyright        - a copyright statement.
+  % \CopyrightURL     - location of a web page describing the owner and/or rights statement for this document.
+  % \Copyrighted      - 'True' if the document is copyrighted, and
+  % 'False' if it isn't. This is automatically set to 'True' if either
+  % \Copyright or \CopyrightURL is specified, but can be overridden.
+  
+  % Publication information:
+
+  % \PublicationType   - The type of publication. If defined, must be
+  % one of book, catalog, feed, journal, magazine,
+  % manual, newsletter, pamphlet. This is
+  % automatically set to "journal" if \Journaltitle
+  % is specified, but can be overridden.
+  % \Journaltitle      - The title of the journal in which the document
+  % was published.
+  % \Journalnumber     - The ISSN for the publication in which the
+  % document was published.
+  % \Volume            - Journal volume.
+  % \Issue             - Journal issue/number.
+  % \Firstpage         - First page number of the published version of
+  % the document.
+  % \Lastpage          - Last page number of the published version of
+  % the document.
+  % \Doi               - Digital Object Identifier (DOI) for the
+  % document, without the leading "doi:".
+  % \CoverDisplayDate  - Date on the cover of the journal issue, as a
+  % human-readable text string.
+  % \CoverDate         - Date on the cover of the journal issue, in a
+  % format suitable for storing in a database field
+  % with a 'date' data type.
+  
   \bool_if:NTF \g_ceur_pdfx_bool
   {
     \xmpdatawrite{Title}{\casprelimstitle}
@@ -1263,7 +1306,9 @@
   }
   % 
   \csgdef { __pdfxauthor } { #2 }
-  \xappto \pdfxauthors { \__pdfxauthor , ~ }
+  \int_compare:nNnTF { \theau@ } = { 1 }
+  { \xappto \pdfxauthors { \__pdfxauthor } }
+  { \xappto \pdfxauthors { \iow_char:N \\ sep ~ \__pdfxauthor } }
 }
 
 \NewDocumentCommand \ceurauthors { } {
