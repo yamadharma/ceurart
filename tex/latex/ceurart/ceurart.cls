@@ -241,11 +241,11 @@
     \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
 
     \ifx\@copyrightclause\@empty\else
-      % \xmpdatawrite{Copyright}{Copyright~(c)~\@copyrightyear\ \@copyrightclause}
+      \xmpdatawrite{Copyright}{\iow_char:N \\ copyright\ \@copyrightyear\ \@copyrightclause}
       \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
     \fi
 
-    \xmpdatawrite{Journaltitle}{CEUR Workshop Proceedings}
+    \xmpdatawrite{Journaltitle}{CEUR~Workshop~Proceedings}
     \xmpdatawrite{Journalnumber}{1613-0073}
   }{
     \hypersetup{%
