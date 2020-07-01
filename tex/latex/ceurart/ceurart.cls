@@ -72,6 +72,7 @@
 \RequirePackage{footmisc}
 \RequirePackage[svgnames,dvipsnames]{xcolor}
 \RequirePackage{iftex}
+\RequirePackage{microtype}
 
 \ExplSyntaxOn
 
