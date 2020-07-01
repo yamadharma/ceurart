@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.2.10}%
-\def\RCSdate{2020/06/28}%
+\def\RCSversion{0.3.1}%
+\def\RCSdate{2020/06/30}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -85,16 +85,17 @@
 \bool_gset_false:N \g_ceur_pdfx_bool
 
 \file_if_exist:nTF { pdfx.sty } {%
-  \RequirePackage[useBOM,pdf17]{pdfx}
+  \RequirePackage[useBOM,pdf17,a-3u]{pdfx}
   \bool_gset_true:N \g_ceur_pdfx_bool
 }{%
-  \RequirePackage{hyperref}
+  \RequirePackage[unicode]{hyperref}
 }
 \hypersetup{%
   colorlinks,
   bookmarksnumbered,
   pdfencoding=unicode,
-  allcolors=DarkSlateGrey
+  allcolors=DarkSlateGrey,
+  pdfversion=1.7
 }
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
