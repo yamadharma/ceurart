@@ -1,8 +1,21 @@
 
+v0.3.1 / 2020-07-01
+==================
+
+  * Added: enable microtype
+  * Added: set pdf/a-3u version
+  * Changed: pdf/a compatible logo
+  * Added: \sep delimiter for \Author in .xmpdata file
+  * Added: license information to pdf/a
+  * Add: ~ as space symbol
+  * Changed: set pdf-1.7 by default
+  * license
+  * Added: CC-BY-SA 4.0 license for word processors files
+
 v0.3.0 / 2020-06-29
 ==================
 
-  * Added: docx template
+  * Added: docx template (thank to Aleksandr Ometov aleksandr.ometov@tuni.fi)
 
 v0.2.10 / 2020-06-29
 ==================
