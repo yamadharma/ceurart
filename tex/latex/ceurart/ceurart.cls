@@ -515,11 +515,10 @@
      }
    }
 
-\NewDocumentCommand \cormark { O{} }
-   {
-     \@cormarktrue
-     \writemarks {corau\theau@} { #1 }
-   }
+\NewDocumentCommand \cormark { O{} } {
+  \@cormarktrue
+  \writemarks {corau\theau@} { #1 }
+}
 
 \seq_new:N \l_ceur_au_seq
 \seq_new:N \l_ceur_au_sn_seq
@@ -530,34 +529,38 @@
 \seq_new:N \l_ceur_au_url_seq
 \seq_new:N \l_ceur_au_contrib_role_seq
 
-\NewDocumentCommand \parsename { m }
-   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
-     \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
-     \seq_map_inline:Nn \l_ceur_au_seq
-      { \seq_put_right:Nx \l_ceur_au_ead_seq
-        { \tl_head:n { #1 }. } }
-    }
+\NewDocumentCommand \parsename { m } {
+  \seq_set_split:Nnn \l_ceur_au_seq { ~ } { #1 }
+  \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+  \seq_map_inline:Nn \l_ceur_au_seq
+  { \seq_put_right:Nx \l_ceur_au_ead_seq
+    { \tl_head:n { #1 }. }
+  }
+}
 
-\NewDocumentCommand \invparsename { m }
-   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
-     \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
-     \seq_map_inline:Nn \l_ceur_au_seq
-      { \seq_put_right:Nx \l_ceur_au_ead_seq
-        { \tl_head:n { #1 }. } }
-    }
+\NewDocumentCommand \invparsename { m } {
+  \seq_set_split:Nnn \l_ceur_au_seq { ~ } { #1 }
+  \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+  \seq_map_inline:Nn \l_ceur_au_seq
+  { \seq_put_right:Nx \l_ceur_au_ead_seq
+    { \tl_head:n { #1 }. }
+  }
+}
 
-
-\NewDocumentCommand \surname {} { \l_ceur_au_sn_seq }
-\NewDocumentCommand \firstname {}
-    { \seq_use:Nn \l_ceur_au_seq { ~ } }
-\NewDocumentCommand \eadauthor {}
-    { \seq_map_inline:Nn \l_ceur_au_seq
-      { \regex_match:nnTF { \. } { ##1 }
-        { ##1 }
-        { \tl_head:n {##1}. }
-      }
-        {~} \l_ceur_au_sn_seq
-     }
+\NewDocumentCommand \surname {} {
+  \l_ceur_au_sn_seq
+}
+\NewDocumentCommand \firstname {} {
+  \seq_use:Nn \l_ceur_au_seq { ~ }
+}
+\NewDocumentCommand \eadauthor {} {
+  \seq_map_inline:Nn \l_ceur_au_seq
+  {
+    \regex_match:nnTF { \. } { ##1 }
+    { ##1 \, }
+    { \tl_head:n {##1}. \, }
+  } {\,} \l_ceur_au_sn_seq
+}
 \cs_set_eq:NN \shortauthor \eadauthor
 
 \seq_clear_new:N \l_affmk_seq
@@ -615,17 +618,16 @@
      \group_end:
    }
 
-\NewDocumentCommand \urlauthor { m m }
-   {
-     \int_gincr:N \g_uad_int
-     \seq_gput_right:Nn \g_ceur_uad_seq
-       {
-         { %\ttfamily \tl_to_str:n
-           \url{ #1 } }
-         \parsename { #2 }
-         \space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \urlauthor { m m } {
+  \int_gincr:N \g_uad_int
+  \seq_gput_right:Nn \g_ceur_uad_seq
+  {
+    { %\ttfamily \tl_to_str:n
+      \url{ #1 } }
+    \parsename { #2 }
+    \space(\eadauthor)
+  }
+}
 \NewDocumentCommand \@stmuads { }
   { \seq_use:Nn \g_ceur_uad_seq { ;~ } }
 
@@ -1218,14 +1220,14 @@
     { \processAffNum { #1 } }
     \tl_if_empty:NF \l_ceur_au_prefix
     { \l_ceur_au_prefix_tl \c_space_token }
-    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese }
-    { %\msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
+    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese } {
+      % \msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
       \invparsename { #2 }
       \textcolor{\l_ceur_augroup_color_tl}{\surname}
       \no_break_space:
       \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
-    }
-    { %\msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
+    }{
+      % \msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
       \parsename { #2 }
       \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
       \no_break_space:
