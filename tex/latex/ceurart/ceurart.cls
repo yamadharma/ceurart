@@ -538,7 +538,7 @@
   \l_ceur_au_sn_seq
 }
 \NewDocumentCommand \firstname {} {
-  \seq_use:Nn \l_ceur_au_seq { ~ }
+  \seq_use:Nn \l_ceur_au_seq { \no_break_space: }
 }
 \NewDocumentCommand \eadauthor {} {
   \seq_map_inline:Nn \l_ceur_au_seq
@@ -1971,13 +1971,12 @@
   \normalfont \normalsize
 }
 
-\NewDocumentCommand \MaketitleBox { }
-{
+\NewDocumentCommand \MaketitleBox { } {
   \tex_def:D \baselinestretch{1}
   \group_begin:
   \@title
   \group_end:
-  %
+  % 
   \bool_if:NTF \g_ceur_blind_bool
   { \vspace* { 10 mm } }
   {
