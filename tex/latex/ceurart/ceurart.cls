@@ -2652,15 +2652,20 @@
 
 \def\itemize{\@ifnextchar[{\@Itemize}{\@Itemize[]}}
 
-\def\@Itemize[#1]{\def\next{#1}%
+\def\@Itemize[#1]{%
+  \def\next{#1}%
   \ifnum \@itemdepth >\thr@@\@toodeep\else
-   \advance\@itemdepth\@ne
-  \ifx\next\@empty\else\expandafter\def\csname
-   labelitem\romannumeral\the\@itemdepth\endcsname{#1}\fi%
-  \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
-  \expandafter\list\csname\@itemitem\endcsname
-  {\def\makelabel##1{\hss\llap{##1}}}%
- \fi}
+    \advance\@itemdepth\@ne
+    \ifx\next\@empty\else\expandafter\def\csname
+      labelitem\romannumeral\the\@itemdepth\endcsname{#1}\fi%
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter\list\csname\@itemitem\endcsname
+    {\def\makelabel##1{\hss\llap{##1}}}%
+  \fi
+  \setlength{\itemsep}{\@@sep}
+  \setlength{\parsep}{0pt plus1pt minus1pt}%
+  \setlength{\parskip}{0pt plus1pt minus1pt}
+}
 
 %
 % Customized theorem
