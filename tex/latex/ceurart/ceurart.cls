@@ -2279,7 +2279,7 @@
   \skip_vertical:N \l_tbl_belowcap_skip
 }
 
-\keys_define:nn { cas / tbl }
+\keys_define:nn { ceur / tbl }
 {
   width     .dim_set:N   =  \l_tbl_width_dim ,
   pos       .tl_set:N    =  \l_tbl_pos_tl ,
@@ -2309,7 +2309,7 @@
   \__reset_tbl:
   \bool_gset_false:N \g_tbl_full_bool
   \dim_set:Nn \l_tbl_width_dim { \linewidth }
-  \keys_set:nn { cas / tbl } { #1 }
+  \keys_set:nn { ceur / tbl } { #1 }
   \csxdef{fps@table}{\l_tbl_pos_tl}
   \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
   \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
@@ -2327,7 +2327,7 @@
     \__reset_tbl:
     \bool_gset_true:N \g_tbl_full_bool
           \dim_set:Nn \l_tbl_width_dim { \FullWidth }
-   \keys_set:nn { cas / tbl } { #1 }
+   \keys_set:nn { ceur / tbl } { #1 }
     \csxdef{fps@table}{\l_tbl_pos_tl}
     \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
     \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
@@ -2355,8 +2355,7 @@
   \skip_vertical:N \l_fig_belowcap_skip
 }
 
-\keys_define:nn { cas / fig }
-{
+\keys_define:nn { ceur / fig } {
   width     .dim_set:N   =  \l_fig_width_dim ,
   pos       .tl_set:N    =  \l_fig_pos_tl ,
   cols      .tl_set:N    =  \l_fig_cols_tl ,
@@ -2385,7 +2384,7 @@
     \__reset_fig:
     \bool_gset_false:N \g_fig_full_bool
     \dim_set:Nn \l_fig_width_dim { \linewidth }
-    \keys_set:nn { cas / fig } { #1 }
+    \keys_set:nn { ceur / fig } { #1 }
     \csxdef{fps@figure}{\l_fig_pos_tl}
     \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
     \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
@@ -2403,7 +2402,7 @@
   \__reset_fig:
   \bool_gset_true:N \g_fig_full_bool
   \dim_set:Nn \l_fig_width_dim { \FullWidth }
-  \keys_set:nn { cas / fig } { #1 }
+  \keys_set:nn { ceur / fig } { #1 }
   \csxdef{fps@figure}{\l_fig_pos_tl}
   \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
   \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
