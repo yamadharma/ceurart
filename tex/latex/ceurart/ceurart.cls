@@ -196,8 +196,7 @@
 % Specific to Single Column
 %
 
-\RenewDocumentCommand \maketitle {}
-{
+\RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
   \logonote{\@ceurLogoLine}
@@ -328,128 +327,119 @@
 % Usage of those macros and methods are gratefully acknowledged.
 %
 
-\keys_define:nn { ceur / title }
-   {
-     mode      .choice:     ,
-     mode / title  .meta:n  =
-       {
-         type   = title      ,
-         size   = \LARGE      ,
-         % size   = \huge      ,
-         % shape  = \upshape   ,
-         shape  = \sffamily   ,
-         % weight = \mdseries  ,
-         weight = \bfseries  ,
-         color  = black  ,
-         before = 0pt        ,
-         after  = 0pt        ,
-         align  = \raggedright ,
-       } ,
-     mode / alt  .meta:n  =
-       {
-         type   = alt      ,
-         size   = \large     ,
-         shape  = \upshape   ,
-         weight = \mdseries  ,
-         color  = black  ,
-         before = 6pt        ,
-         after  = 0pt        ,
-         align  = \raggedright ,
-       } ,
-     mode / sub    .meta:n  =
-       {
-         type   = sub           ,
-         size   = \large        ,
-         shape  = \upshape      ,
-         weight = \mdseries     ,
-         color  = black!80  ,
-         before = 6pt          ,
-         after  = 0pt           ,
-         align  = \raggedright  ,
-       } ,
-     mode / trans   .meta:n  =
-       {
-         type   = trans         ,
-         size   = \normalsize   ,
-         shape  = \upshape      ,
-         weight = \mdseries     ,
-         color  = black!60      ,
-         before = 6pt           ,
-         after  = 0pt           ,
-         align  = \raggedright  ,
-       } ,
-     mode / transsub   .meta:n  =
-       {
-         type   = transsub      ,
-         size   = \small        ,
-         shape  = \upshape      ,
-         weight = \mdseries     ,
-         color  = black!50      ,
-         before = 6pt           ,
-         after  = 0pt           ,
-         align  = \raggedright  ,
-       } ,
-     mode / ascii   .meta:n  =
-       {
-         type   = ascii            ,
-         size   = \small\ttfamily  ,
-         shape  = \upshape         ,
-         weight = \mdseries        ,
-         color  = black            ,
-         before = 12pt             ,
-         after  = 0pt              ,
-         align  = \raggedright     ,
-       } ,
-     type      .tl_set:N    = \l_ceur_title_type_tl      ,
-     size      .tl_set:N    = \l_ceur_title_size_tl      ,
-     shape     .tl_set:N    = \l_ceur_title_shape_tl     ,
-     weight    .tl_set:N    = \l_ceur_title_weight_tl    ,
-     before    .dim_set:N   = \l_ceur_title_before_dim   ,
-     after     .dim_set:N   = \l_ceur_title_after_dim    ,
-     align     .tl_set:N    = \l_ceur_title_align_tl     ,
-     color     .tl_set:N    = \l_ceur_title_color_tl     ,
-   }
+\keys_define:nn { ceur / title } {
+  mode      .choice:     ,
+  mode / title  .meta:n  = {
+    type   = title      ,
+    size   = \LARGE      ,
+    % size   = \huge      ,
+    % shape  = \upshape   ,
+    shape  = \sffamily   ,
+    % weight = \mdseries  ,
+    weight = \bfseries  ,
+    color  = black  ,
+    before = 0pt        ,
+    after  = 0pt        ,
+    align  = \raggedright ,
+  } ,
+  mode / alt  .meta:n  = {
+    type   = alt      ,
+    size   = \large     ,
+    shape  = \upshape   ,
+    weight = \mdseries  ,
+    color  = black  ,
+    before = 6pt        ,
+    after  = 0pt        ,
+    align  = \raggedright ,
+  } ,
+  mode / sub    .meta:n  = {
+    type   = sub           ,
+    size   = \large        ,
+    shape  = \upshape      ,
+    weight = \mdseries     ,
+    color  = black!80  ,
+    before = 6pt          ,
+    after  = 0pt           ,
+    align  = \raggedright  ,
+  } ,
+  mode / trans   .meta:n  =  {
+    type   = trans         ,
+    size   = \normalsize   ,
+    shape  = \upshape      ,
+    weight = \mdseries     ,
+    color  = black!60      ,
+    before = 6pt           ,
+    after  = 0pt           ,
+    align  = \raggedright  ,
+  } ,
+  mode / transsub   .meta:n  = {
+    type   = transsub      ,
+    size   = \small        ,
+    shape  = \upshape      ,
+    weight = \mdseries     ,
+    color  = black!50      ,
+    before = 6pt           ,
+    after  = 0pt           ,
+    align  = \raggedright  ,
+  } ,
+  mode / ascii   .meta:n  = {
+    type   = ascii            ,
+    size   = \small\ttfamily  ,
+    shape  = \upshape         ,
+    weight = \mdseries        ,
+    color  = black            ,
+    before = 12pt             ,
+    after  = 0pt              ,
+    align  = \raggedright     ,
+  } ,
+  type      .tl_set:N    = \l_ceur_title_type_tl      ,
+  size      .tl_set:N    = \l_ceur_title_size_tl      ,
+  shape     .tl_set:N    = \l_ceur_title_shape_tl     ,
+  weight    .tl_set:N    = \l_ceur_title_weight_tl    ,
+  before    .dim_set:N   = \l_ceur_title_before_dim   ,
+  after     .dim_set:N   = \l_ceur_title_after_dim    ,
+  align     .tl_set:N    = \l_ceur_title_align_tl     ,
+  color     .tl_set:N    = \l_ceur_title_color_tl     ,
+}
 
-\NewDocumentCommand \processTmarks { }
-   {
-     \cs_if_free:cTF { mark@title }
-     { \ignorespaces }
-     { \tl_set:Nx \l_tmpa_tl { \cs:w mark@title\cs_end: }
-       \clist_map_inline:cn { mark@title }
-       {
-         \str_case:nn { ##1 }
-         {
-           { 1 }  { $^\star$ }
-           { 2 }  { $^{,\star\star}$ }
-           { 3 }  { $^{,\star\star\star}$ }
-         }
-       }
-     }
-   }
-
-\RenewDocumentCommand \title { O{mode = title} m }
-   {
-     \pdfstringdef \@pdftitle { #2 }
-     \csgdef { casprelimstitle } { #2 }
-     \keys_set:nn { ceur / title } { #1 }
-     \seq_gput_right:Nn \g_ceur_title_seq
+\NewDocumentCommand \processTmarks { } {
+  \cs_if_free:cTF { mark@title }
+  { \ignorespaces }
+  { \tl_set:Nx \l_tmpa_tl { \cs:w mark@title\cs_end: }
+    \clist_map_inline:cn { mark@title }
+    {
+      \str_case:nn { ##1 }
       {
-        \keys_set:nn { ceur / title } { #1 }
-        % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
-        \par \vskip \l_ceur_title_before_dim
-        \l_ceur_title_align_tl
-        \l_ceur_title_size_tl
-        \l_ceur_title_shape_tl
-        \l_ceur_title_weight_tl
-        \color { \l_ceur_title_color_tl }
-        #2
-        \tl_set:Nn \l_tmpa_tl { title }
-        \tl_if_eq:NNTF \l_ceur_title_type_tl \l_tmpa_tl
-        { \processTmarks } { }
-        \par \vskip  \l_ceur_title_after_dim
-        \normalcolor \normalsize \normalfont
+        { 1 }  { $^\star$ }
+        { 2 }  { $^{,\star\star}$ }
+        { 3 }  { $^{,\star\star\star}$ }
       }
-     }
+    }
+  }
+}
+
+\RenewDocumentCommand \title { O{mode = title} m } {
+  \pdfstringdef \@pdftitle { #2 }
+  \csgdef { casprelimstitle } { #2 }
+  \keys_set:nn { ceur / title } { #1 }
+  \seq_gput_right:Nn \g_ceur_title_seq
+  {
+    \keys_set:nn { ceur / title } { #1 }
+    % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
+    \par \vskip \l_ceur_title_before_dim
+    \l_ceur_title_align_tl
+    \l_ceur_title_size_tl
+    \l_ceur_title_shape_tl
+    \l_ceur_title_weight_tl
+    \color { \l_ceur_title_color_tl }
+    #2
+    \tl_set:Nn \l_tmpa_tl { title }
+    \tl_if_eq:NNTF \l_ceur_title_type_tl \l_tmpa_tl
+    { \processTmarks } { }
+    \par \vskip  \l_ceur_title_after_dim
+    \normalcolor \normalsize \normalfont
+  }
+}
 
 %  \gappto\usestmtitle{#1}%
 
@@ -465,55 +455,52 @@
 \NewDocumentCommand \wrShipAun { m }   % unexpanded write at shipout
    { \iow_shipout:Nn \@auxout { #1 } }
 
-\NewDocumentCommand \ceurLabel { m }
-   {
-     \@bsphack \wrAux
-     { \token_to_str:N \NewLabel { #1 }
-       { \@currentlabel }
-     } \@esphack
-   }
-\NewDocumentCommand \NewLabel { m m }
-   {
-     \cs_if_free:cTF { X@#1: }
-       { \cs_new:cx { X@#1: } { #2 } }
-       { \cs_set:cx { X@#1: } { #2 } }
-     }
-\NewDocumentCommand \ceurRef { m }
-   {
-    \cs_if_free:cTF { X@#1: }
-      { 0 } {\use:c {X@#1:} }
-   }
+\NewDocumentCommand \ceurLabel { m } {
+  \@bsphack \wrAux
+  { \token_to_str:N \NewLabel { #1 }
+    { \@currentlabel }
+  } \@esphack
+}
+
+\NewDocumentCommand \NewLabel { m m } {
+  \cs_if_free:cTF { X@#1: }
+  { \cs_new:cx { X@#1: } { #2 } }
+  { \cs_set:cx { X@#1: } { #2 } }
+}
+
+\NewDocumentCommand \ceurRef { m } {
+  \cs_if_free:cTF { X@#1: }
+  { 0 } {\use:c {X@#1:} }
+}
 
 \seq_clear_new:N \l_fnmk_seq
-\NewDocumentCommand \processFnRef { m }
-   {
-      \seq_clear:N \l_fnmk_seq
-      \clist_map_inline:nn { #1 }
-      { \seq_put_right:Nx \l_fnmk_seq
-          {\cs_if_free:cTF { X@##1: } {0} { \use:c {X@##1:} }}
-      }
+\NewDocumentCommand \processFnRef { m } {
+  \seq_clear:N \l_fnmk_seq
+  \clist_map_inline:nn { #1 }
+  { \seq_put_right:Nx \l_fnmk_seq
+    {\cs_if_free:cTF { X@##1: } {0} { \use:c {X@##1:} }}
+  }
+}
+
+\NewDocumentCommand \fnmark { O{} } {
+  \writemarks { fnau\theau@ } { #1 }
+}
+
+
+\NewDocumentCommand  \fnref { m } {
+  \processFnRef { #1 }
+  \wrAux { \token_to_str:N \csxdef {mark@fnau\theau@}
+    { \seq_use:Nn \l_fnmk_seq  { , } } }
+}
+
+\NewDocumentCommand \corref { m } {
+  \str_set:Nx \l_tmpa_str { \ceurRef { #1 } }
+  \wrAux { \token_to_str:N \csxdef { mark@corau\theau@ }
+    {
+      \cs_if_free:cTF { X@#1: } {0} { \use:c {X@#1:} }
     }
-
-\NewDocumentCommand \fnmark { O{} }
-   { \writemarks { fnau\theau@ } { #1 } }
-
-
-\NewDocumentCommand  \fnref { m }
-   {
-     \processFnRef { #1 }
-     \wrAux { \token_to_str:N \csxdef {mark@fnau\theau@}
-         { \seq_use:Nn \l_fnmk_seq  { , } } }
-   }
-
-\NewDocumentCommand \corref { m }
-   {
-     \str_set:Nx \l_tmpa_str { \ceurRef { #1 } }
-     \wrAux { \token_to_str:N \csxdef { mark@corau\theau@ }
-       {
-         \cs_if_free:cTF { X@#1: } {0} { \use:c {X@#1:} }
-       }
-     }
-   }
+  }
+}
 
 \NewDocumentCommand \cormark { O{} } {
   \@cormarktrue
@@ -551,7 +538,7 @@
   \l_ceur_au_sn_seq
 }
 \NewDocumentCommand \firstname {} {
-  \seq_use:Nn \l_ceur_au_seq { ~ }
+  \seq_use:Nn \l_ceur_au_seq { \no_break_space: }
 }
 \NewDocumentCommand \eadauthor {} {
   \seq_map_inline:Nn \l_ceur_au_seq
@@ -1984,13 +1971,12 @@
   \normalfont \normalsize
 }
 
-\NewDocumentCommand \MaketitleBox { }
-{
+\NewDocumentCommand \MaketitleBox { } {
   \tex_def:D \baselinestretch{1}
   \group_begin:
   \@title
   \group_end:
-  %
+  % 
   \bool_if:NTF \g_ceur_blind_bool
   { \vspace* { 10 mm } }
   {
