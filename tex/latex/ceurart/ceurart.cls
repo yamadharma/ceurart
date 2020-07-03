@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.1}%
-\def\RCSdate{2020/06/30}%
+\def\RCSversion{0.3.2}%
+\def\RCSdate{2020/07/03}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -95,8 +95,7 @@
   colorlinks,
   bookmarksnumbered,
   pdfencoding=unicode,
-  allcolors=DarkSlateGrey,
-  pdfversion=1.7
+  allcolors=DarkSlateGrey
 }
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
@@ -516,11 +515,10 @@
      }
    }
 
-\NewDocumentCommand \cormark { O{} }
-   {
-     \@cormarktrue
-     \writemarks {corau\theau@} { #1 }
-   }
+\NewDocumentCommand \cormark { O{} } {
+  \@cormarktrue
+  \writemarks {corau\theau@} { #1 }
+}
 
 \seq_new:N \l_ceur_au_seq
 \seq_new:N \l_ceur_au_sn_seq
@@ -531,34 +529,38 @@
 \seq_new:N \l_ceur_au_url_seq
 \seq_new:N \l_ceur_au_contrib_role_seq
 
-\NewDocumentCommand \parsename { m }
-   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
-     \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
-     \seq_map_inline:Nn \l_ceur_au_seq
-      { \seq_put_right:Nx \l_ceur_au_ead_seq
-        { \tl_head:n { #1 }. } }
-    }
+\NewDocumentCommand \parsename { m } {
+  \seq_set_split:Nnn \l_ceur_au_seq { ~ } { #1 }
+  \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+  \seq_map_inline:Nn \l_ceur_au_seq
+  { \seq_put_right:Nx \l_ceur_au_ead_seq
+    { \tl_head:n { #1 }. }
+  }
+}
 
-\NewDocumentCommand \invparsename { m }
-   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
-     \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
-     \seq_map_inline:Nn \l_ceur_au_seq
-      { \seq_put_right:Nx \l_ceur_au_ead_seq
-        { \tl_head:n { #1 }. } }
-    }
+\NewDocumentCommand \invparsename { m } {
+  \seq_set_split:Nnn \l_ceur_au_seq { ~ } { #1 }
+  \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+  \seq_map_inline:Nn \l_ceur_au_seq
+  { \seq_put_right:Nx \l_ceur_au_ead_seq
+    { \tl_head:n { #1 }. }
+  }
+}
 
-
-\NewDocumentCommand \surname {} { \l_ceur_au_sn_seq }
-\NewDocumentCommand \firstname {}
-    { \seq_use:Nn \l_ceur_au_seq { ~ } }
-\NewDocumentCommand \eadauthor {}
-    { \seq_map_inline:Nn \l_ceur_au_seq
-      { \regex_match:nnTF { \. } { ##1 }
-        { ##1 }
-        { \tl_head:n {##1}. }
-      }
-        {~} \l_ceur_au_sn_seq
-     }
+\NewDocumentCommand \surname {} {
+  \l_ceur_au_sn_seq
+}
+\NewDocumentCommand \firstname {} {
+  \seq_use:Nn \l_ceur_au_seq { ~ }
+}
+\NewDocumentCommand \eadauthor {} {
+  \seq_map_inline:Nn \l_ceur_au_seq
+  {
+    \regex_match:nnTF { \. } { ##1 }
+    { ##1 \, }
+    { \tl_head:n {##1}. \, }
+  } {\,} \l_ceur_au_sn_seq
+}
 \cs_set_eq:NN \shortauthor \eadauthor
 
 \seq_clear_new:N \l_affmk_seq
@@ -616,17 +618,16 @@
      \group_end:
    }
 
-\NewDocumentCommand \urlauthor { m m }
-   {
-     \int_gincr:N \g_uad_int
-     \seq_gput_right:Nn \g_ceur_uad_seq
-       {
-         { %\ttfamily \tl_to_str:n
-           \url{ #1 } }
-         \parsename { #2 }
-         \space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \urlauthor { m m } {
+  \int_gincr:N \g_uad_int
+  \seq_gput_right:Nn \g_ceur_uad_seq
+  {
+    { %\ttfamily \tl_to_str:n
+      \url{ #1 } }
+    \parsename { #2 }
+    \space(\eadauthor)
+  }
+}
 \NewDocumentCommand \@stmuads { }
   { \seq_use:Nn \g_ceur_uad_seq { ;~ } }
 
@@ -1219,14 +1220,14 @@
     { \processAffNum { #1 } }
     \tl_if_empty:NF \l_ceur_au_prefix
     { \l_ceur_au_prefix_tl \c_space_token }
-    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese }
-    { %\msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
+    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese } {
+      % \msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
       \invparsename { #2 }
       \textcolor{\l_ceur_augroup_color_tl}{\surname}
       \no_break_space:
       \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
-    }
-    { %\msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
+    }{
+      % \msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
       \parsename { #2 }
       \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
       \no_break_space:
@@ -2280,8 +2281,7 @@
   \skip_vertical:N \l_tbl_belowcap_skip
 }
 
-\keys_define:nn { cas / tbl }
-{
+\keys_define:nn { ceur / tbl } {
   width     .dim_set:N   =  \l_tbl_width_dim ,
   pos       .tl_set:N    =  \l_tbl_pos_tl ,
   cols      .tl_set:N    =  \l_tbl_cols_tl ,
@@ -2291,10 +2291,10 @@
   abovetbl  .skip_set:N  =  \l_tbl_abovetbl_skip ,
   belowtbl  .skip_set:N  =  \l_tbl_belowtbl_skip ,
   full      .bool_gset:N =  \g_tbl_full_bool ,
+  unknown   .code:n      =  \tl_set:Nx \l_tbl_pos_tl { \l_keys_key_str },
 }
 
-\cs_set:Npn \__reset_tbl:
-{
+\cs_set:Npn \__reset_tbl: {
   \tl_set:Nx \l_tbl_pos_tl { t }
   \tl_set:Nx \l_tbl_cols_tl { 1 }
   \tl_set:Nn \l_tbl_align_tl { \centering }
@@ -2302,15 +2302,13 @@
   \skip_set:Nn \l_tbl_belowcap_skip { 0pt }
   \skip_set:Nn \l_tbl_abovetbl_skip { 6pt }
   \skip_set:Nn \l_tbl_belowtbl_skip { 6pt }
-
 }
 
-\RenewDocumentEnvironment { table } { O{} }
-{
+\RenewDocumentEnvironment { table } { O{} } {
   \__reset_tbl:
   \bool_gset_false:N \g_tbl_full_bool
   \dim_set:Nn \l_tbl_width_dim { \linewidth }
-  \keys_set:nn { cas / tbl } { #1 }
+  \keys_set:nn { ceur / tbl } { #1 }
   \csxdef{fps@table}{\l_tbl_pos_tl}
   \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
   \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
@@ -2318,46 +2316,38 @@
   \l_tbl_align_tl
   \sffamily\small
 }
-{
-\end@float
+{ \end@float }
+
+
+\RenewDocumentEnvironment { table* } { O{width=\FullWidth} } {
+  \__reset_tbl:
+  \bool_gset_true:N \g_tbl_full_bool
+  \dim_set:Nn \l_tbl_width_dim { \FullWidth }
+  \keys_set:nn { ceur / tbl } { #1 }
+  \csxdef{fps@table}{\l_tbl_pos_tl}
+  \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
+  \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
+  \@dblfloat{table}
+  \l_tbl_align_tl
+  \sffamily\small
+  % \leftskip=-\FullWidth
 }
-
-
-\RenewDocumentEnvironment { table* } { O{width=\FullWidth} }
-  {
-    \__reset_tbl:
-    \bool_gset_true:N \g_tbl_full_bool
-          \dim_set:Nn \l_tbl_width_dim { \FullWidth }
-   \keys_set:nn { cas / tbl } { #1 }
-    \csxdef{fps@table}{\l_tbl_pos_tl}
-    \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
-    \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
-    \@dblfloat{table}
-     \l_tbl_align_tl
-     \sffamily\small
- %    \leftskip=-\FullWidth
-  }
-  {
-    \end@dblfloat
-  }
-
+{ \end@dblfloat }
 
 \dim_new:N \l_fig_width_dim
 \dim_set:Nn \l_fig_width_dim { \linewidth }
 
-\cs_new:Npn \__make_fig_caption:nn #1#2
-{
+\cs_new:Npn \__make_fig_caption:nn #1#2 {
   \l_fig_align_tl
   \skip_vertical:N \l_fig_abovecap_skip
-%  \bool_if:NTF \g_fig_full_bool
-%  { \skip_horizontal:n { -\FullWidth } } { }
+  % \bool_if:NTF \g_fig_full_bool
+  % { \skip_horizontal:n { -\FullWidth } } { }
   \parbox{ \l_fig_width_dim }
-   {\rightskip=0pt\sffamily\small\textbf{\color{scolor}#1:}~#2\par }
+  {\rightskip=0pt\sffamily\small\textbf{\color{scolor}#1:}~#2\par }
   \skip_vertical:N \l_fig_belowcap_skip
 }
 
-\keys_define:nn { cas / fig }
-{
+\keys_define:nn { ceur / fig } {
   width     .dim_set:N   =  \l_fig_width_dim ,
   pos       .tl_set:N    =  \l_fig_pos_tl ,
   cols      .tl_set:N    =  \l_fig_cols_tl ,
@@ -2367,10 +2357,10 @@
   abovefig  .skip_set:N  =  \l_fig_abovefig_skip ,
   belowfig  .skip_set:N  =  \l_fig_belowfig_skip ,
   full      .bool_gset:N =  \g_fig_full_bool ,
+  unknown   .code:n      =  \tl_set:Nx \l_fig_pos_tl { \l_keys_key_str },
 }
 
-\cs_set:Npn \__reset_fig:
-{
+\cs_set:Npn \__reset_fig: {
   \tl_set:Nx \l_fig_pos_tl { t }
   \tl_set:Nx \l_fig_cols_tl { 1 }
   \tl_set:Nn \l_fig_align_tl { \raggedleft }
@@ -2378,40 +2368,33 @@
   \skip_set:Nn \l_fig_belowcap_skip { 6pt }
   \skip_set:Nn \l_fig_abovefig_skip { 6pt }
   \skip_set:Nn \l_fig_belowfig_skip { 6pt }
-
 }
 
-\RenewDocumentEnvironment { figure } { O{} }
-  {
-    \__reset_fig:
-    \bool_gset_false:N \g_fig_full_bool
-    \dim_set:Nn \l_fig_width_dim { \linewidth }
-    \keys_set:nn { cas / fig } { #1 }
-    \csxdef{fps@figure}{\l_fig_pos_tl}
-    \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
-    \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
-   \@float{figure}
-     \l_fig_align_tl
-     \sffamily\small
-  }
-  {
-    \end@float
-  }
+\RenewDocumentEnvironment { figure } { O{} } {
+  \__reset_fig:
+  \bool_gset_false:N \g_fig_full_bool
+  \dim_set:Nn \l_fig_width_dim { \linewidth }
+  \keys_set:nn { ceur / fig } { #1 }
+  \csxdef{fps@figure}{\l_fig_pos_tl}
+  \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
+  \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
+  \@float{figure}
+  \l_fig_align_tl
+  \sffamily\small
+}{ \end@float }
 
-
-\RenewDocumentEnvironment { figure* } { O{width=\textwidth} }
-{
+\RenewDocumentEnvironment { figure* } { O{width=\textwidth} } {
   \__reset_fig:
   \bool_gset_true:N \g_fig_full_bool
   \dim_set:Nn \l_fig_width_dim { \FullWidth }
-  \keys_set:nn { cas / fig } { #1 }
+  \keys_set:nn { ceur / fig } { #1 }
   \csxdef{fps@figure}{\l_fig_pos_tl}
   \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
   \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
   \@dblfloat{figure}
   \l_fig_align_tl
   \sffamily\small
-%  \leftskip=-\FullWidth
+  % \leftskip=-\FullWidth
 }
 { \end@dblfloat }
 
@@ -2445,25 +2428,23 @@
 \NewDocumentCommand \abovebioskip { m }
   { \dim_set:Nn \l_above_bio_dim { #1 } }
 
-\cs_new:Nn \__fig_defaults:
-  {
-    \wfigwidth  { 25.5mm }
-    \wfighspace { 0mm }
-    \wfigvspace { 0mm }
-    \wfighcorr  { 0pt }
-    \wfigvcorr  { -12pt }
-    \wfigvcorr  { 0pt }
-    \abovebioskip { 12pt }
-    \tl_set:Nn  \l_wrap_figpos_tl { l }
-    \int_set:Nn \l_wrap_figlines_int { 3 }
-    \int_set:Nn \l_wrap_figlcorr_int { 1 }
-    \tl_clear:N \l_wrap_figcap_tl
-  }
+\cs_new:Nn \__fig_defaults: {
+  \wfigwidth  { 25.5mm }
+  \wfighspace { 0mm }
+  \wfigvspace { 0mm }
+  \wfighcorr  { 0pt }
+  \wfigvcorr  { -12pt }
+  \wfigvcorr  { 0pt }
+  \abovebioskip { 12pt }
+  \tl_set:Nn  \l_wrap_figpos_tl { l }
+  \int_set:Nn \l_wrap_figlines_int { 3 }
+  \int_set:Nn \l_wrap_figlcorr_int { 1 }
+  \tl_clear:N \l_wrap_figcap_tl
+}
 
 \__fig_defaults:
 
-\keys_define:nn { wrap / fig }
-{
+\keys_define:nn { wrap / fig } {
   width    .dim_set:N    =  \l_wrap_figwidth_dim ,
   hspace   .dim_set:N    =  \l_wrap_fighspace_dim ,
   vspace   .dim_set:N    =  \l_wrap_figvspace_dim ,
@@ -2475,8 +2456,7 @@
   cap      .tl_set:N     =  \l_wrap_figcap_tl ,
 }
 
-\cs_new:Npn \__find_fig_height:n #1
-{
+\cs_new:Npn \__find_fig_height:n #1 {
   \box_clear:N  \g_tmpa_box
   \hbox_gset:Nn \g_tmpa_box
   { \includegraphics [ width = \l_wrap_figwidth_dim ] { #1 } }
@@ -2485,21 +2465,20 @@
   \dim_add:Nn \l_tmpa_dim { \box_dp:N \g_tmpa_box }
   \fp_set:Nn  \l_tmpa_fp  { \dim_to_fp:n { \l_tmpa_dim } }
   \fp_set:Nn  \l_tmpb_fp  { \dim_to_fp:n { \baselineskip } }
-%
+  % 
   \fp_set:Nn \l_wrap_figlines_fp
-    { \fp_eval:n { ( \l_tmpa_fp / \l_tmpb_fp )  + .5 } }
+  { \fp_eval:n { ( \l_tmpa_fp / \l_tmpb_fp )  + .5 } }
   \int_set:Nn \l_wrap_figlines_int
-    { \fp_to_int:N \l_wrap_figlines_fp }
-%
-    \iow_term:x { ...~wr-fig:~[BL:~\the\baselineskip] ~ ...}
-    \iow_term:x { ...~wr-fig:~[LINE-FP:~ \fp_use:N \l_wrap_figlines_fp]~ ...}
-    \iow_term:x { ...~wr-fig:~[LINE-INT:~ \int_use:N \l_wrap_figlines_int]~ ...}
+  { \fp_to_int:N \l_wrap_figlines_fp }
+  % 
+  \iow_term:x { ...~wr-fig:~[BL:~\the\baselineskip] ~ ...}
+  \iow_term:x { ...~wr-fig:~[LINE-FP:~ \fp_use:N \l_wrap_figlines_fp]~ ...}
+  \iow_term:x { ...~wr-fig:~[LINE-INT:~ \int_use:N \l_wrap_figlines_int]~ ...}
 }
 
 \newbox \l_bio_text_box
 
-\NewDocumentCommand \WrapFigure { o m }
-{
+\NewDocumentCommand \WrapFigure { o m } {
   \__fig_defaults:
   \IfNoValueTF { #1 } { } { \keys_set:nn { wrap / fig } { #1 } }
   \stepcounter { ca_biography_ctr }
@@ -2510,31 +2489,33 @@
   \int_gadd:Nn \l_wrap_figlines_int { \int_use:N \l_wrap_figlcorr_int }
   \setlength { \columnsep } { 5pt }
   \setlength { \intextsep } { 0pt }
-%  \mbox{}
-  \ifbool { dc }
-    { \xdef\Columnwidth{238.25pt} }
-    { \xdef\Columnwidth{\the\textwidth} }
+  % \mbox{}
+  \ifbool { dc } {
+    \xdef\Columnwidth{238.25pt}
+  }{
+    \xdef\Columnwidth{\the\textwidth}
+  }
   \ifcsundef { cabio\theca_biography_ctr lines }
-    {
-      \setbox \l_bio_text_box = \vbox \bgroup
-      \hsize = \dimexpr ( \Columnwidth - 72.28pt )
-    }
-    {
-      \ifbool { dc } {
-         \int_gset:Nn \l_wrap_figlines_int
-            { \csuse { cabio\theca_biography_ctr lines } }
-      } { }
-      \skip_vertical:N \l_above_bio_dim
-      \begin{wrapfigure}[\int_use:N \l_wrap_figlines_int]
-        { \l_wrap_figpos_tl }
-        [ \dim_use:N \l_wrap_fighcorr_dim ]
-        { \dim_use:N \l_tmpb_dim }
-        %\skip_vertical:N \l_wrap_figvcorr_dim
-        \includegraphics[width=\l_wrap_figwidth_dim]{#2}
-      \end{wrapfigure}
-      \setbox \l_bio_text_box = \vbox \bgroup
-      \hsize = \dimexpr ( \Columnwidth )
-    }
+  {
+    \setbox \l_bio_text_box = \vbox \bgroup
+    \hsize = \dimexpr ( \Columnwidth - 72.28pt )
+  }
+  {
+    \ifbool { dc } {
+      \int_gset:Nn \l_wrap_figlines_int
+      { \csuse { cabio\theca_biography_ctr lines } }
+    } { }
+    \skip_vertical:N \l_above_bio_dim
+    \begin{wrapfigure}[\int_use:N \l_wrap_figlines_int]
+      { \l_wrap_figpos_tl }
+      [ \dim_use:N \l_wrap_fighcorr_dim ]
+      { \dim_use:N \l_tmpb_dim }
+      % \skip_vertical:N \l_wrap_figvcorr_dim
+      \includegraphics[width=\l_wrap_figwidth_dim]{#2}
+    \end{wrapfigure}
+    \setbox \l_bio_text_box = \vbox \bgroup
+    \hsize = \dimexpr ( \Columnwidth )
+  }
 }
 
 \cs_set:Nn \__fwidth: { 1in }
