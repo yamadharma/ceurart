@@ -15,8 +15,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.1}%
-\def\RCSdate{2020/06/30}%
+\def\RCSversion{0.3.2}%
+\def\RCSdate{2020/07/03}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -95,8 +95,7 @@
   colorlinks,
   bookmarksnumbered,
   pdfencoding=unicode,
-  allcolors=DarkSlateGrey,
-  pdfversion=1.7
+  allcolors=DarkSlateGrey
 }
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
