@@ -224,7 +224,7 @@
   %   } { }
   %     \pagebreak
   \thispagestyle{plain}
-  \def\firstpage{\thepage}
+  \xdef\firstpage{\thepage}
   % \thispagestyle{first}
   % \pagestyle{standard}
   \ifbool{longmktitle}
@@ -2200,12 +2200,16 @@
 \clearpairofpagestyles
 
 \setkomafont{pageheadfoot}{\sffamily\small}
-\setkomafont{pagehead}{\sffamily\small}
+% \setkomafont{pagehead}{\sffamily\small}
 
 \bool_if:NTF \g_ceur_hf_bool {
-  \ofoot[Page~ \thepage {} ~of~ \lastpage]{Page~ \thepage {} ~of~ \lastpage}
-  \ifoot[\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
-  \ohead[]{\__short_title:}
+  \KOMAoptions{headsepline}
+  % \ofoot[Page~ \thepage {} ~of~ \lastpage]{Page~ \thepage {} ~of~ \lastpage}
+  % \ifoot[\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+  % \ohead[]{\__short_title:}
+  \cfoot[\thepage]{\thepage}
+  \ohead[]{\firstpage--\lastpage}
+  \ihead[]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
 }{ }
 
 % \newcommand{\hffont}{\sffamily\small}
