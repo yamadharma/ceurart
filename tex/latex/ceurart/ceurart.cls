@@ -20,15 +20,23 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
+\ExplSyntaxOn
+
 %%
 %% switches
 %%
+
 \newif\iflongmktitle    \longmktitlefalse
-%% twocolumn
+
+% twocolumn
 \newif\ifdc             \global\dcfalse
 \newif\ifsc             \global\sctrue
 \newif\ifcasreviewlayout  \global\casreviewlayoutfalse
 \newif\ifcasfinallayout   \global\casfinallayoutfalse
+
+% enable header and footer
+\bool_new:N \g_ceur_hf_bool
+\bool_gset_false:N \g_ceur_hf_bool
 
 \newcounter{blind}
 \setcounter{blind}{0}
@@ -40,6 +48,7 @@
 
 %\newif\if@twocolumn
 \DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
+\DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -74,7 +83,7 @@
 \RequirePackage{iftex}
 \RequirePackage{microtype}
 
-\ExplSyntaxOn
+% \ExplSyntaxOn
 
 %% PDF/A support
 
@@ -213,8 +222,10 @@
   %     \thispagestyle{empty}
   %     \unvbox\casauhlbox
   %   } { }
-  % \pagebreak
-  \thispagestyle{first}
+  %     \pagebreak
+  \thispagestyle{plain}
+  % \thispagestyle{first}
+  % \pagestyle{standard}
   \ifbool{longmktitle}
   {
     \LongMaketitleBox
@@ -290,6 +301,10 @@
 
     \xmpdatawrite{Journaltitle}{CEUR~Workshop~Proceedings}
     \xmpdatawrite{Journalnumber}{1613-0073}
+    \bool_if:NTF \g_ceur_hf_bool {
+      \xmpdatawrite{Firstpage}{1}
+      \xmpdatawrite{Lastpage}{\lastpage}
+    }{ }
   }{
     \hypersetup{%
       pdfcreator={ceurart.cls},
@@ -422,8 +437,10 @@
   \pdfstringdef \@pdftitle { #2 }
   \csgdef { casprelimstitle } { #2 }
   \keys_set:nn { ceur / title } { #1 }
-  \seq_gput_right:Nn \g_ceur_title_seq
-  {
+  \tl_if_empty:NTF \__short_title: {
+    \cs_gset:Nn \__short_title: { #2 }
+  }{ }
+  \seq_gput_right:Nn \g_ceur_title_seq {
     \keys_set:nn { ceur / title } { #1 }
     % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
     \par \vskip \l_ceur_title_before_dim
@@ -537,9 +554,11 @@
 \NewDocumentCommand \surname {} {
   \l_ceur_au_sn_seq
 }
+
 \NewDocumentCommand \firstname {} {
   \seq_use:Nn \l_ceur_au_seq { \no_break_space: }
 }
+
 \NewDocumentCommand \eadauthor {} {
   \seq_map_inline:Nn \l_ceur_au_seq
   {
@@ -548,6 +567,7 @@
     { \tl_head:n {##1}. \, }
   } {\,} \l_ceur_au_sn_seq
 }
+
 \cs_set_eq:NN \shortauthor \eadauthor
 
 \seq_clear_new:N \l_affmk_seq
@@ -1183,9 +1203,16 @@
 
 \seq_new:N \g_ceur_prelimsau_seq
 
-\csxdef{infoauthors}{}
+\csxdef { infoauthors } { }
 \csgdef { pdfxauthors } { }
+
+\csgdef { __short_authors_tmp } { }
+% Number of person in short authors list
+\int_new:N \g_num_short_authors
+\g_num_short_authors = 1
+
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
+
 \RenewDocumentCommand \author { O{} m O{} } {
   \ResetMarks
   \tl_if_blank:nTF { #3 } { }
@@ -1284,6 +1311,19 @@
     \wrAux { \token_to_str:N \orcidauthor
       { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
   }
+  % Short authors list
+  \csgdef { __short_authors_tmp } { #2 }
+  \int_compare:nNnTF { \theau@ } = { 1 } {
+    \xappto \__short_authors: { \__short_authors_tmp }
+  }{ 
+    \int_compare:nNnTF { \theau@ } < { \g_num_short_authors + 1 } {
+      \xappto \__short_authors: { , ~ \__short_authors_tmp }
+    }{
+      \int_compare:nNnTF { \theau@ } = { \g_num_short_authors + 1 } {
+        \xappto \__short_authors: { ~et~al. }
+      }{ }
+    }
+  }
   % 
   \@eadauthor={#2}
   \pdfstringdef\__info_au: { #2 }
@@ -1294,7 +1334,7 @@
     { \xappto \infoauthors { et~al. } }
     { }
   }
-  % 
+  % Authors list for PDF/A
   \csgdef { __pdfxauthor } { #2 }
   \int_compare:nNnTF { \theau@ } = { 1 }
   { \xappto \pdfxauthors { \__pdfxauthor } }
@@ -2155,17 +2195,48 @@
 % pagestyle
 %
 
-\cs_new:Npn \__first_footerline:
-{
+\RequirePackage{scrlayer-scrpage}
+\clearpairofpagestyles
+
+\setkomafont{pageheadfoot}{\sffamily\small}
+\setkomafont{pagehead}{\sffamily\small}
+
+\bool_if:NTF \g_ceur_hf_bool {
+  \ofoot[Page~ \thepage {} ~of~ \lastpage]{Page~ \thepage {} ~of~ \lastpage}
+  \ifoot[\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+  \ohead[]{\__short_title:}
+}{ }
+
+% \newcommand{\hffont}{\sffamily\small}
+
+% \RequirePackage{scrlayer-fancyhdr}
+
+% \fancypagestyle{first}{%
+%   \fancyhf{}%
+%   \renewcommand{\headrulewidth}{\z@}%
+%   \renewcommand{\footrulewidth}{\z@}%
+%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+% }  
+
+% \fancypagestyle{standard}{%
+%   \fancyhf{}%
+%   \renewcommand{\headrulewidth}{\z@}%
+%   \renewcommand{\footrulewidth}{\z@}%
+%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+%   \fancyhead[L]{\hffont \__short_title:}%
+% }  
+
+\cs_new:Npn \__first_footerline: {
   \group_begin:
-  % \small
-  % \sffamily \__short_authors: :~
-  % { \rmfamily \itshape Preprint~ submitted ~to ~Elsevier }
+  \small \sffamily
+  \__short_authors: :~
+  { \rmfamily \itshape CEUR~Workshop~Proceedings }
   \group_end:
 }
 
-\cs_new:Npn \__first_head:
-{
+\cs_new:Npn \__first_head: {
   \parbox[t]{\textwidth}
   {
     \color{black!20}
@@ -2173,55 +2244,46 @@
   }
 }
 
-\cs_new:Npn \__first_foot:
-{
-  % \parbox[t]{\textwidth}
-  % {
-  %    \rule{\textwidth}{.2pt}\\
-  %    \__first_footerline: \hfill Page~ \thepage {} ~of~ \lastpage }
-}
-
-
-\cs_new:Npn \__cas_head:
-{
-  \parbox{\textwidth}
-    {
-      \sffamily\small\centering
-      \__short_title:
-    }
+\cs_new:Npn \__first_foot: {
+  \parbox[t]{\textwidth} {
+    % \rule{\textwidth}{.2pt}\\
+    \sffamily\small
+    \__first_footerline:
+    \hfill Page~ \thepage {} ~of~ \lastpage
   }
-
-
-\cs_new:Npn \__cas_foot:
-{
-  % \parbox[t]{\textwidth}
-  % {
-  %  \rule{\textwidth}{.2pt}\\
-  %  \sffamily\small
-  %  \__first_footerline:
-  %  \hfill Page~\thepage {}~of~ \lastpage
-  % }
 }
 
-\newcommand \ps@first
- {
-   \cs_set_eq:NN \@oddhead \__first_head:
-   \cs_set_eq:NN \@evenhead \__first_head:
-   \cs_set_eq:NN \@evenfoot \__first_foot:
-   \cs_set_eq:NN \@oddfoot \__first_foot:
- }
-
-
-\newcommand \ps@cas
-{
-  \cs_set_eq:NN \@oddhead \__cas_head:
-  \cs_set_eq:NN \@evenhead \__cas_head:
-  \cs_set_eq:NN \@evenfoot \__cas_foot:
-  \cs_set_eq:NN \@oddfoot \__cas_foot:
+\cs_new:Npn \__ceur_head: {
+  \parbox{\textwidth} {
+    \sffamily\small\centering
+    \__short_title:
+  }
 }
 
-\ps@cas
+\cs_new:Npn \__ceur_foot: {
+  \parbox[t]{\textwidth} {
+    % \rule{\textwidth}{.2pt}\\
+    \sffamily\small
+    \__first_footerline:
+    \hfill Page~\thepage {}~of~ \lastpage
+  }
+}
 
+% \newcommand \ps@first {
+%   \cs_set_eq:NN \@oddhead \__first_head:
+%   \cs_set_eq:NN \@evenhead \__first_head:
+%   \cs_set_eq:NN \@evenfoot \__first_foot:
+%   \cs_set_eq:NN \@oddfoot \__first_foot:
+% }
+
+% \newcommand \ps@ceur {
+%   \cs_set_eq:NN \@oddhead \__ceur_head:
+%   \cs_set_eq:NN \@evenhead \__ceur_head:
+%   \cs_set_eq:NN \@evenfoot \__ceur_foot:
+%   \cs_set_eq:NN \@oddfoot \__ceur_foot:
+% }
+
+% \ps@ceur
 
 %
 % Floats
@@ -2511,11 +2573,11 @@
 % short authors/title
 %
 
+\tl_new:N \__short_authors:
 \newcommand\shortauthors[1]{ \cs_gset:Nn \__short_authors: { #1 } }
-\newcommand\shorttitle[1]{ \cs_gset:Nn \__short_title: { #1 } }
 
-\shortauthors{}
-\shorttitle{}
+\tl_new:N \__short_title:
+\newcommand\shorttitle[1]{ \cs_gset:Nn \__short_title: { #1 } }
 
 \newcounter { ca_biography_ctr }
 \newbool { cas_no_pic_bio }
