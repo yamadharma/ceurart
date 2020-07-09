@@ -612,6 +612,7 @@
 \int_new:N \g_ead_int
 \seq_new:N \g_ceur_ead_seq
 \int_new:N \g_uad_int
+\int_new:N \g_orcid_int
 \seq_new:N \g_ceur_uad_seq
 \seq_new:N \g_ceur_orcid_seq
 \seq_new:N \g_ceur_contrib_role_seq
@@ -650,7 +651,6 @@
 \newtoks \@eadauthor
 \newbool{@cormark}
 
-
 \NewDocumentCommand \emailauthor { m m }
 {
   \int_gincr:N \g_ead_int
@@ -668,19 +668,15 @@
   \seq_use:Nn \g_ceur_ead_seq { ;~ }
 }
 
-\NewDocumentCommand \printemails { }
-{
+\NewDocumentCommand \printemails { } {
   \group_begin:
-  \int_compare:nNnTF { \int_use:N \g_ead_int } > { 0 }
-  {
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nNnTF { \int_use:N \g_ead_int } > { 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_ceur_nologo_bool
-      {
+      \bool_if:NTF \g_ceur_nologo_bool {
         \int_compare:nTF { \g_ead_int = 1 }
         { \textsc{email:\c_space_token} }
         { \textsc{email:\c_space_token} }
@@ -688,18 +684,14 @@
       { \faIcon[regular]{envelope-open}\c_space_token }
       \seq_use:Nn \g_ceur_ead_seq { ;~ }
     }
-  }
-  {  }
+  } {  }
   \group_end:
 }
 
-\NewDocumentCommand \printurls { }
-{
+\NewDocumentCommand \printurls { } {
   \group_begin:
-  \int_compare:nTF { \g_uad_int > 0 }
-  {
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nTF { \g_uad_int > 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
@@ -709,8 +701,7 @@
       { \faIcon{globe}\c_space_token }
       \seq_use:Nn \g_ceur_uad_seq { ;~ }
     }
-  }
-  { }
+  } { }
   \group_end:
 }
 
@@ -718,22 +709,20 @@
 %% orcid
 %%
 
-\NewDocumentCommand \orcidauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_orcid_seq
-       {
-         % { \ttfamily \tl_to_str:n { #1 } }
-         { \hrefurl { https://orcid.org/ #1 } { #1 } }
-         \parsename{#2}
-         \space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \orcidauthor { m m } {
+  \int_gincr:N \g_orcid_int
+  \seq_gput_right:Nn \g_ceur_orcid_seq {
+    % { \ttfamily \tl_to_str:n { #1 } }
+    { \hrefurl { https://orcid.org/ #1 } { #1 } }
+    \parsename{#2}
+    \space(\eadauthor)
+  }
+}
 
-\NewDocumentCommand \printorcid { }
-{
+\NewDocumentCommand \printorcid { } {
   \group_begin:
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nTF { \g_orcid_int > 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
@@ -743,6 +732,7 @@
       { \faIcon{orcid}\c_space_token }
       \seq_use:Nn \g_ceur_orcid_seq { ;~ }
     }
+  } { }
   \group_end:
 }
 
