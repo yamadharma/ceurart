@@ -213,9 +213,10 @@
   %     \thispagestyle{empty}
   %     \unvbox\casauhlbox
   %   } { }
-  % \pagebreak
-  \thispagestyle{first}
-  \pagestyle{standard}
+  %     \pagebreak
+  \thispagestyle{plain}
+  % \thispagestyle{first}
+  % \pagestyle{standard}
   \ifbool{longmktitle}
   {
     \LongMaketitleBox
@@ -2181,26 +2182,36 @@
 % pagestyle
 %
 
-\RequirePackage{scrlayer-fancyhdr}
+\RequirePackage{scrlayer-scrpage}
+\clearpairofpagestyles
 
-\newcommand{\hffont}{\sffamily\small}
+\setkomafont{pageheadfoot}{\sffamily\small}
+\setkomafont{pagehead}{\sffamily\small}
 
-\fancypagestyle{first}{%
-  \fancyhf{}%
-  \renewcommand{\headrulewidth}{\z@}%
-  \renewcommand{\footrulewidth}{\z@}%
-  \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
-  \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
-}  
+\ofoot[Page~ \thepage {} ~of~ \lastpage]{Page~ \thepage {} ~of~ \lastpage}
+\ifoot[\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+\ohead[]{\__short_title:}
 
-\fancypagestyle{standard}{%
-  \fancyhf{}%
-  \renewcommand{\headrulewidth}{\z@}%
-  \renewcommand{\footrulewidth}{\z@}%
-  \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
-  \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
-  \fancyhead[L]{\hffont \__short_title:}%
-}  
+% \newcommand{\hffont}{\sffamily\small}
+
+% \RequirePackage{scrlayer-fancyhdr}
+
+% \fancypagestyle{first}{%
+%   \fancyhf{}%
+%   \renewcommand{\headrulewidth}{\z@}%
+%   \renewcommand{\footrulewidth}{\z@}%
+%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+% }  
+
+% \fancypagestyle{standard}{%
+%   \fancyhf{}%
+%   \renewcommand{\headrulewidth}{\z@}%
+%   \renewcommand{\footrulewidth}{\z@}%
+%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+%   \fancyhead[L]{\hffont \__short_title:}%
+% }  
 
 \cs_new:Npn \__first_footerline: {
   \group_begin:
