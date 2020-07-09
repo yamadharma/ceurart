@@ -422,8 +422,10 @@
   \pdfstringdef \@pdftitle { #2 }
   \csgdef { casprelimstitle } { #2 }
   \keys_set:nn { ceur / title } { #1 }
-  \seq_gput_right:Nn \g_ceur_title_seq
-  {
+  \tl_if_empty:NTF \__short_title: {
+    \cs_gset:Nn \__short_title: { #2 }
+  }{ }
+  \seq_gput_right:Nn \g_ceur_title_seq {
     \keys_set:nn { ceur / title } { #1 }
     % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
     \par \vskip \l_ceur_title_before_dim
@@ -2524,11 +2526,11 @@
 % short authors/title
 %
 
+\tl_new:N \__short_authors:
 \newcommand\shortauthors[1]{ \cs_gset:Nn \__short_authors: { #1 } }
-\newcommand\shorttitle[1]{ \cs_gset:Nn \__short_title: { #1 } }
 
-\shortauthors{}
-\shorttitle{}
+\tl_new:N \__short_title:
+\newcommand\shorttitle[1]{ \cs_gset:Nn \__short_title: { #1 } }
 
 \newcounter { ca_biography_ctr }
 \newbool { cas_no_pic_bio }
