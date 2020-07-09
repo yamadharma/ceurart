@@ -2182,7 +2182,7 @@
 }
 
 
-\cs_new:Npn \__cas_head:
+\cs_new:Npn \__ceur_head:
 {
   \parbox{\textwidth}
     {
@@ -2192,7 +2192,7 @@
   }
 
 
-\cs_new:Npn \__cas_foot:
+\cs_new:Npn \__ceur_foot:
 {
   % \parbox[t]{\textwidth}
   % {
@@ -2214,10 +2214,10 @@
 
 \newcommand \ps@cas
 {
-  \cs_set_eq:NN \@oddhead \__cas_head:
-  \cs_set_eq:NN \@evenhead \__cas_head:
-  \cs_set_eq:NN \@evenfoot \__cas_foot:
-  \cs_set_eq:NN \@oddfoot \__cas_foot:
+  \cs_set_eq:NN \@oddhead \__ceur_head:
+  \cs_set_eq:NN \@evenhead \__ceur_head:
+  \cs_set_eq:NN \@evenfoot \__ceur_foot:
+  \cs_set_eq:NN \@oddfoot \__ceur_foot:
 }
 
 \ps@cas
