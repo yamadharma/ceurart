@@ -537,9 +537,11 @@
 \NewDocumentCommand \surname {} {
   \l_ceur_au_sn_seq
 }
+
 \NewDocumentCommand \firstname {} {
   \seq_use:Nn \l_ceur_au_seq { \no_break_space: }
 }
+
 \NewDocumentCommand \eadauthor {} {
   \seq_map_inline:Nn \l_ceur_au_seq
   {
@@ -548,6 +550,7 @@
     { \tl_head:n {##1}. \, }
   } {\,} \l_ceur_au_sn_seq
 }
+
 \cs_set_eq:NN \shortauthor \eadauthor
 
 \seq_clear_new:N \l_affmk_seq
@@ -1183,9 +1186,16 @@
 
 \seq_new:N \g_ceur_prelimsau_seq
 
-\csxdef{infoauthors}{}
+\csxdef { infoauthors } { }
 \csgdef { pdfxauthors } { }
+
+\csgdef { __short_authors_tmp } { }
+% Number of person in short authors list
+\int_new:N \g_num_short_authors
+\g_num_short_authors = 1
+
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
+
 \RenewDocumentCommand \author { O{} m O{} } {
   \ResetMarks
   \tl_if_blank:nTF { #3 } { }
@@ -1284,6 +1294,19 @@
     \wrAux { \token_to_str:N \orcidauthor
       { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
   }
+  % Short authors list
+  \csgdef { __short_authors_tmp } { #2 }
+  \int_compare:nNnTF { \theau@ } = { 1 } {
+    \xappto \__short_authors: { \__short_authors_tmp }
+  }{ 
+    \int_compare:nNnTF { \theau@ } < { \g_num_short_authors + 1 } {
+      \xappto \__short_authors: { , ~ \__short_authors_tmp }
+    }{
+      \int_compare:nNnTF { \theau@ } = { \g_num_short_authors + 1 } {
+        \xappto \__short_authors: { ~et~al. }
+      }{ }
+    }
+  }
   % 
   \@eadauthor={#2}
   \pdfstringdef\__info_au: { #2 }
@@ -1294,7 +1317,7 @@
     { \xappto \infoauthors { et~al. } }
     { }
   }
-  % 
+  % Authors list for PDF/A
   \csgdef { __pdfxauthor } { #2 }
   \int_compare:nNnTF { \theau@ } = { 1 }
   { \xappto \pdfxauthors { \__pdfxauthor } }
@@ -2155,17 +2178,15 @@
 % pagestyle
 %
 
-\cs_new:Npn \__first_footerline:
-{
+\cs_new:Npn \__first_footerline: {
   \group_begin:
-  % \small
-  % \sffamily \__short_authors: :~
-  % { \rmfamily \itshape Preprint~ submitted ~to ~Elsevier }
+  \small \sffamily
+  \__short_authors: :~
+  { \rmfamily \itshape CEUR~Workshop~Proceedings }
   \group_end:
 }
 
-\cs_new:Npn \__first_head:
-{
+\cs_new:Npn \__first_head: {
   \parbox[t]{\textwidth}
   {
     \color{black!20}
@@ -2173,47 +2194,40 @@
   }
 }
 
-\cs_new:Npn \__first_foot:
-{
-  % \parbox[t]{\textwidth}
-  % {
-  %    \rule{\textwidth}{.2pt}\\
-  %    \__first_footerline: \hfill Page~ \thepage {} ~of~ \lastpage }
-}
-
-
-\cs_new:Npn \__ceur_head:
-{
-  \parbox{\textwidth}
-    {
-      \sffamily\small\centering
-      \__short_title:
-    }
+\cs_new:Npn \__first_foot: {
+  \parbox[t]{\textwidth} {
+    % \rule{\textwidth}{.2pt}\\
+    \sffamily\small
+    \__first_footerline:
+    \hfill Page~ \thepage {} ~of~ \lastpage
   }
-
-
-\cs_new:Npn \__ceur_foot:
-{
-  % \parbox[t]{\textwidth}
-  % {
-  %  \rule{\textwidth}{.2pt}\\
-  %  \sffamily\small
-  %  \__first_footerline:
-  %  \hfill Page~\thepage {}~of~ \lastpage
-  % }
 }
 
-\newcommand \ps@first
- {
-   \cs_set_eq:NN \@oddhead \__first_head:
-   \cs_set_eq:NN \@evenhead \__first_head:
-   \cs_set_eq:NN \@evenfoot \__first_foot:
-   \cs_set_eq:NN \@oddfoot \__first_foot:
- }
+\cs_new:Npn \__ceur_head: {
+  \parbox{\textwidth} {
+    \sffamily\small\centering
+    \__short_title:
+  }
+}
+
+\cs_new:Npn \__ceur_foot: {
+  \parbox[t]{\textwidth} {
+    % \rule{\textwidth}{.2pt}\\
+    \sffamily\small
+    \__first_footerline:
+    \hfill Page~\thepage {}~of~ \lastpage
+  }
+}
+
+\newcommand \ps@first {
+  \cs_set_eq:NN \@oddhead \__first_head:
+  \cs_set_eq:NN \@evenhead \__first_head:
+  \cs_set_eq:NN \@evenfoot \__first_foot:
+  \cs_set_eq:NN \@oddfoot \__first_foot:
+}
 
 
-\newcommand \ps@ceur
-{
+\newcommand \ps@ceur {
   \cs_set_eq:NN \@oddhead \__ceur_head:
   \cs_set_eq:NN \@evenhead \__ceur_head:
   \cs_set_eq:NN \@evenfoot \__ceur_foot:
@@ -2221,7 +2235,6 @@
 }
 
 \ps@ceur
-
 
 %
 % Floats
