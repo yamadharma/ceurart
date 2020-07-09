@@ -2212,7 +2212,7 @@
  }
 
 
-\newcommand \ps@cas
+\newcommand \ps@ceur
 {
   \cs_set_eq:NN \@oddhead \__ceur_head:
   \cs_set_eq:NN \@evenhead \__ceur_head:
@@ -2220,7 +2220,7 @@
   \cs_set_eq:NN \@oddfoot \__ceur_foot:
 }
 
-\ps@cas
+\ps@ceur
 
 
 %
