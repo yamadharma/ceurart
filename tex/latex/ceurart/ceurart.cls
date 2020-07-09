@@ -612,6 +612,7 @@
 \int_new:N \g_ead_int
 \seq_new:N \g_ceur_ead_seq
 \int_new:N \g_uad_int
+\int_new:N \g_orcid_int
 \seq_new:N \g_ceur_uad_seq
 \seq_new:N \g_ceur_orcid_seq
 \seq_new:N \g_ceur_contrib_role_seq
@@ -650,7 +651,6 @@
 \newtoks \@eadauthor
 \newbool{@cormark}
 
-
 \NewDocumentCommand \emailauthor { m m }
 {
   \int_gincr:N \g_ead_int
@@ -668,19 +668,15 @@
   \seq_use:Nn \g_ceur_ead_seq { ;~ }
 }
 
-\NewDocumentCommand \printemails { }
-{
+\NewDocumentCommand \printemails { } {
   \group_begin:
-  \int_compare:nNnTF { \int_use:N \g_ead_int } > { 0 }
-  {
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nNnTF { \int_use:N \g_ead_int } > { 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_ceur_nologo_bool
-      {
+      \bool_if:NTF \g_ceur_nologo_bool {
         \int_compare:nTF { \g_ead_int = 1 }
         { \textsc{email:\c_space_token} }
         { \textsc{email:\c_space_token} }
@@ -688,18 +684,14 @@
       { \faIcon[regular]{envelope-open}\c_space_token }
       \seq_use:Nn \g_ceur_ead_seq { ;~ }
     }
-  }
-  {  }
+  } {  }
   \group_end:
 }
 
-\NewDocumentCommand \printurls { }
-{
+\NewDocumentCommand \printurls { } {
   \group_begin:
-  \int_compare:nTF { \g_uad_int > 0 }
-  {
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nTF { \g_uad_int > 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
@@ -709,8 +701,7 @@
       { \faIcon{globe}\c_space_token }
       \seq_use:Nn \g_ceur_uad_seq { ;~ }
     }
-  }
-  { }
+  } { }
   \group_end:
 }
 
@@ -718,22 +709,20 @@
 %% orcid
 %%
 
-\NewDocumentCommand \orcidauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_orcid_seq
-       {
-         % { \ttfamily \tl_to_str:n { #1 } }
-         { \hrefurl { https://orcid.org/ #1 } { #1 } }
-         \parsename{#2}
-         \space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \orcidauthor { m m } {
+  \int_gincr:N \g_orcid_int
+  \seq_gput_right:Nn \g_ceur_orcid_seq {
+    % { \ttfamily \tl_to_str:n { #1 } }
+    { \hrefurl { https://orcid.org/ #1 } { #1 } }
+    \parsename{#2}
+    \space(\eadauthor)
+  }
+}
 
-\NewDocumentCommand \printorcid { }
-{
+\NewDocumentCommand \printorcid { } {
   \group_begin:
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nTF { \g_orcid_int > 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
@@ -743,6 +732,7 @@
       { \faIcon{orcid}\c_space_token }
       \seq_use:Nn \g_ceur_orcid_seq { ;~ }
     }
+  } { }
   \group_end:
 }
 
@@ -1645,78 +1635,74 @@
   % \global\setbox \g_ceur_abs_box = \vtop \bgroup
   % \hsize = .65 \textwidth \parindent \z@
   \group_begin:
-  \IfNoValueTF { #1 } { }
-  { \tex_gdef:D \abstractname { #1 } }
-  \parindent \z@
-  \leftskip = .1 \textwidth
-  % \box_if_empty:NTF \g_ceur_key_box
-  % { \leftskip = .1 \textwidth }
-  % {
-  % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_ceur_key_box }
-  % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_ceur_key_box }
-  % \leftskip .1\textwidth
-  % \hspace*{-.1 \textwidth }
-  % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_ceur_key_box }
-  % \skip_vertical:n { - \l_tmpa_dim }
-  % }
-  \skip_vertical:n { \baselineskip }
-  \noindent \abstractname \par
-  % \skip_vertical:n { -4pt}
-  % \noindent \rule{.65\textwidth}{.2pt}\par
-  \footnotesize
-  \ignorespaces \everypar { \parindent=1.5em }
-}{
+  % Check if abstract exist
+  \file_if_exist:nT { \jobname.abs } { 
+    \IfNoValueTF { #1 } {
+    } { \tex_gdef:D \abstractname { #1 } }
+    \parindent \z@
+    \leftskip = .1 \textwidth
+    % \box_if_empty:NTF \g_ceur_key_box
+    % { \leftskip = .1 \textwidth }
+    % {
+    % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_ceur_key_box }
+    % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_ceur_key_box }
+    % \leftskip .1\textwidth
+    % \hspace*{-.1 \textwidth }
+    % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_ceur_key_box }
+    % \skip_vertical:n { - \l_tmpa_dim }
+    % }
+    \skip_vertical:n { \baselineskip }
+    \noindent \abstractname \par
+    % \skip_vertical:n { -4pt}
+    % \noindent \rule{.65\textwidth}{.2pt}\par
+    \footnotesize
+    \ignorespaces \everypar { \parindent=1.5em }
+  } { }
+} {
   \par
   \noindent\hbox_to_wd:nn { \z@ } { \box \g_ceur_key_box }
   \par \group_end:
 }
 
-\NewDocumentEnvironment { PrelimsAbstract } { O{} }
-  {\parindent=0pt
-   { \fontsize{14pt}{16pt}\selectfont #1 }\par
-   \vskip12pt
-   { \fontsize{12pt}{14pt}\bfseries\selectfont\casprelimstitle } \par
-   \vskip6pt
-   \seq_use:Nn \g_ceur_prelimsau_seq { , }
-   \vskip12pt
-   \par
-  }
-  {}
+\NewDocumentEnvironment { PrelimsAbstract } { O{} } {
+  \parindent=0pt
+  { \fontsize{14pt}{16pt}\selectfont #1 }\par
+  \vskip12pt
+  { \fontsize{12pt}{14pt}\bfseries\selectfont\casprelimstitle } \par
+  \vskip6pt
+  \seq_use:Nn \g_ceur_prelimsau_seq { , }
+  \vskip12pt
+  \par
+} { }
 
-\RenewDocumentEnvironment { abstract } { o }
-{
-  \IfNoValueTF { #1 } { }
-   { \tex_gdef:D \abstracttitle { #1 } }
+\RenewDocumentEnvironment { abstract } { o } {
+  \IfNoValueTF { #1 } {
+  } { \tex_gdef:D \abstracttitle { #1 } }
   \verbatimwrite{\jobname.abs}
-}
-{ \endverbatimwrite }
+} { \endverbatimwrite }
 
 \newbox\casgrabsbox
 \newbox\casauhlbox
 \newbool { usecasgrabsbox }
 \newbool { usecashlsbox }
 
-\DeclareDocumentEnvironment { graphicalabstract } { O{Graphical~Abstract} }
-{
- \global \booltrue { usecasgrabsbox }
- \global\setbox\casgrabsbox=\vbox\bgroup
+\DeclareDocumentEnvironment { graphicalabstract } { O{Graphical~Abstract} } {
+  \global \booltrue { usecasgrabsbox }
+  \global\setbox\casgrabsbox=\vbox\bgroup
   \begin{PrelimsAbstract}[#1]
   \noindent \ignorespaces
-}
-{
+} {
   \end{PrelimsAbstract}
   \egroup
 }
 
-\DeclareDocumentEnvironment { highlights } { O{Highlights} }
-{
- \global \booltrue { usecashlsbox }
- \global\setbox\casauhlbox=\vbox\bgroup
+\DeclareDocumentEnvironment { highlights } { O{Highlights} } {
+  \global \booltrue { usecashlsbox }
+  \global\setbox\casauhlbox=\vbox\bgroup
   \begin{PrelimsAbstract}[#1]
   \noindent \ignorespaces
   \begin{itemize}
-}
-{
+} {
   \end{itemize}
   \end{PrelimsAbstract}
   \egroup
@@ -1809,7 +1795,6 @@
   \end{minipage}
 }
 
-
 \RequirePackage{calc}
 
 \def\@ceurLogoLine{%
@@ -1858,40 +1843,36 @@
 \int_new:N \g_ceur_jtype_int
 \int_new:N \g_ceur_blind_int
 
-\NewDocumentCommand \printFirstPageNotes { }
-   {
-     \bool_if:NTF \g_ceur_longmktitle_bool
-       { \tex_let:D \columnwidth = \textwidth }
-       { }
-     \int_compare:nTF { \g_ceur_jtype_int > 5 }
-       { \ceuraddress }
-       { }
-     \printtnotes
-     \printnonumnotes
-     \bool_if:NTF \g_ceur_blind_bool
-       { }
-       {
-         \printcornotes
-         \printmaltese
-         \printaddrinfoot
-         \printemails
-         \printurls
-         \printorcid
-         \printfacebook
-         \printtwitter
-         \printgplus
-         \printlinkedin
-         \printfnotes
-       }
-       \printlogonotes
-     \bool_if:NTF \g_ceur_longmktitle_bool
-       {
-         \if@twocolumn
-         \tex_let:D \columnwidth = \Columnwidth \fi
-       }
-       { }
-       \normalcolor
-     }
+\NewDocumentCommand \printFirstPageNotes { } {
+  \bool_if:NTF \g_ceur_longmktitle_bool {
+    \tex_let:D \columnwidth = \textwidth
+  } { }
+  \int_compare:nTF { \g_ceur_jtype_int > 5 } {
+    \ceuraddress
+  } { }
+  \printtnotes
+  \printnonumnotes
+  \bool_if:NTF \g_ceur_blind_bool {
+  } {
+    \printcornotes
+    \printmaltese
+    \printaddrinfoot
+    \printemails
+    \printurls
+    \printorcid
+    \printfacebook
+    \printtwitter
+    \printgplus
+    \printlinkedin
+    \printfnotes
+  }
+  \printlogonotes
+  \bool_if:NTF \g_ceur_longmktitle_bool {
+    \if@twocolumn
+      \tex_let:D \columnwidth = \Columnwidth \fi
+  } { }
+  \normalcolor
+}
 
 %
 % Date History
@@ -2018,9 +1999,9 @@
   \@title
   \group_end:
   % 
-  \bool_if:NTF \g_ceur_blind_bool
-  { \vspace* { 10 mm } }
-  {
+  \bool_if:NTF \g_ceur_blind_bool {
+    \vspace* { 10 mm }
+  } {
     \group_begin:
     \normalsize \ceurauthors \par
     \ceurcollab \par
@@ -2209,7 +2190,7 @@
   % \ohead[]{\__short_title:}
   \cfoot[\thepage]{\thepage}
   \ohead[]{\firstpage--\lastpage}
-  \ihead[]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+  \ihead[]{\__short_authors:{} ~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
 }{ }
 
 % \newcommand{\hffont}{\sffamily\small}
