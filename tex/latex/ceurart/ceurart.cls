@@ -2190,7 +2190,7 @@
   % \ohead[]{\__short_title:}
   \cfoot[\thepage]{\thepage}
   \ohead[]{\firstpage--\lastpage}
-  \ihead[]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+  \ihead[]{\__short_authors:{} ~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
 }{ }
 
 % \newcommand{\hffont}{\sffamily\small}
