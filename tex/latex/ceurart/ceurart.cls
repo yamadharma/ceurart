@@ -301,6 +301,10 @@
 
     \xmpdatawrite{Journaltitle}{CEUR~Workshop~Proceedings}
     \xmpdatawrite{Journalnumber}{1613-0073}
+    \bool_if:NTF \g_ceur_hf_bool {
+      \xmpdatawrite{Firstpage}{1}
+      \xmpdatawrite{Lastpage}{\lastpage}
+    }{ }
   }{
     \hypersetup{%
       pdfcreator={ceurart.cls},

@@ -14,6 +14,7 @@ all: $(FILES)
 	-$(BIBTEX) `basename $< .tex`
 	$(LATEX) $(LATEX_FLAGS) $<
 	$(LATEX) $(LATEX_FLAGS) $<
+	$(LATEX) $(LATEX_FLAGS) $<
 	qpdf --linearize --newline-before-endstream $@ /tmp/$@
 	mv /tmp/$@ $@
 
