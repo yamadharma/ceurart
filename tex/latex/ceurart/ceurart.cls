@@ -215,6 +215,7 @@
   %   } { }
   % \pagebreak
   \thispagestyle{first}
+  \pagestyle{standard}
   \ifbool{longmktitle}
   {
     \LongMaketitleBox
@@ -2180,6 +2181,27 @@
 % pagestyle
 %
 
+\RequirePackage{scrlayer-fancyhdr}
+
+\newcommand{\hffont}{\sffamily\small}
+
+\fancypagestyle{first}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{\z@}%
+  \renewcommand{\footrulewidth}{\z@}%
+  \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+  \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+}  
+
+\fancypagestyle{standard}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{\z@}%
+  \renewcommand{\footrulewidth}{\z@}%
+  \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+  \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+  \fancyhead[L]{\hffont \__short_title:}%
+}  
+
 \cs_new:Npn \__first_footerline: {
   \group_begin:
   \small \sffamily
@@ -2221,22 +2243,21 @@
   }
 }
 
-\newcommand \ps@first {
-  \cs_set_eq:NN \@oddhead \__first_head:
-  \cs_set_eq:NN \@evenhead \__first_head:
-  \cs_set_eq:NN \@evenfoot \__first_foot:
-  \cs_set_eq:NN \@oddfoot \__first_foot:
-}
+% \newcommand \ps@first {
+%   \cs_set_eq:NN \@oddhead \__first_head:
+%   \cs_set_eq:NN \@evenhead \__first_head:
+%   \cs_set_eq:NN \@evenfoot \__first_foot:
+%   \cs_set_eq:NN \@oddfoot \__first_foot:
+% }
 
+% \newcommand \ps@ceur {
+%   \cs_set_eq:NN \@oddhead \__ceur_head:
+%   \cs_set_eq:NN \@evenhead \__ceur_head:
+%   \cs_set_eq:NN \@evenfoot \__ceur_foot:
+%   \cs_set_eq:NN \@oddfoot \__ceur_foot:
+% }
 
-\newcommand \ps@ceur {
-  \cs_set_eq:NN \@oddhead \__ceur_head:
-  \cs_set_eq:NN \@evenhead \__ceur_head:
-  \cs_set_eq:NN \@evenfoot \__ceur_foot:
-  \cs_set_eq:NN \@oddfoot \__ceur_foot:
-}
-
-\ps@ceur
+% \ps@ceur
 
 %
 % Floats
