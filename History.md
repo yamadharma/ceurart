@@ -1,4 +1,33 @@
 
+v0.3.2 / 2020-07-10
+==================
+
+  * Changed: removed colon in header after short authors names
+  * Added: check if abstract exist
+  * Added: checked orcid availability
+  * Changed: header and foofter format
+  * Added: firstpage to PDF/A
+  * Added: Lastpage to PDF/A. Need additional LaTeX run
+  * Added: option for documentclass to enable header and footer
+  * Changed: moved header-footer to KOMA-Script native interface
+  * Changed: moved header-footer to fancyhdr package
+  * Added: header, shorttitle
+  * Added: Footnote with short authors list
+  * Changed: cas -> ceur
+  * Changed: cas -> ceur
+  * Added: \no_break_space: to \firstname to prevent name wrapping on another line
+  * Changed: code format
+  * Changed: made narrowed itemize line spacing
+  * Added: thin spacing in authors short name (eadname)
+  * Added: compatibility with latex2e float options
+  * Changed: cas -> ceur
+  * Changed: removed pdfversion in hypersetup
+  * Changed: tuned Makefile
+  * Added: pdf linearization in Makefile
+  * Changed: optimized .png files
+  * Added: link to overleaf template
+  * Added: links to online resources
+
 v0.3.1 / 2020-07-01
 ==================
 
