@@ -18,7 +18,7 @@
 %% Rights management information.
 %% CC-BY is default license.
 \copyrightyear{2020}
-\copyrightclause{Copyright for this paper by its authors.\\
+\copyrightclause{Copyright for this paper by its authors.
   Use permitted under Creative Commons License Attribution 4.0
   International (CC BY 4.0).}
 
@@ -103,14 +103,14 @@ to the source.
 This class depends on the following packages
 for its proper functioning:
 
-\begin{enumerate}
+\begin{itemize}
 \item \verb|natbib.sty| for citation processing;
 \item \verb|geometry.sty| for margin settings;
 \item \verb|graphicx.sty| for graphics inclusion;
 \item \verb|hyperref.sty| optional package if hyperlinking is required in
   the document;
 \item \verb|fontawesome5.sty| optional package for bells and whistles.
-\end{enumerate}
+\end{itemize}
 
 All the above packages are part of any
 standard \LaTeX{} installation.
@@ -124,18 +124,20 @@ margins, typeface sizes, line spacing, paragraph and list definitions,
 and the use of the \verb|\vspace| command to manually adjust the
 vertical spacing between elements of your work --- is not allowed.
 
-\section{Template Styles}
+\section{Template parameters}
 
-The primary parameter given to the ``\verb|ceurart|'' document class is
-the \textit{template style}. This parameter is enclosed in square
-brackets and is a part of the {\verb|documentclass|} command:
+There are a number of template
+parameters which modify some part of the \verb|ceurart| document class.
+This parameters are enclosed in square
+brackets and are a part of the {\verb|documentclass|} command:
 \begin{verbatim}
-  \documentclass[STYLE]{ceurart}
+  \documentclass[parameter]{ceurart}
 \end{verbatim}
 
-Now this is only one style:
+Frequently-used parameters, or combinations of parameters, include:
 \begin{itemize}
 \item {\verb|twocolumn|}: Two column layout.
+\item {\verb|hf|}: Enable header and footer.
 \end{itemize}
 
 \section{Front matter}
@@ -159,16 +161,16 @@ possible. Include authors' e-mail addresses whenever possible.
 
 \verb|\author| command have the below options: 
 
-\begin{enumerate}
-\item \verb|style| Style of author name (chinese)
-\item \verb|prefix| Prefix
-\item \verb|suffix| Suffix
-\item \verb|degree| Degree
-\item \verb|role| Role
-\item \verb|orcid| ORCID
-\item \verb|email| E-mail
-\item \verb|url| URL
-\end{enumerate}
+\begin{itemize}
+\item \verb|style|: Style of author name (chinese)
+\item \verb|prefix|: Prefix
+\item \verb|suffix|: Suffix
+\item \verb|degree|: Degree
+\item \verb|role|: Role
+\item \verb|orcid|: ORCID
+\item \verb|email|: E-mail
+\item \verb|url|: URL
+\end{itemize}
 
 Author names can have some kinds of marks and notes:
 \begin{itemize}
@@ -442,11 +444,10 @@ Start the appendix with the ``\verb|appendix|'' command:
 \appendix
 \end{verbatim}
 and note that in the appendix, sections are lettered, not
-numbered. This document has two appendices, demonstrating the section
-and subsection identification method.
+numbered. 
 
 %%
-%% The acknowledgments section is defined using the "acks" environment
+%% The acknowledgments section is defined using the "acknowledgments" environment
 %% (and NOT an unnumbered section). This ensures the proper
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
@@ -454,9 +455,7 @@ and subsection identification method.
   Thanks to the developers of ACM consolidated LaTeX styles
   \url{https://github.com/borisveytsman/acmart} and to the developers
   of Elsevier updated \LaTeX{} templates
-  \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.
-  
-  
+  \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.  
 \end{acknowledgments}
 
 %%
@@ -467,35 +466,17 @@ and subsection identification method.
 %% If your work has an appendix, this is the place to put it.
 \appendix
 
-\section{Research Methods}
-
-\subsection{Part One}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-malesuada, quam in pulvinar varius, metus nunc fermentum urna, id
-sollicitudin purus odio sit amet enim. Aliquam ullamcorper eu ipsum
-vel mollis. Curabitur quis dictum nisl. Phasellus vel semper risus, et
-lacinia dolor. Integer ultricies commodo sem nec semper.
-
-\subsection{Part Two}
-
-Etiam commodo feugiat nisl pulvinar pellentesque. Etiam auctor sodales
-ligula, non varius nibh pulvinar semper. Suspendisse nec lectus non
-ipsum convallis congue hendrerit vitae sapien. Donec at laoreet
-eros. Vivamus non purus placerat, scelerisque diam eu, cursus
-ante. Etiam aliquam tortor auctor efficitur mattis.
-
 \section{Online Resources}
 
-Nam id fermentum dui. Suspendisse sagittis tortor a nulla mollis, in
-pulvinar ex pretium. Sed interdum orci quis metus euismod, et sagittis
-enim maximus. Vestibulum gravida massa ut felis suscipit
-congue. Quisque mattis elit a risus ultrices commodo venenatis eget
-dui. Etiam sagittis eleifend elementum.
 
-Nam interdum magna at lectus dignissim, ac dignissim lorem
-rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
-massa et mattis lacinia.
+The sources for the ceur-art style are available via
+\begin{itemize}
+\item \href{https://github.com/yamadharma/ceurart}{GitHub},
+\item \href{https://www.overleaf.com/project/5e76702c4acae70001d3bc87}{Overleaf},
+\item
+  \href{https://www.overleaf.com/latex/templates/template-for-submissions-to-ceur-workshop-proceedings-ceur-ws-dot-org/hpvjjzhjxzjk}{Overleaf
+    template}.
+\end{itemize}
 
 \end{document}
 

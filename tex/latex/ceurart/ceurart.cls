@@ -15,20 +15,28 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.1}%
-\def\RCSdate{2020/06/30}%
+\def\RCSversion{0.3.2}%
+\def\RCSdate{2020/07/03}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
+
+\ExplSyntaxOn
 
 %%
 %% switches
 %%
+
 \newif\iflongmktitle    \longmktitlefalse
-%% twocolumn
+
+% twocolumn
 \newif\ifdc             \global\dcfalse
 \newif\ifsc             \global\sctrue
 \newif\ifcasreviewlayout  \global\casreviewlayoutfalse
 \newif\ifcasfinallayout   \global\casfinallayoutfalse
+
+% enable header and footer
+\bool_new:N \g_ceur_hf_bool
+\bool_gset_false:N \g_ceur_hf_bool
 
 \newcounter{blind}
 \setcounter{blind}{0}
@@ -40,6 +48,7 @@
 
 %\newif\if@twocolumn
 \DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
+\DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -74,7 +83,7 @@
 \RequirePackage{iftex}
 \RequirePackage{microtype}
 
-\ExplSyntaxOn
+% \ExplSyntaxOn
 
 %% PDF/A support
 
@@ -95,8 +104,7 @@
   colorlinks,
   bookmarksnumbered,
   pdfencoding=unicode,
-  allcolors=DarkSlateGrey,
-  pdfversion=1.7
+  allcolors=DarkSlateGrey
 }
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
@@ -197,8 +205,7 @@
 % Specific to Single Column
 %
 
-\RenewDocumentCommand \maketitle {}
-{
+\RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
   \logonote{\@ceurLogoLine}
@@ -215,8 +222,11 @@
   %     \thispagestyle{empty}
   %     \unvbox\casauhlbox
   %   } { }
-  % \pagebreak
-  \thispagestyle{first}
+  %     \pagebreak
+  \thispagestyle{plain}
+  \xdef\firstpage{\thepage}
+  % \thispagestyle{first}
+  % \pagestyle{standard}
   \ifbool{longmktitle}
   {
     \LongMaketitleBox
@@ -292,6 +302,10 @@
 
     \xmpdatawrite{Journaltitle}{CEUR~Workshop~Proceedings}
     \xmpdatawrite{Journalnumber}{1613-0073}
+    \bool_if:NTF \g_ceur_hf_bool {
+        \xmpdatawrite{Firstpage}{\firstpage}
+        \xmpdatawrite{Lastpage}{\lastpage}
+    }{ }
   }{
     \hypersetup{%
       pdfcreator={ceurart.cls},
@@ -329,128 +343,121 @@
 % Usage of those macros and methods are gratefully acknowledged.
 %
 
-\keys_define:nn { ceur / title }
-   {
-     mode      .choice:     ,
-     mode / title  .meta:n  =
-       {
-         type   = title      ,
-         size   = \LARGE      ,
-         % size   = \huge      ,
-         % shape  = \upshape   ,
-         shape  = \sffamily   ,
-         % weight = \mdseries  ,
-         weight = \bfseries  ,
-         color  = black  ,
-         before = 0pt        ,
-         after  = 0pt        ,
-         align  = \raggedright ,
-       } ,
-     mode / alt  .meta:n  =
-       {
-         type   = alt      ,
-         size   = \large     ,
-         shape  = \upshape   ,
-         weight = \mdseries  ,
-         color  = black  ,
-         before = 6pt        ,
-         after  = 0pt        ,
-         align  = \raggedright ,
-       } ,
-     mode / sub    .meta:n  =
-       {
-         type   = sub           ,
-         size   = \large        ,
-         shape  = \upshape      ,
-         weight = \mdseries     ,
-         color  = black!80  ,
-         before = 6pt          ,
-         after  = 0pt           ,
-         align  = \raggedright  ,
-       } ,
-     mode / trans   .meta:n  =
-       {
-         type   = trans         ,
-         size   = \normalsize   ,
-         shape  = \upshape      ,
-         weight = \mdseries     ,
-         color  = black!60      ,
-         before = 6pt           ,
-         after  = 0pt           ,
-         align  = \raggedright  ,
-       } ,
-     mode / transsub   .meta:n  =
-       {
-         type   = transsub      ,
-         size   = \small        ,
-         shape  = \upshape      ,
-         weight = \mdseries     ,
-         color  = black!50      ,
-         before = 6pt           ,
-         after  = 0pt           ,
-         align  = \raggedright  ,
-       } ,
-     mode / ascii   .meta:n  =
-       {
-         type   = ascii            ,
-         size   = \small\ttfamily  ,
-         shape  = \upshape         ,
-         weight = \mdseries        ,
-         color  = black            ,
-         before = 12pt             ,
-         after  = 0pt              ,
-         align  = \raggedright     ,
-       } ,
-     type      .tl_set:N    = \l_ceur_title_type_tl      ,
-     size      .tl_set:N    = \l_ceur_title_size_tl      ,
-     shape     .tl_set:N    = \l_ceur_title_shape_tl     ,
-     weight    .tl_set:N    = \l_ceur_title_weight_tl    ,
-     before    .dim_set:N   = \l_ceur_title_before_dim   ,
-     after     .dim_set:N   = \l_ceur_title_after_dim    ,
-     align     .tl_set:N    = \l_ceur_title_align_tl     ,
-     color     .tl_set:N    = \l_ceur_title_color_tl     ,
-   }
+\keys_define:nn { ceur / title } {
+  mode      .choice:     ,
+  mode / title  .meta:n  = {
+    type   = title      ,
+    size   = \LARGE      ,
+    % size   = \huge      ,
+    % shape  = \upshape   ,
+    shape  = \sffamily   ,
+    % weight = \mdseries  ,
+    weight = \bfseries  ,
+    color  = black  ,
+    before = 0pt        ,
+    after  = 0pt        ,
+    align  = \raggedright ,
+  } ,
+  mode / alt  .meta:n  = {
+    type   = alt      ,
+    size   = \large     ,
+    shape  = \upshape   ,
+    weight = \mdseries  ,
+    color  = black  ,
+    before = 6pt        ,
+    after  = 0pt        ,
+    align  = \raggedright ,
+  } ,
+  mode / sub    .meta:n  = {
+    type   = sub           ,
+    size   = \large        ,
+    shape  = \upshape      ,
+    weight = \mdseries     ,
+    color  = black!80  ,
+    before = 6pt          ,
+    after  = 0pt           ,
+    align  = \raggedright  ,
+  } ,
+  mode / trans   .meta:n  =  {
+    type   = trans         ,
+    size   = \normalsize   ,
+    shape  = \upshape      ,
+    weight = \mdseries     ,
+    color  = black!60      ,
+    before = 6pt           ,
+    after  = 0pt           ,
+    align  = \raggedright  ,
+  } ,
+  mode / transsub   .meta:n  = {
+    type   = transsub      ,
+    size   = \small        ,
+    shape  = \upshape      ,
+    weight = \mdseries     ,
+    color  = black!50      ,
+    before = 6pt           ,
+    after  = 0pt           ,
+    align  = \raggedright  ,
+  } ,
+  mode / ascii   .meta:n  = {
+    type   = ascii            ,
+    size   = \small\ttfamily  ,
+    shape  = \upshape         ,
+    weight = \mdseries        ,
+    color  = black            ,
+    before = 12pt             ,
+    after  = 0pt              ,
+    align  = \raggedright     ,
+  } ,
+  type      .tl_set:N    = \l_ceur_title_type_tl      ,
+  size      .tl_set:N    = \l_ceur_title_size_tl      ,
+  shape     .tl_set:N    = \l_ceur_title_shape_tl     ,
+  weight    .tl_set:N    = \l_ceur_title_weight_tl    ,
+  before    .dim_set:N   = \l_ceur_title_before_dim   ,
+  after     .dim_set:N   = \l_ceur_title_after_dim    ,
+  align     .tl_set:N    = \l_ceur_title_align_tl     ,
+  color     .tl_set:N    = \l_ceur_title_color_tl     ,
+}
 
-\NewDocumentCommand \processTmarks { }
-   {
-     \cs_if_free:cTF { mark@title }
-     { \ignorespaces }
-     { \tl_set:Nx \l_tmpa_tl { \cs:w mark@title\cs_end: }
-       \clist_map_inline:cn { mark@title }
-       {
-         \str_case:nn { ##1 }
-         {
-           { 1 }  { $^\star$ }
-           { 2 }  { $^{,\star\star}$ }
-           { 3 }  { $^{,\star\star\star}$ }
-         }
-       }
-     }
-   }
-
-\RenewDocumentCommand \title { O{mode = title} m }
-   {
-     \pdfstringdef \@pdftitle { #2 }
-     \csgdef { casprelimstitle } { #2 }
-     \keys_set:nn { ceur / title } { #1 }
-     \seq_gput_right:Nn \g_ceur_title_seq
+\NewDocumentCommand \processTmarks { } {
+  \cs_if_free:cTF { mark@title }
+  { \ignorespaces }
+  { \tl_set:Nx \l_tmpa_tl { \cs:w mark@title\cs_end: }
+    \clist_map_inline:cn { mark@title }
+    {
+      \str_case:nn { ##1 }
       {
-        \keys_set:nn { ceur / title } { #1 }
-        % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
-        \par \vskip \l_ceur_title_before_dim
-        \l_ceur_title_align_tl
-        \l_ceur_title_size_tl
-        \l_ceur_title_shape_tl
-        \l_ceur_title_weight_tl
-        \color { \l_ceur_title_color_tl }
-        #2
-        \tl_set:Nn \l_tmpa_tl { title }
-        \tl_if_eq:NNTF \l_ceur_title_type_tl \l_tmpa_tl
-        { \processTmarks } { }
-        \par \vskip  \l_ceur_title_after_dim
-        \normalcolor \normalsize \normalfont
+        { 1 }  { $^\star$ }
+        { 2 }  { $^{,\star\star}$ }
+        { 3 }  { $^{,\star\star\star}$ }
       }
-     }
+    }
+  }
+}
+
+\RenewDocumentCommand \title { O{mode = title} m } {
+  \pdfstringdef \@pdftitle { #2 }
+  \csgdef { casprelimstitle } { #2 }
+  \keys_set:nn { ceur / title } { #1 }
+  \tl_if_empty:NTF \__short_title: {
+    \cs_gset:Nn \__short_title: { #2 }
+  }{ }
+  \seq_gput_right:Nn \g_ceur_title_seq {
+    \keys_set:nn { ceur / title } { #1 }
+    % \iow_term:n { MODE:~\l_ceur_title_mode_tl ~ ~ [#1]}
+    \par \vskip \l_ceur_title_before_dim
+    \l_ceur_title_align_tl
+    \l_ceur_title_size_tl
+    \l_ceur_title_shape_tl
+    \l_ceur_title_weight_tl
+    \color { \l_ceur_title_color_tl }
+    #2
+    \tl_set:Nn \l_tmpa_tl { title }
+    \tl_if_eq:NNTF \l_ceur_title_type_tl \l_tmpa_tl
+    { \processTmarks } { }
+    \par \vskip  \l_ceur_title_after_dim
+    \normalcolor \normalsize \normalfont
+  }
+}
 
 %  \gappto\usestmtitle{#1}%
 
@@ -466,61 +473,57 @@
 \NewDocumentCommand \wrShipAun { m }   % unexpanded write at shipout
    { \iow_shipout:Nn \@auxout { #1 } }
 
-\NewDocumentCommand \ceurLabel { m }
-   {
-     \@bsphack \wrAux
-     { \token_to_str:N \NewLabel { #1 }
-       { \@currentlabel }
-     } \@esphack
-   }
-\NewDocumentCommand \NewLabel { m m }
-   {
-     \cs_if_free:cTF { X@#1: }
-       { \cs_new:cx { X@#1: } { #2 } }
-       { \cs_set:cx { X@#1: } { #2 } }
-     }
-\NewDocumentCommand \ceurRef { m }
-   {
-    \cs_if_free:cTF { X@#1: }
-      { 0 } {\use:c {X@#1:} }
-   }
+\NewDocumentCommand \ceurLabel { m } {
+  \@bsphack \wrAux
+  { \token_to_str:N \NewLabel { #1 }
+    { \@currentlabel }
+  } \@esphack
+}
+
+\NewDocumentCommand \NewLabel { m m } {
+  \cs_if_free:cTF { X@#1: }
+  { \cs_new:cx { X@#1: } { #2 } }
+  { \cs_set:cx { X@#1: } { #2 } }
+}
+
+\NewDocumentCommand \ceurRef { m } {
+  \cs_if_free:cTF { X@#1: }
+  { 0 } {\use:c {X@#1:} }
+}
 
 \seq_clear_new:N \l_fnmk_seq
-\NewDocumentCommand \processFnRef { m }
-   {
-      \seq_clear:N \l_fnmk_seq
-      \clist_map_inline:nn { #1 }
-      { \seq_put_right:Nx \l_fnmk_seq
-          {\cs_if_free:cTF { X@##1: } {0} { \use:c {X@##1:} }}
-      }
+\NewDocumentCommand \processFnRef { m } {
+  \seq_clear:N \l_fnmk_seq
+  \clist_map_inline:nn { #1 }
+  { \seq_put_right:Nx \l_fnmk_seq
+    {\cs_if_free:cTF { X@##1: } {0} { \use:c {X@##1:} }}
+  }
+}
+
+\NewDocumentCommand \fnmark { O{} } {
+  \writemarks { fnau\theau@ } { #1 }
+}
+
+
+\NewDocumentCommand  \fnref { m } {
+  \processFnRef { #1 }
+  \wrAux { \token_to_str:N \csxdef {mark@fnau\theau@}
+    { \seq_use:Nn \l_fnmk_seq  { , } } }
+}
+
+\NewDocumentCommand \corref { m } {
+  \str_set:Nx \l_tmpa_str { \ceurRef { #1 } }
+  \wrAux { \token_to_str:N \csxdef { mark@corau\theau@ }
+    {
+      \cs_if_free:cTF { X@#1: } {0} { \use:c {X@#1:} }
     }
+  }
+}
 
-\NewDocumentCommand \fnmark { O{} }
-   { \writemarks { fnau\theau@ } { #1 } }
-
-
-\NewDocumentCommand  \fnref { m }
-   {
-     \processFnRef { #1 }
-     \wrAux { \token_to_str:N \csxdef {mark@fnau\theau@}
-         { \seq_use:Nn \l_fnmk_seq  { , } } }
-   }
-
-\NewDocumentCommand \corref { m }
-   {
-     \str_set:Nx \l_tmpa_str { \ceurRef { #1 } }
-     \wrAux { \token_to_str:N \csxdef { mark@corau\theau@ }
-       {
-         \cs_if_free:cTF { X@#1: } {0} { \use:c {X@#1:} }
-       }
-     }
-   }
-
-\NewDocumentCommand \cormark { O{} }
-   {
-     \@cormarktrue
-     \writemarks {corau\theau@} { #1 }
-   }
+\NewDocumentCommand \cormark { O{} } {
+  \@cormarktrue
+  \writemarks {corau\theau@} { #1 }
+}
 
 \seq_new:N \l_ceur_au_seq
 \seq_new:N \l_ceur_au_sn_seq
@@ -531,34 +534,41 @@
 \seq_new:N \l_ceur_au_url_seq
 \seq_new:N \l_ceur_au_contrib_role_seq
 
-\NewDocumentCommand \parsename { m }
-   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
-     \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
-     \seq_map_inline:Nn \l_ceur_au_seq
-      { \seq_put_right:Nx \l_ceur_au_ead_seq
-        { \tl_head:n { #1 }. } }
-    }
+\NewDocumentCommand \parsename { m } {
+  \seq_set_split:Nnn \l_ceur_au_seq { ~ } { #1 }
+  \seq_pop_right:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+  \seq_map_inline:Nn \l_ceur_au_seq
+  { \seq_put_right:Nx \l_ceur_au_ead_seq
+    { \tl_head:n { #1 }. }
+  }
+}
 
-\NewDocumentCommand \invparsename { m }
-   { \seq_set_split:Nnn \l_ceur_au_seq { ~ } {#1}
-     \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
-     \seq_map_inline:Nn \l_ceur_au_seq
-      { \seq_put_right:Nx \l_ceur_au_ead_seq
-        { \tl_head:n { #1 }. } }
-    }
+\NewDocumentCommand \invparsename { m } {
+  \seq_set_split:Nnn \l_ceur_au_seq { ~ } { #1 }
+  \seq_pop_left:NN \l_ceur_au_seq \l_ceur_au_sn_seq
+  \seq_map_inline:Nn \l_ceur_au_seq
+  { \seq_put_right:Nx \l_ceur_au_ead_seq
+    { \tl_head:n { #1 }. }
+  }
+}
 
+\NewDocumentCommand \surname {} {
+  \l_ceur_au_sn_seq
+}
 
-\NewDocumentCommand \surname {} { \l_ceur_au_sn_seq }
-\NewDocumentCommand \firstname {}
-    { \seq_use:Nn \l_ceur_au_seq { ~ } }
-\NewDocumentCommand \eadauthor {}
-    { \seq_map_inline:Nn \l_ceur_au_seq
-      { \regex_match:nnTF { \. } { ##1 }
-        { ##1 }
-        { \tl_head:n {##1}. }
-      }
-        {~} \l_ceur_au_sn_seq
-     }
+\NewDocumentCommand \firstname {} {
+  \seq_use:Nn \l_ceur_au_seq { \no_break_space: }
+}
+
+\NewDocumentCommand \eadauthor {} {
+  \seq_map_inline:Nn \l_ceur_au_seq
+  {
+    \regex_match:nnTF { \. } { ##1 }
+    { ##1 \, }
+    { \tl_head:n {##1}. \, }
+  } {\,} \l_ceur_au_sn_seq
+}
+
 \cs_set_eq:NN \shortauthor \eadauthor
 
 \seq_clear_new:N \l_affmk_seq
@@ -602,6 +612,7 @@
 \int_new:N \g_ead_int
 \seq_new:N \g_ceur_ead_seq
 \int_new:N \g_uad_int
+\int_new:N \g_orcid_int
 \seq_new:N \g_ceur_uad_seq
 \seq_new:N \g_ceur_orcid_seq
 \seq_new:N \g_ceur_contrib_role_seq
@@ -616,17 +627,16 @@
      \group_end:
    }
 
-\NewDocumentCommand \urlauthor { m m }
-   {
-     \int_gincr:N \g_uad_int
-     \seq_gput_right:Nn \g_ceur_uad_seq
-       {
-         { %\ttfamily \tl_to_str:n
-           \url{ #1 } }
-         \parsename { #2 }
-         \space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \urlauthor { m m } {
+  \int_gincr:N \g_uad_int
+  \seq_gput_right:Nn \g_ceur_uad_seq
+  {
+    { %\ttfamily \tl_to_str:n
+      \url{ #1 } }
+    \parsename { #2 }
+    \space(\eadauthor)
+  }
+}
 \NewDocumentCommand \@stmuads { }
   { \seq_use:Nn \g_ceur_uad_seq { ;~ } }
 
@@ -640,7 +650,6 @@
 
 \newtoks \@eadauthor
 \newbool{@cormark}
-
 
 \NewDocumentCommand \emailauthor { m m }
 {
@@ -659,19 +668,15 @@
   \seq_use:Nn \g_ceur_ead_seq { ;~ }
 }
 
-\NewDocumentCommand \printemails { }
-{
+\NewDocumentCommand \printemails { } {
   \group_begin:
-  \int_compare:nNnTF { \int_use:N \g_ead_int } > { 0 }
-  {
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nNnTF { \int_use:N \g_ead_int } > { 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      \bool_if:NTF \g_ceur_nologo_bool
-      {
+      \bool_if:NTF \g_ceur_nologo_bool {
         \int_compare:nTF { \g_ead_int = 1 }
         { \textsc{email:\c_space_token} }
         { \textsc{email:\c_space_token} }
@@ -679,18 +684,14 @@
       { \faIcon[regular]{envelope-open}\c_space_token }
       \seq_use:Nn \g_ceur_ead_seq { ;~ }
     }
-  }
-  {  }
+  } {  }
   \group_end:
 }
 
-\NewDocumentCommand \printurls { }
-{
+\NewDocumentCommand \printurls { } {
   \group_begin:
-  \int_compare:nTF { \g_uad_int > 0 }
-  {
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nTF { \g_uad_int > 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
@@ -700,8 +701,7 @@
       { \faIcon{globe}\c_space_token }
       \seq_use:Nn \g_ceur_uad_seq { ;~ }
     }
-  }
-  { }
+  } { }
   \group_end:
 }
 
@@ -709,22 +709,20 @@
 %% orcid
 %%
 
-\NewDocumentCommand \orcidauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_orcid_seq
-       {
-         % { \ttfamily \tl_to_str:n { #1 } }
-         { \hrefurl { https://orcid.org/ #1 } { #1 } }
-         \parsename{#2}
-         \space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \orcidauthor { m m } {
+  \int_gincr:N \g_orcid_int
+  \seq_gput_right:Nn \g_ceur_orcid_seq {
+    % { \ttfamily \tl_to_str:n { #1 } }
+    { \hrefurl { https://orcid.org/ #1 } { #1 } }
+    \parsename{#2}
+    \space(\eadauthor)
+  }
+}
 
-\NewDocumentCommand \printorcid { }
-{
+\NewDocumentCommand \printorcid { } {
   \group_begin:
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
+  \int_compare:nTF { \g_orcid_int > 0 } {
+    \tex_let:D \thefootnote \relax \footnotetext {
       \raggedright
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
@@ -734,6 +732,7 @@
       { \faIcon{orcid}\c_space_token }
       \seq_use:Nn \g_ceur_orcid_seq { ;~ }
     }
+  } { }
   \group_end:
 }
 
@@ -1195,9 +1194,16 @@
 
 \seq_new:N \g_ceur_prelimsau_seq
 
-\csxdef{infoauthors}{}
+\csxdef { infoauthors } { }
 \csgdef { pdfxauthors } { }
+
+\csgdef { __short_authors_tmp } { }
+% Number of person in short authors list
+\int_new:N \g_num_short_authors
+\g_num_short_authors = 1
+
 \cs_new:Nn \no_break_space: { \nobreak{~} \penalty 10000 }
+
 \RenewDocumentCommand \author { O{} m O{} } {
   \ResetMarks
   \tl_if_blank:nTF { #3 } { }
@@ -1219,14 +1225,14 @@
     { \processAffNum { #1 } }
     \tl_if_empty:NF \l_ceur_au_prefix
     { \l_ceur_au_prefix_tl \c_space_token }
-    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese }
-    { %\msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
+    \str_if_eq:VnTF \l_ceur_au_style_tl  { chinese } {
+      % \msg_term:n {STYLE~T=\l_ceur_au_style_tl........}
       \invparsename { #2 }
       \textcolor{\l_ceur_augroup_color_tl}{\surname}
       \no_break_space:
       \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
-    }
-    { %\msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
+    }{
+      % \msg_term:n {STYLE~F=\l_ceur_au_style_tl........}
       \parsename { #2 }
       \textcolor{\l_ceur_augroup_color_tl !50}{\firstname}
       \no_break_space:
@@ -1296,6 +1302,19 @@
     \wrAux { \token_to_str:N \orcidauthor
       { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
   }
+  % Short authors list
+  \csgdef { __short_authors_tmp } { #2 }
+  \int_compare:nNnTF { \theau@ } = { 1 } {
+    \xappto \__short_authors: { \__short_authors_tmp }
+  }{ 
+    \int_compare:nNnTF { \theau@ } < { \g_num_short_authors + 1 } {
+      \xappto \__short_authors: { , ~ \__short_authors_tmp }
+    }{
+      \int_compare:nNnTF { \theau@ } = { \g_num_short_authors + 1 } {
+        \xappto \__short_authors: { ~et~al. }
+      }{ }
+    }
+  }
   % 
   \@eadauthor={#2}
   \pdfstringdef\__info_au: { #2 }
@@ -1306,7 +1325,7 @@
     { \xappto \infoauthors { et~al. } }
     { }
   }
-  % 
+  % Authors list for PDF/A
   \csgdef { __pdfxauthor } { #2 }
   \int_compare:nNnTF { \theau@ } = { 1 }
   { \xappto \pdfxauthors { \__pdfxauthor } }
@@ -1616,78 +1635,74 @@
   % \global\setbox \g_ceur_abs_box = \vtop \bgroup
   % \hsize = .65 \textwidth \parindent \z@
   \group_begin:
-  \IfNoValueTF { #1 } { }
-  { \tex_gdef:D \abstractname { #1 } }
-  \parindent \z@
-  \leftskip = .1 \textwidth
-  % \box_if_empty:NTF \g_ceur_key_box
-  % { \leftskip = .1 \textwidth }
-  % {
-  % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_ceur_key_box }
-  % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_ceur_key_box }
-  % \leftskip .1\textwidth
-  % \hspace*{-.1 \textwidth }
-  % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_ceur_key_box }
-  % \skip_vertical:n { - \l_tmpa_dim }
-  % }
-  \skip_vertical:n { \baselineskip }
-  \noindent \abstractname \par
-  % \skip_vertical:n { -4pt}
-  % \noindent \rule{.65\textwidth}{.2pt}\par
-  \footnotesize
-  \ignorespaces \everypar { \parindent=1.5em }
-}{
+  % Check if abstract exist
+  \file_if_exist:nT { \jobname.abs } { 
+    \IfNoValueTF { #1 } {
+    } { \tex_gdef:D \abstractname { #1 } }
+    \parindent \z@
+    \leftskip = .1 \textwidth
+    % \box_if_empty:NTF \g_ceur_key_box
+    % { \leftskip = .1 \textwidth }
+    % {
+    % \dim_gset:Nn \l_tmpa_dim { \box_ht:N \g_ceur_key_box }
+    % \dim_gadd:Nn \l_tmpa_dim { \box_dp:N \g_ceur_key_box }
+    % \leftskip .1\textwidth
+    % \hspace*{-.1 \textwidth }
+    % \noindent\hbox_to_wd:nn {  \z@ } { \box \g_ceur_key_box }
+    % \skip_vertical:n { - \l_tmpa_dim }
+    % }
+    \skip_vertical:n { \baselineskip }
+    \noindent \abstractname \par
+    % \skip_vertical:n { -4pt}
+    % \noindent \rule{.65\textwidth}{.2pt}\par
+    \footnotesize
+    \ignorespaces \everypar { \parindent=1.5em }
+  } { }
+} {
   \par
   \noindent\hbox_to_wd:nn { \z@ } { \box \g_ceur_key_box }
   \par \group_end:
 }
 
-\NewDocumentEnvironment { PrelimsAbstract } { O{} }
-  {\parindent=0pt
-   { \fontsize{14pt}{16pt}\selectfont #1 }\par
-   \vskip12pt
-   { \fontsize{12pt}{14pt}\bfseries\selectfont\casprelimstitle } \par
-   \vskip6pt
-   \seq_use:Nn \g_ceur_prelimsau_seq { , }
-   \vskip12pt
-   \par
-  }
-  {}
+\NewDocumentEnvironment { PrelimsAbstract } { O{} } {
+  \parindent=0pt
+  { \fontsize{14pt}{16pt}\selectfont #1 }\par
+  \vskip12pt
+  { \fontsize{12pt}{14pt}\bfseries\selectfont\casprelimstitle } \par
+  \vskip6pt
+  \seq_use:Nn \g_ceur_prelimsau_seq { , }
+  \vskip12pt
+  \par
+} { }
 
-\RenewDocumentEnvironment { abstract } { o }
-{
-  \IfNoValueTF { #1 } { }
-   { \tex_gdef:D \abstracttitle { #1 } }
+\RenewDocumentEnvironment { abstract } { o } {
+  \IfNoValueTF { #1 } {
+  } { \tex_gdef:D \abstracttitle { #1 } }
   \verbatimwrite{\jobname.abs}
-}
-{ \endverbatimwrite }
+} { \endverbatimwrite }
 
 \newbox\casgrabsbox
 \newbox\casauhlbox
 \newbool { usecasgrabsbox }
 \newbool { usecashlsbox }
 
-\DeclareDocumentEnvironment { graphicalabstract } { O{Graphical~Abstract} }
-{
- \global \booltrue { usecasgrabsbox }
- \global\setbox\casgrabsbox=\vbox\bgroup
+\DeclareDocumentEnvironment { graphicalabstract } { O{Graphical~Abstract} } {
+  \global \booltrue { usecasgrabsbox }
+  \global\setbox\casgrabsbox=\vbox\bgroup
   \begin{PrelimsAbstract}[#1]
   \noindent \ignorespaces
-}
-{
+} {
   \end{PrelimsAbstract}
   \egroup
 }
 
-\DeclareDocumentEnvironment { highlights } { O{Highlights} }
-{
- \global \booltrue { usecashlsbox }
- \global\setbox\casauhlbox=\vbox\bgroup
+\DeclareDocumentEnvironment { highlights } { O{Highlights} } {
+  \global \booltrue { usecashlsbox }
+  \global\setbox\casauhlbox=\vbox\bgroup
   \begin{PrelimsAbstract}[#1]
   \noindent \ignorespaces
   \begin{itemize}
-}
-{
+} {
   \end{itemize}
   \end{PrelimsAbstract}
   \egroup
@@ -1780,7 +1795,6 @@
   \end{minipage}
 }
 
-
 \RequirePackage{calc}
 
 \def\@ceurLogoLine{%
@@ -1829,40 +1843,36 @@
 \int_new:N \g_ceur_jtype_int
 \int_new:N \g_ceur_blind_int
 
-\NewDocumentCommand \printFirstPageNotes { }
-   {
-     \bool_if:NTF \g_ceur_longmktitle_bool
-       { \tex_let:D \columnwidth = \textwidth }
-       { }
-     \int_compare:nTF { \g_ceur_jtype_int > 5 }
-       { \ceuraddress }
-       { }
-     \printtnotes
-     \printnonumnotes
-     \bool_if:NTF \g_ceur_blind_bool
-       { }
-       {
-         \printcornotes
-         \printmaltese
-         \printaddrinfoot
-         \printemails
-         \printurls
-         \printorcid
-         \printfacebook
-         \printtwitter
-         \printgplus
-         \printlinkedin
-         \printfnotes
-       }
-       \printlogonotes
-     \bool_if:NTF \g_ceur_longmktitle_bool
-       {
-         \if@twocolumn
-         \tex_let:D \columnwidth = \Columnwidth \fi
-       }
-       { }
-       \normalcolor
-     }
+\NewDocumentCommand \printFirstPageNotes { } {
+  \bool_if:NTF \g_ceur_longmktitle_bool {
+    \tex_let:D \columnwidth = \textwidth
+  } { }
+  \int_compare:nTF { \g_ceur_jtype_int > 5 } {
+    \ceuraddress
+  } { }
+  \printtnotes
+  \printnonumnotes
+  \bool_if:NTF \g_ceur_blind_bool {
+  } {
+    \printcornotes
+    \printmaltese
+    \printaddrinfoot
+    \printemails
+    \printurls
+    \printorcid
+    \printfacebook
+    \printtwitter
+    \printgplus
+    \printlinkedin
+    \printfnotes
+  }
+  \printlogonotes
+  \bool_if:NTF \g_ceur_longmktitle_bool {
+    \if@twocolumn
+      \tex_let:D \columnwidth = \Columnwidth \fi
+  } { }
+  \normalcolor
+}
 
 %
 % Date History
@@ -1983,16 +1993,15 @@
   \normalfont \normalsize
 }
 
-\NewDocumentCommand \MaketitleBox { }
-{
+\NewDocumentCommand \MaketitleBox { } {
   \tex_def:D \baselinestretch{1}
   \group_begin:
   \@title
   \group_end:
-  %
-  \bool_if:NTF \g_ceur_blind_bool
-  { \vspace* { 10 mm } }
-  {
+  % 
+  \bool_if:NTF \g_ceur_blind_bool {
+    \vspace* { 10 mm }
+  } {
     \group_begin:
     \normalsize \ceurauthors \par
     \ceurcollab \par
@@ -2168,17 +2177,52 @@
 % pagestyle
 %
 
-\cs_new:Npn \__first_footerline:
-{
+\RequirePackage{scrlayer-scrpage}
+\clearpairofpagestyles
+
+\setkomafont{pageheadfoot}{\sffamily\small}
+% \setkomafont{pagehead}{\sffamily\small}
+
+\bool_if:NTF \g_ceur_hf_bool {
+  \KOMAoptions{headsepline}
+  % \ofoot[Page~ \thepage {} ~of~ \lastpage]{Page~ \thepage {} ~of~ \lastpage}
+  % \ifoot[\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}]{\__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+  % \ohead[]{\__short_title:}
+  \cfoot[\thepage]{\thepage}
+  \ohead[]{\firstpage--\lastpage}
+  \ihead[]{\__short_authors:{} ~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
+}{ }
+
+% \newcommand{\hffont}{\sffamily\small}
+
+% \RequirePackage{scrlayer-fancyhdr}
+
+% \fancypagestyle{first}{%
+%   \fancyhf{}%
+%   \renewcommand{\headrulewidth}{\z@}%
+%   \renewcommand{\footrulewidth}{\z@}%
+%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+% }  
+
+% \fancypagestyle{standard}{%
+%   \fancyhf{}%
+%   \renewcommand{\headrulewidth}{\z@}%
+%   \renewcommand{\footrulewidth}{\z@}%
+%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
+%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
+%   \fancyhead[L]{\hffont \__short_title:}%
+% }  
+
+\cs_new:Npn \__first_footerline: {
   \group_begin:
-  % \small
-  % \sffamily \__short_authors: :~
-  % { \rmfamily \itshape Preprint~ submitted ~to ~Elsevier }
+  \small \sffamily
+  \__short_authors: :~
+  { \rmfamily \itshape CEUR~Workshop~Proceedings }
   \group_end:
 }
 
-\cs_new:Npn \__first_head:
-{
+\cs_new:Npn \__first_head: {
   \parbox[t]{\textwidth}
   {
     \color{black!20}
@@ -2186,55 +2230,46 @@
   }
 }
 
-\cs_new:Npn \__first_foot:
-{
-  % \parbox[t]{\textwidth}
-  % {
-  %    \rule{\textwidth}{.2pt}\\
-  %    \__first_footerline: \hfill Page~ \thepage {} ~of~ \lastpage }
-}
-
-
-\cs_new:Npn \__cas_head:
-{
-  \parbox{\textwidth}
-    {
-      \sffamily\small\centering
-      \__short_title:
-    }
+\cs_new:Npn \__first_foot: {
+  \parbox[t]{\textwidth} {
+    % \rule{\textwidth}{.2pt}\\
+    \sffamily\small
+    \__first_footerline:
+    \hfill Page~ \thepage {} ~of~ \lastpage
   }
-
-
-\cs_new:Npn \__cas_foot:
-{
-  % \parbox[t]{\textwidth}
-  % {
-  %  \rule{\textwidth}{.2pt}\\
-  %  \sffamily\small
-  %  \__first_footerline:
-  %  \hfill Page~\thepage {}~of~ \lastpage
-  % }
 }
 
-\newcommand \ps@first
- {
-   \cs_set_eq:NN \@oddhead \__first_head:
-   \cs_set_eq:NN \@evenhead \__first_head:
-   \cs_set_eq:NN \@evenfoot \__first_foot:
-   \cs_set_eq:NN \@oddfoot \__first_foot:
- }
-
-
-\newcommand \ps@cas
-{
-  \cs_set_eq:NN \@oddhead \__cas_head:
-  \cs_set_eq:NN \@evenhead \__cas_head:
-  \cs_set_eq:NN \@evenfoot \__cas_foot:
-  \cs_set_eq:NN \@oddfoot \__cas_foot:
+\cs_new:Npn \__ceur_head: {
+  \parbox{\textwidth} {
+    \sffamily\small\centering
+    \__short_title:
+  }
 }
 
-\ps@cas
+\cs_new:Npn \__ceur_foot: {
+  \parbox[t]{\textwidth} {
+    % \rule{\textwidth}{.2pt}\\
+    \sffamily\small
+    \__first_footerline:
+    \hfill Page~\thepage {}~of~ \lastpage
+  }
+}
 
+% \newcommand \ps@first {
+%   \cs_set_eq:NN \@oddhead \__first_head:
+%   \cs_set_eq:NN \@evenhead \__first_head:
+%   \cs_set_eq:NN \@evenfoot \__first_foot:
+%   \cs_set_eq:NN \@oddfoot \__first_foot:
+% }
+
+% \newcommand \ps@ceur {
+%   \cs_set_eq:NN \@oddhead \__ceur_head:
+%   \cs_set_eq:NN \@evenhead \__ceur_head:
+%   \cs_set_eq:NN \@evenfoot \__ceur_foot:
+%   \cs_set_eq:NN \@oddfoot \__ceur_foot:
+% }
+
+% \ps@ceur
 
 %
 % Floats
@@ -2280,8 +2315,7 @@
   \skip_vertical:N \l_tbl_belowcap_skip
 }
 
-\keys_define:nn { cas / tbl }
-{
+\keys_define:nn { ceur / tbl } {
   width     .dim_set:N   =  \l_tbl_width_dim ,
   pos       .tl_set:N    =  \l_tbl_pos_tl ,
   cols      .tl_set:N    =  \l_tbl_cols_tl ,
@@ -2291,10 +2325,10 @@
   abovetbl  .skip_set:N  =  \l_tbl_abovetbl_skip ,
   belowtbl  .skip_set:N  =  \l_tbl_belowtbl_skip ,
   full      .bool_gset:N =  \g_tbl_full_bool ,
+  unknown   .code:n      =  \tl_set:Nx \l_tbl_pos_tl { \l_keys_key_str },
 }
 
-\cs_set:Npn \__reset_tbl:
-{
+\cs_set:Npn \__reset_tbl: {
   \tl_set:Nx \l_tbl_pos_tl { t }
   \tl_set:Nx \l_tbl_cols_tl { 1 }
   \tl_set:Nn \l_tbl_align_tl { \centering }
@@ -2302,15 +2336,13 @@
   \skip_set:Nn \l_tbl_belowcap_skip { 0pt }
   \skip_set:Nn \l_tbl_abovetbl_skip { 6pt }
   \skip_set:Nn \l_tbl_belowtbl_skip { 6pt }
-
 }
 
-\RenewDocumentEnvironment { table } { O{} }
-{
+\RenewDocumentEnvironment { table } { O{} } {
   \__reset_tbl:
   \bool_gset_false:N \g_tbl_full_bool
   \dim_set:Nn \l_tbl_width_dim { \linewidth }
-  \keys_set:nn { cas / tbl } { #1 }
+  \keys_set:nn { ceur / tbl } { #1 }
   \csxdef{fps@table}{\l_tbl_pos_tl}
   \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
   \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
@@ -2318,46 +2350,38 @@
   \l_tbl_align_tl
   \sffamily\small
 }
-{
-\end@float
+{ \end@float }
+
+
+\RenewDocumentEnvironment { table* } { O{width=\FullWidth} } {
+  \__reset_tbl:
+  \bool_gset_true:N \g_tbl_full_bool
+  \dim_set:Nn \l_tbl_width_dim { \FullWidth }
+  \keys_set:nn { ceur / tbl } { #1 }
+  \csxdef{fps@table}{\l_tbl_pos_tl}
+  \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
+  \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
+  \@dblfloat{table}
+  \l_tbl_align_tl
+  \sffamily\small
+  % \leftskip=-\FullWidth
 }
-
-
-\RenewDocumentEnvironment { table* } { O{width=\FullWidth} }
-  {
-    \__reset_tbl:
-    \bool_gset_true:N \g_tbl_full_bool
-          \dim_set:Nn \l_tbl_width_dim { \FullWidth }
-   \keys_set:nn { cas / tbl } { #1 }
-    \csxdef{fps@table}{\l_tbl_pos_tl}
-    \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
-    \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn
-    \@dblfloat{table}
-     \l_tbl_align_tl
-     \sffamily\small
- %    \leftskip=-\FullWidth
-  }
-  {
-    \end@dblfloat
-  }
-
+{ \end@dblfloat }
 
 \dim_new:N \l_fig_width_dim
 \dim_set:Nn \l_fig_width_dim { \linewidth }
 
-\cs_new:Npn \__make_fig_caption:nn #1#2
-{
+\cs_new:Npn \__make_fig_caption:nn #1#2 {
   \l_fig_align_tl
   \skip_vertical:N \l_fig_abovecap_skip
-%  \bool_if:NTF \g_fig_full_bool
-%  { \skip_horizontal:n { -\FullWidth } } { }
+  % \bool_if:NTF \g_fig_full_bool
+  % { \skip_horizontal:n { -\FullWidth } } { }
   \parbox{ \l_fig_width_dim }
-   {\rightskip=0pt\sffamily\small\textbf{\color{scolor}#1:}~#2\par }
+  {\rightskip=0pt\sffamily\small\textbf{\color{scolor}#1:}~#2\par }
   \skip_vertical:N \l_fig_belowcap_skip
 }
 
-\keys_define:nn { cas / fig }
-{
+\keys_define:nn { ceur / fig } {
   width     .dim_set:N   =  \l_fig_width_dim ,
   pos       .tl_set:N    =  \l_fig_pos_tl ,
   cols      .tl_set:N    =  \l_fig_cols_tl ,
@@ -2367,10 +2391,10 @@
   abovefig  .skip_set:N  =  \l_fig_abovefig_skip ,
   belowfig  .skip_set:N  =  \l_fig_belowfig_skip ,
   full      .bool_gset:N =  \g_fig_full_bool ,
+  unknown   .code:n      =  \tl_set:Nx \l_fig_pos_tl { \l_keys_key_str },
 }
 
-\cs_set:Npn \__reset_fig:
-{
+\cs_set:Npn \__reset_fig: {
   \tl_set:Nx \l_fig_pos_tl { t }
   \tl_set:Nx \l_fig_cols_tl { 1 }
   \tl_set:Nn \l_fig_align_tl { \raggedleft }
@@ -2378,40 +2402,33 @@
   \skip_set:Nn \l_fig_belowcap_skip { 6pt }
   \skip_set:Nn \l_fig_abovefig_skip { 6pt }
   \skip_set:Nn \l_fig_belowfig_skip { 6pt }
-
 }
 
-\RenewDocumentEnvironment { figure } { O{} }
-  {
-    \__reset_fig:
-    \bool_gset_false:N \g_fig_full_bool
-    \dim_set:Nn \l_fig_width_dim { \linewidth }
-    \keys_set:nn { cas / fig } { #1 }
-    \csxdef{fps@figure}{\l_fig_pos_tl}
-    \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
-    \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
-   \@float{figure}
-     \l_fig_align_tl
-     \sffamily\small
-  }
-  {
-    \end@float
-  }
+\RenewDocumentEnvironment { figure } { O{} } {
+  \__reset_fig:
+  \bool_gset_false:N \g_fig_full_bool
+  \dim_set:Nn \l_fig_width_dim { \linewidth }
+  \keys_set:nn { ceur / fig } { #1 }
+  \csxdef{fps@figure}{\l_fig_pos_tl}
+  \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
+  \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
+  \@float{figure}
+  \l_fig_align_tl
+  \sffamily\small
+}{ \end@float }
 
-
-\RenewDocumentEnvironment { figure* } { O{width=\textwidth} }
-{
+\RenewDocumentEnvironment { figure* } { O{width=\textwidth} } {
   \__reset_fig:
   \bool_gset_true:N \g_fig_full_bool
   \dim_set:Nn \l_fig_width_dim { \FullWidth }
-  \keys_set:nn { cas / fig } { #1 }
+  \keys_set:nn { ceur / fig } { #1 }
   \csxdef{fps@figure}{\l_fig_pos_tl}
   \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
   \cs_set_eq:NN \@makecaption \__make_fig_caption:nn
   \@dblfloat{figure}
   \l_fig_align_tl
   \sffamily\small
-%  \leftskip=-\FullWidth
+  % \leftskip=-\FullWidth
 }
 { \end@dblfloat }
 
@@ -2445,25 +2462,23 @@
 \NewDocumentCommand \abovebioskip { m }
   { \dim_set:Nn \l_above_bio_dim { #1 } }
 
-\cs_new:Nn \__fig_defaults:
-  {
-    \wfigwidth  { 25.5mm }
-    \wfighspace { 0mm }
-    \wfigvspace { 0mm }
-    \wfighcorr  { 0pt }
-    \wfigvcorr  { -12pt }
-    \wfigvcorr  { 0pt }
-    \abovebioskip { 12pt }
-    \tl_set:Nn  \l_wrap_figpos_tl { l }
-    \int_set:Nn \l_wrap_figlines_int { 3 }
-    \int_set:Nn \l_wrap_figlcorr_int { 1 }
-    \tl_clear:N \l_wrap_figcap_tl
-  }
+\cs_new:Nn \__fig_defaults: {
+  \wfigwidth  { 25.5mm }
+  \wfighspace { 0mm }
+  \wfigvspace { 0mm }
+  \wfighcorr  { 0pt }
+  \wfigvcorr  { -12pt }
+  \wfigvcorr  { 0pt }
+  \abovebioskip { 12pt }
+  \tl_set:Nn  \l_wrap_figpos_tl { l }
+  \int_set:Nn \l_wrap_figlines_int { 3 }
+  \int_set:Nn \l_wrap_figlcorr_int { 1 }
+  \tl_clear:N \l_wrap_figcap_tl
+}
 
 \__fig_defaults:
 
-\keys_define:nn { wrap / fig }
-{
+\keys_define:nn { wrap / fig } {
   width    .dim_set:N    =  \l_wrap_figwidth_dim ,
   hspace   .dim_set:N    =  \l_wrap_fighspace_dim ,
   vspace   .dim_set:N    =  \l_wrap_figvspace_dim ,
@@ -2475,8 +2490,7 @@
   cap      .tl_set:N     =  \l_wrap_figcap_tl ,
 }
 
-\cs_new:Npn \__find_fig_height:n #1
-{
+\cs_new:Npn \__find_fig_height:n #1 {
   \box_clear:N  \g_tmpa_box
   \hbox_gset:Nn \g_tmpa_box
   { \includegraphics [ width = \l_wrap_figwidth_dim ] { #1 } }
@@ -2485,21 +2499,20 @@
   \dim_add:Nn \l_tmpa_dim { \box_dp:N \g_tmpa_box }
   \fp_set:Nn  \l_tmpa_fp  { \dim_to_fp:n { \l_tmpa_dim } }
   \fp_set:Nn  \l_tmpb_fp  { \dim_to_fp:n { \baselineskip } }
-%
+  % 
   \fp_set:Nn \l_wrap_figlines_fp
-    { \fp_eval:n { ( \l_tmpa_fp / \l_tmpb_fp )  + .5 } }
+  { \fp_eval:n { ( \l_tmpa_fp / \l_tmpb_fp )  + .5 } }
   \int_set:Nn \l_wrap_figlines_int
-    { \fp_to_int:N \l_wrap_figlines_fp }
-%
-    \iow_term:x { ...~wr-fig:~[BL:~\the\baselineskip] ~ ...}
-    \iow_term:x { ...~wr-fig:~[LINE-FP:~ \fp_use:N \l_wrap_figlines_fp]~ ...}
-    \iow_term:x { ...~wr-fig:~[LINE-INT:~ \int_use:N \l_wrap_figlines_int]~ ...}
+  { \fp_to_int:N \l_wrap_figlines_fp }
+  % 
+  \iow_term:x { ...~wr-fig:~[BL:~\the\baselineskip] ~ ...}
+  \iow_term:x { ...~wr-fig:~[LINE-FP:~ \fp_use:N \l_wrap_figlines_fp]~ ...}
+  \iow_term:x { ...~wr-fig:~[LINE-INT:~ \int_use:N \l_wrap_figlines_int]~ ...}
 }
 
 \newbox \l_bio_text_box
 
-\NewDocumentCommand \WrapFigure { o m }
-{
+\NewDocumentCommand \WrapFigure { o m } {
   \__fig_defaults:
   \IfNoValueTF { #1 } { } { \keys_set:nn { wrap / fig } { #1 } }
   \stepcounter { ca_biography_ctr }
@@ -2510,31 +2523,33 @@
   \int_gadd:Nn \l_wrap_figlines_int { \int_use:N \l_wrap_figlcorr_int }
   \setlength { \columnsep } { 5pt }
   \setlength { \intextsep } { 0pt }
-%  \mbox{}
-  \ifbool { dc }
-    { \xdef\Columnwidth{238.25pt} }
-    { \xdef\Columnwidth{\the\textwidth} }
+  % \mbox{}
+  \ifbool { dc } {
+    \xdef\Columnwidth{238.25pt}
+  }{
+    \xdef\Columnwidth{\the\textwidth}
+  }
   \ifcsundef { cabio\theca_biography_ctr lines }
-    {
-      \setbox \l_bio_text_box = \vbox \bgroup
-      \hsize = \dimexpr ( \Columnwidth - 72.28pt )
-    }
-    {
-      \ifbool { dc } {
-         \int_gset:Nn \l_wrap_figlines_int
-            { \csuse { cabio\theca_biography_ctr lines } }
-      } { }
-      \skip_vertical:N \l_above_bio_dim
-      \begin{wrapfigure}[\int_use:N \l_wrap_figlines_int]
-        { \l_wrap_figpos_tl }
-        [ \dim_use:N \l_wrap_fighcorr_dim ]
-        { \dim_use:N \l_tmpb_dim }
-        %\skip_vertical:N \l_wrap_figvcorr_dim
-        \includegraphics[width=\l_wrap_figwidth_dim]{#2}
-      \end{wrapfigure}
-      \setbox \l_bio_text_box = \vbox \bgroup
-      \hsize = \dimexpr ( \Columnwidth )
-    }
+  {
+    \setbox \l_bio_text_box = \vbox \bgroup
+    \hsize = \dimexpr ( \Columnwidth - 72.28pt )
+  }
+  {
+    \ifbool { dc } {
+      \int_gset:Nn \l_wrap_figlines_int
+      { \csuse { cabio\theca_biography_ctr lines } }
+    } { }
+    \skip_vertical:N \l_above_bio_dim
+    \begin{wrapfigure}[\int_use:N \l_wrap_figlines_int]
+      { \l_wrap_figpos_tl }
+      [ \dim_use:N \l_wrap_fighcorr_dim ]
+      { \dim_use:N \l_tmpb_dim }
+      % \skip_vertical:N \l_wrap_figvcorr_dim
+      \includegraphics[width=\l_wrap_figwidth_dim]{#2}
+    \end{wrapfigure}
+    \setbox \l_bio_text_box = \vbox \bgroup
+    \hsize = \dimexpr ( \Columnwidth )
+  }
 }
 
 \cs_set:Nn \__fwidth: { 1in }
@@ -2544,11 +2559,11 @@
 % short authors/title
 %
 
+\tl_new:N \__short_authors:
 \newcommand\shortauthors[1]{ \cs_gset:Nn \__short_authors: { #1 } }
-\newcommand\shorttitle[1]{ \cs_gset:Nn \__short_title: { #1 } }
 
-\shortauthors{}
-\shorttitle{}
+\tl_new:N \__short_title:
+\newcommand\shorttitle[1]{ \cs_gset:Nn \__short_title: { #1 } }
 
 \newcounter { ca_biography_ctr }
 \newbool { cas_no_pic_bio }
@@ -2671,15 +2686,20 @@
 
 \def\itemize{\@ifnextchar[{\@Itemize}{\@Itemize[]}}
 
-\def\@Itemize[#1]{\def\next{#1}%
+\def\@Itemize[#1]{%
+  \def\next{#1}%
   \ifnum \@itemdepth >\thr@@\@toodeep\else
-   \advance\@itemdepth\@ne
-  \ifx\next\@empty\else\expandafter\def\csname
-   labelitem\romannumeral\the\@itemdepth\endcsname{#1}\fi%
-  \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
-  \expandafter\list\csname\@itemitem\endcsname
-  {\def\makelabel##1{\hss\llap{##1}}}%
- \fi}
+    \advance\@itemdepth\@ne
+    \ifx\next\@empty\else\expandafter\def\csname
+      labelitem\romannumeral\the\@itemdepth\endcsname{#1}\fi%
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter\list\csname\@itemitem\endcsname
+    {\def\makelabel##1{\hss\llap{##1}}}%
+  \fi
+  \setlength{\itemsep}{\@@sep}
+  \setlength{\parsep}{0pt plus1pt minus1pt}%
+  \setlength{\parskip}{0pt plus1pt minus1pt}
+}
 
 %
 % Customized theorem
