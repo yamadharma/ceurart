@@ -1,4 +1,10 @@
 
+v0.3.3 / 2020-08-11
+==================
+
+  * feat: add ht option to sample files
+  * fix: TeXlive-2019 (Overleaf) issue (#1)
+
 v0.3.2 / 2020-07-10
 ==================
 
