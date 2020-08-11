@@ -26,11 +26,14 @@
 
 \newif\iflongmktitle    \longmktitlefalse
 
-% twocolumn
+%% twocolumn
 \newif\ifdc             \global\dcfalse
 \newif\ifsc             \global\sctrue
 \newif\ifcasreviewlayout  \global\casreviewlayoutfalse
 \newif\ifcasfinallayout   \global\casfinallayoutfalse
+%% header and footer
+\newif\ifhf
+\global\hffalse
 
 \newcounter{blind}
 \setcounter{blind}{0}
@@ -42,7 +45,8 @@
 
 %\newif\if@twocolumn
 \DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
-\DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
+% \DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
+\DeclareOption{hf}{\global\hftrue}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -82,6 +86,9 @@
 % enable header and footer
 \bool_new:N \g_ceur_hf_bool
 \bool_gset_false:N \g_ceur_hf_bool
+\ifhf
+  \bool_gset_true:N \g_ceur_hf_bool
+\fi
 
 %% PDF/A support
 
