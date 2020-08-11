@@ -15,12 +15,10 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.2}%
-\def\RCSdate{2020/07/03}%
+\def\RCSversion{0.3.3}%
+\def\RCSdate{2020/08/11}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
-
-\ExplSyntaxOn
 
 %%
 %% switches
@@ -33,10 +31,6 @@
 \newif\ifsc             \global\sctrue
 \newif\ifcasreviewlayout  \global\casreviewlayoutfalse
 \newif\ifcasfinallayout   \global\casfinallayoutfalse
-
-% enable header and footer
-\bool_new:N \g_ceur_hf_bool
-\bool_gset_false:N \g_ceur_hf_bool
 
 \newcounter{blind}
 \setcounter{blind}{0}
@@ -83,7 +77,11 @@
 \RequirePackage{iftex}
 \RequirePackage{microtype}
 
-% \ExplSyntaxOn
+\ExplSyntaxOn
+
+% enable header and footer
+\bool_new:N \g_ceur_hf_bool
+\bool_gset_false:N \g_ceur_hf_bool
 
 %% PDF/A support
 
