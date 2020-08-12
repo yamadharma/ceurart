@@ -2831,14 +2831,14 @@
 }
 
 %% Math font for pdfLaTeX
-\ifpdftex
-\file_if_exist:nTF { libertinust1math.sty }
-{
-  \RequirePackage{libertinust1math}
-}{
-  \iow_term:x { Libertinus math fonts are not available }
-}
-\fi
+% \ifpdftex
+% \file_if_exist:nTF { libertinust1math.sty }
+% {
+%   \RequirePackage{libertinust1math}
+% }{
+%   \iow_term:x { Libertinus math fonts are not available }
+% }
+% \fi
 
 \ExplSyntaxOff
 
