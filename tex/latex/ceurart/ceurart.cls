@@ -1,5 +1,5 @@
 %% ceurart.cls
-%% Copyright 2019, 2020 CEUR Workshop Proceedings (CEUR-WS.org)
+%% Copyright 2019--2020 CEUR Workshop Proceedings (CEUR-WS.org)
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -11,8 +11,9 @@
 %
 % This work has the LPPL maintenance status `maintained'.
 %.
-% The Current Maintainer of this work is Dmitry S. Kulyabov
-%
+% The Current Maintainer of this work is Dmitry S. Kulyabov.
+% The code was originally based on 'CAS Bundle' code.
+% 
 
 \def\RCSfile{ceurart}%
 \def\RCSversion{0.3.3}%
