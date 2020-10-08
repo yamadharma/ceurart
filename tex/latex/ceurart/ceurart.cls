@@ -1,5 +1,5 @@
 %% ceurart.cls
-%% Copyright 2019, 2020 CEUR Workshop Proceedings (CEUR-WS.org)
+%% Copyright 2019--2020 CEUR Workshop Proceedings (CEUR-WS.org)
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -11,14 +11,20 @@
 %
 % This work has the LPPL maintenance status `maintained'.
 %.
-% The Current Maintainer of this work is Dmitry S. Kulyabov
-%
+% The Current Maintainer of this work is Dmitry S. Kulyabov.
+% The code was originally based on 'CAS Bundle' code.
+% 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.3}%
-\def\RCSdate{2020/08/11}%
+\def\RCSversion{0.3.4}%
+\def\RCSdate{2020/10/08}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
+
+\RequirePackage{expl3,xparse}
+\@ifundefined{regex_match:nnTF}{\RequirePackage{l3regex}}{}
+
+\ExplSyntaxOn
 
 %%
 %% switches
@@ -31,9 +37,16 @@
 \newif\ifsc             \global\sctrue
 \newif\ifcasreviewlayout  \global\casreviewlayoutfalse
 \newif\ifcasfinallayout   \global\casfinallayoutfalse
+%% enable header and footer
+\bool_new:N \g_ceur_hf_bool
+\bool_gset_false:N \g_ceur_hf_bool
+
+% \ifhf
+%   \bool_gset_true:N \g_ceur_hf_bool
+% \fi
 %% header and footer
-\newif\ifhf
-\global\hffalse
+% \newif\ifhf
+% \global\hffalse
 
 \newcounter{blind}
 \setcounter{blind}{0}
@@ -45,8 +58,8 @@
 
 %\newif\if@twocolumn
 \DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
-% \DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
-\DeclareOption{hf}{\global\hftrue}
+\DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
+% \DeclareOption{hf}{\global\hftrue}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -71,8 +84,6 @@
 \RequirePackage{amsmath,amsfonts,amssymb}
 \allowdisplaybreaks
 
-\RequirePackage{expl3,xparse}
-\@ifundefined{regex_match:nnTF}{\RequirePackage{l3regex}}{}
 \RequirePackage{etoolbox,balance}
 \RequirePackage{booktabs,makecell,multirow,array,colortbl,dcolumn,stfloats}
 \RequirePackage{xspace,xstring}
@@ -80,15 +91,6 @@
 \RequirePackage[svgnames,dvipsnames]{xcolor}
 \RequirePackage{iftex}
 \RequirePackage{microtype}
-
-\ExplSyntaxOn
-
-% enable header and footer
-\bool_new:N \g_ceur_hf_bool
-\bool_gset_false:N \g_ceur_hf_bool
-\ifhf
-  \bool_gset_true:N \g_ceur_hf_bool
-\fi
 
 %% PDF/A support
 
