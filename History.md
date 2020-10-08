@@ -1,4 +1,10 @@
 
+v0.3.4 / 2020-10-08
+==================
+
+  * feat: revert to latex3 bools
+  * feat: add information about the CAS Bundle
+
 v0.3.3 / 2020-08-11
 ==================
 
