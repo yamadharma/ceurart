@@ -1,4 +1,10 @@
 
+v0.3.5 / 2020-10-09
+==================
+
+  * feat(template): change overleaf template link
+  * feat: add desription in README
+
 v0.3.4 / 2020-10-08
 ==================
 
