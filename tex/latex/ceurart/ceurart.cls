@@ -1020,7 +1020,8 @@
   plus      .tl_set:N   = \l_ceur_au_gplus_tl      ,
   gplus     .tl_set:N   = \l_ceur_au_gplus_tl      ,
   email     .tl_set:N   = \l_ceur_au_email_tl      ,
-  url       .tl_set:N   = \l_ceur_au_url_tl        ,
+  %% prevent URL expansion (due ~ sign)
+  url       .code:n   = { \tl_set:Nn \l_ceur_au_url_tl { \exp_not:n { #1 } } },
 }
 
 \keys_set:nn { ceur / author } {
@@ -2863,3 +2864,9 @@
 %
 % End of class 'ceurart'
 %
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% coding: utf-8-unix
+%%% End:
