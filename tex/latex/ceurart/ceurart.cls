@@ -10,13 +10,13 @@
 % version 2005/12/01 or later.
 %
 % This work has the LPPL maintenance status `maintained'.
-%.
+%
 % The Current Maintainer of this work is Dmitry S. Kulyabov.
 % The code was originally based on 'CAS Bundle' code.
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.6}%
+\def\RCSversion{0.3.8}%
 \def\RCSdate{2020/10/16}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
@@ -1222,7 +1222,7 @@
   {
     \int_gincr:N \g_ceur_aau_int
     \tex_gdef:D \theauthor {\int_use:N \g_ceur_aau_int }
-    \keys_set:nn { ceur /author } { #3 }
+    \keys_set:nn { ceur / author } { #3 }
     \tl_if_head_eq_catcode:nNTF { #1 } a
     { \processAffRef { #1 } }
     { \processAffNum { #1 } }
@@ -1275,7 +1275,8 @@
     \wrAux { \token_to_str:N \emailauthor
       { \l_ceur_au_email_tl } { \exp_not:n {#2} } }
   }
-  \tl_if_empty:NTF \l_ceur_au_url_tl {
+  \tl_set:Nx \l_ceur_au_url_tl_tmp { \l_ceur_au_url_tl }
+  \tl_if_empty:NF \l_ceur_au_url_tl_tmp {
     \wrAux { \token_to_str:N \urlauthor
       { \l_ceur_au_url_tl } { \exp_not:n {#2} } }
   }
