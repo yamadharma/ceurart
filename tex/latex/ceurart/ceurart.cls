@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.4}%
-\def\RCSdate{2020/10/08}%
+\def\RCSversion{0.3.6}%
+\def\RCSdate{2020/10/16}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -992,7 +992,6 @@
   \tex_gdef:D \@fnmark {}
 }
 
-
 \int_new:N \l_autype_int
 \keys_define:nn { ceur / author } {
   auid     .tl_set:N   = \l_ceur_au_id_tl             ,
@@ -1005,21 +1004,21 @@
   role     .tl_set:N   = \l_ceur_au_role_tl           ,
   orcid    .tl_set:N   = \l_ceur_au_orcid_tl          ,
   collab   .bool_set:N = \l_ceur_au_collab_bool       ,
-  type     .multichoice:,
+  type     .multichoice:                              ,
   type/author    .code:n = { \int_set:Nn \l_autype_int { 0 } },
   type/editor    .code:n = { \int_set:Nn \l_autype_int { 1 } },
   type/collab    .code:n = { \int_set:Nn \l_autype_int { 2 } },
   type/anon      .code:n = { \int_set:Nn \l_autype_int { 3 } },
   % type/collab    .bool_set:N = \l_ceur_au_collab_bool          ,
   % type/anon      .bool_set:N = \l_ceur_au_anon_bool            ,
-  anon      .bool_set:N = \l_ceur_au_anon_bool     ,
-  deceased  .bool_set:N = \l_ceur_au_deceased_bool ,
-  twitter   .tl_set:N   = \l_ceur_au_twitter_tl    ,
-  facebook  .tl_set:N   = \l_ceur_au_facebook_tl   ,
-  linkedin  .tl_set:N   = \l_ceur_au_linkedin_tl   ,
-  plus      .tl_set:N   = \l_ceur_au_gplus_tl      ,
-  gplus     .tl_set:N   = \l_ceur_au_gplus_tl      ,
-  email     .tl_set:N   = \l_ceur_au_email_tl      ,
+  anon      .bool_set:N = \l_ceur_au_anon_bool        ,
+  deceased  .bool_set:N = \l_ceur_au_deceased_bool    ,
+  twitter   .tl_set:N   = \l_ceur_au_twitter_tl       ,
+  facebook  .tl_set:N   = \l_ceur_au_facebook_tl      ,
+  linkedin  .tl_set:N   = \l_ceur_au_linkedin_tl      ,
+  plus      .tl_set:N   = \l_ceur_au_gplus_tl         ,
+  gplus     .tl_set:N   = \l_ceur_au_gplus_tl         ,
+  email     .tl_set:N   = \l_ceur_au_email_tl         ,
   %% prevent URL expansion (due ~ sign)
   url       .code:n   = { \tl_set:Nn \l_ceur_au_url_tl { \exp_not:n { #1 } } },
 }
@@ -1047,54 +1046,52 @@
   url        = {} ,
 }
 
-\keys_define:nn { ceur / ausetup }
-   {
-     type      .choice: ,
-     type / authors .meta:n =
-       {
-         size   =  \large         ,
-         shape  =  \upshape       ,
-         weight =  \mdseries      ,
-         before =  \bigskipamount ,
-         after  =  0pt            ,
-         align  =  \raggedright     ,
-         color  =  black          ,
-         lskip  =  0pt            ,
-         rskip  =  0pt            ,
-       } ,
-     type / collaboration .meta:n =
-       {
-         size   =  \Large         ,
-         shape  =  \upshape       ,
-         weight =  \mdseries      ,
-         before =  \bigskipamount ,
-         after  =  0pt            ,
-         align  =  \raggedright     ,
-         color  =  black          ,
-         lskip  =  0pt            ,
-         rskip  =  0pt            ,
-       } ,
-     size      .tl_set:N    = \l_ceur_augroup_size_tl      ,
-     shape     .tl_set:N    = \l_ceur_augroup_shape_tl     ,
-     weight    .tl_set:N    = \l_ceur_augroup_weight_tl    ,
-     before    .dim_set:N   = \l_ceur_augroup_before_dim   ,
-     after     .dim_set:N   = \l_ceur_augroup_after_dim    ,
-     align     .tl_set:N    = \l_ceur_augroup_align_tl     ,
-     color     .tl_set:N    = \l_ceur_augroup_color_tl     ,
-     lskip     .dim_set:N   = \l_ceur_augroup_lskip_tl     ,
-     rskip     .dim_set:N   = \l_ceur_augroup_rskip_tl     ,
-   }
+\keys_define:nn { ceur / ausetup } {
+  type      .choice: ,
+  type / authors .meta:n = {
+    size   =  \large         ,
+    shape  =  \upshape       ,
+    weight =  \mdseries      ,
+    before =  \bigskipamount ,
+    after  =  0pt            ,
+    align  =  \raggedright   ,
+    color  =  black          ,
+    lskip  =  0pt            ,
+    rskip  =  0pt            ,
+  } ,
+  type / collaboration .meta:n = {
+    size   =  \Large         ,
+    shape  =  \upshape       ,
+    weight =  \mdseries      ,
+    before =  \bigskipamount ,
+    after  =  0pt            ,
+    align  =  \raggedright   ,
+    color  =  black          ,
+    lskip  =  0pt            ,
+    rskip  =  0pt            ,
+  } ,
+  size      .tl_set:N    = \l_ceur_augroup_size_tl      ,
+  shape     .tl_set:N    = \l_ceur_augroup_shape_tl     ,
+  weight    .tl_set:N    = \l_ceur_augroup_weight_tl    ,
+  before    .dim_set:N   = \l_ceur_augroup_before_dim   ,
+  after     .dim_set:N   = \l_ceur_augroup_after_dim    ,
+  align     .tl_set:N    = \l_ceur_augroup_align_tl     ,
+  color     .tl_set:N    = \l_ceur_augroup_color_tl     ,
+  lskip     .dim_set:N   = \l_ceur_augroup_lskip_tl     ,
+  rskip     .dim_set:N   = \l_ceur_augroup_rskip_tl     ,
+}
 
-\DeclareDocumentCommand \ceurAuthorSetup { m }
-   { \keys_set:nn { ceur / ausetup } { #1 } }
-\DeclareDocumentCommand \ceurausetup { m }
-   { \tl_set:Nn \l_ceur_au_setup_tl
-     { \keys_set:nn { ceur / ausetup } { #1 } }
-   }
-\DeclareDocumentCommand \ceurclbsetup { m }
-   { \tl_set:Nn \l_ceur_clb_setup_tl
-     { \keys_set:nn { ceur / ausetup } { #1 } }
-   }
+\DeclareDocumentCommand \ceurAuthorSetup { m } {
+  \keys_set:nn { ceur / ausetup } { #1 }
+}
+\DeclareDocumentCommand \ceurausetup { m } {
+  \tl_set:Nn \l_ceur_au_setup_tl {
+    \keys_set:nn { ceur / ausetup } { #1 } }
+}
+\DeclareDocumentCommand \ceurclbsetup { m } {
+  \tl_set:Nn \l_ceur_clb_setup_tl {
+    \keys_set:nn { ceur / ausetup } { #1 } }
+}
 
 \ceurausetup { }
 \ceurclbsetup { }
@@ -1105,14 +1102,12 @@
 \seq_new:N  \g_ceur_gplus_seq
 \seq_new:N  \g_ceur_linkedin_seq
 
-\NewDocumentCommand \twitterauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_twitter_seq
-       {
-         \parsename { #2 }
-         \url{https://twitter.com/\tl_to_str:n{#1}}\space(\eadauthor)
-       }
-     }
+\NewDocumentCommand \twitterauthor { m m } {
+  \seq_gput_right:Nn \g_ceur_twitter_seq {
+    \parsename { #2 }
+    \url{https://twitter.com/\tl_to_str:n{#1}}\space(\eadauthor)
+  }
+}
 \NewDocumentCommand \facebookauthor { m m }
    {
      \seq_gput_right:Nn \g_ceur_facebook_seq
