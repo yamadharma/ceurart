@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.3.8}%
-\def\RCSdate{2020/10/16}%
+\def\RCSversion{0.4.0}%
+\def\RCSdate{2021/03/18}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -595,7 +595,7 @@
      \clist_map_inline:nn { #1 }
      {
        \seq_put_right:Nn \l_affmk_seq
-       { \int_to_alph:n {##1} }
+       { \int_to_arabic:n {##1} }
       }
     }
 
@@ -1433,42 +1433,47 @@
 \seq_new:N \g_ceur_aff_foot_seq
 
 \NewDocumentCommand \printaddrinfoot { }
-   {
-     { \seq_use:Nn \g_ceur_aff_foot_seq { \par } }
-   }
+{
+  { \seq_use:Nn \g_ceur_aff_foot_seq { \par } }
+}
 
 \NewDocumentCommand \address { O{} m O{} }
-   {
-     \__reset_addr:
-     \keys_set:nn { ceur / address } { #3 }
-     \bool_if:NTF \g_ceur_addr_foot_bool
-     { \__foot_address:nnn [#1]{#2}[#3] }
-     {
-       \seq_gput_right:cn { g_ceur_aff\int_use:N \g_ceur_augr_int _seq }
-       { \tl_if_blank:nTF { #1 }
-         {
-           \tex_xdef:D \thefootnote{}
-           { #2 }
-         }
-         {
-           \tl_if_head_eq_catcode:nNTF { #1 } a
-           {
-             \int_gincr:N \g_ceur_aff_int
-             \tex_xdef:D \@currentlabel
-             { \int_to_alph:n { \int_use:N \g_ceur_aff_int } }
-             \ceurLabel {#1}
-             \textsuperscript{\itshape\@currentlabel} #2
-         }
-         {
-           \int_gset:Nn \g_ceur_aff_int { #1 }
-           \tex_xdef:D \@currentlabel
-           { \int_to_alph:n {  \int_use:N \g_ceur_aff_int } }
-           \textsuperscript{\itshape\@currentlabel} #2
-         }
-       }
-     }
-   }
- }
+{
+  \__reset_addr:
+  \keys_set:nn { ceur / address } { #3 }
+  \bool_if:NTF \g_ceur_addr_foot_bool
+  { \__foot_address:nnn [#1]{#2}[#3] }
+  {
+    \seq_gput_right:cn { g_ceur_aff\int_use:N \g_ceur_augr_int _seq }
+    { \tl_if_blank:nTF { #1 }
+      {
+        \tex_xdef:D \thefootnote{}
+        { #2 }
+      }
+      {
+        \tl_if_head_eq_catcode:nNTF { #1 } a
+        {
+          \int_gincr:N \g_ceur_aff_int
+          \tex_xdef:D \@currentlabel
+          %% label format:
+          %% \int_to_arabic:n
+          %% \int_to_alph:n
+          %% \int_to_symbols:nnn
+          %% \int_to_roman:n
+          { \int_to_arabic:n { \int_use:N \g_ceur_aff_int } }
+          \ceurLabel {#1}
+          \textsuperscript{\itshape\@currentlabel} #2
+        }
+        {
+          \int_gset:Nn \g_ceur_aff_int { #1 }
+          \tex_xdef:D \@currentlabel
+          { \int_to_arabic:n {  \int_use:N \g_ceur_aff_int } }
+          \textsuperscript{\itshape\@currentlabel} #2
+        }
+      }
+    }
+  }
+}
 
 \cs_new:Npn \__foot_address:nnn [#1]#2[#3]
 {
@@ -1494,7 +1499,7 @@
         { \footnotetext{\textit{\l_ceur_addr_type_tl}: \c_space_token #2} }
       }
       {
-        \tex_def:D \thefootnote { \itshape\int_to_alph:n { #1 } }
+        \tex_def:D \thefootnote { \itshape\int_to_arabic:n { #1 } }
         \tl_if_empty:NTF \l_ceur_addr_type_tl
         { \footnotetext{#2} }
         { \footnotetext{\textit{\l_ceur_addr_type_tl}:
