@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/yamadharma/ceurart/compare/v0.4.0...v0.4.1) (2021-03-18)
+
+
+### Features
+
+* **doc:** add footnotes in text ([057c1b1](https://github.com/yamadharma/ceurart/commit/057c1b1386e6dbfb70a949f12e49d8ebf8e2f876))
+
+
+
 # [0.4.0](https://github.com/yamadharma/ceurart/compare/v0.3.8...v0.4.0) (2021-03-18)
 
 
