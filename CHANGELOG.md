@@ -1,3 +1,12 @@
+## [0.4.3](https://github.com/yamadharma/ceurart/compare/v0.4.2...v0.4.3) (2021-03-19)
+
+
+### Features
+
+* **class:** add \subtitle command ([31788c5](https://github.com/yamadharma/ceurart/commit/31788c5a52be1ce014cbb02a1ed46138784b28ad))
+
+
+
 ## [0.4.2](https://github.com/yamadharma/ceurart/compare/v0.4.1...v0.4.2) (2021-03-19)
 
 
