@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.0}%
-\def\RCSdate{2021/03/18}%
+\def\RCSversion{0.4.3}%
+\def\RCSdate{2021/03/19}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -469,6 +469,8 @@
 %  \gappto\usestmtitle{#1}%
 
 \renewcommand \@title { \seq_use:Nn \g_ceur_title_seq { } }
+
+\renewcommand{\subtitle}[1]{\title[mode=sub]{#1}}
 
 \NewDocumentCommand \wrAun { m }      %  unexpanded write to aux
    { \iow_now:Nn \@auxout { #1 } }
