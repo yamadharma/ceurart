@@ -132,7 +132,7 @@ bothered about downloading any extra packages.
 
 Modifying the template --- including but not limited to: adjusting
 margins, typeface sizes, line spacing, paragraph and list definitions,
-and the use of the \verb|\vspace| command to manually adjust the
+and the use of the \mintinline{latex}{\vspace} command to manually adjust the
 vertical spacing between elements of your work --- is not allowed.
 
 \section{Template parameters}
@@ -140,7 +140,7 @@ vertical spacing between elements of your work --- is not allowed.
 There are a number of template
 parameters which modify some part of the \verb|ceurart| document class.
 This parameters are enclosed in square
-brackets and are a part of the {\verb|documentclass|} command:
+brackets and are a part of the \mintinline{latex}{\documentclass} command:
 \begin{minted}{latex}
   \documentclass[parameter]{ceurart}
 \end{minted}
@@ -163,12 +163,12 @@ capitalized style or they should all use the regular English (or
 native language) style. It does not make a good impression if you or
 your authors mix the styles.
 
-Use the \verb|\title| command to define the title of your work. Do not
+Use the \mintinline{latex}{\title} command to define the title of your work. Do not
 insert line breaks in your title.
 
 \subsection{Title variants}
 
-\verb|\title| command have the below options:
+\mintinline{latex}{\title} command have the below options:
 \begin{itemize}
 \item \verb|title|: Document title. This is default option. 
 \begin{minted}{latex}
@@ -211,7 +211,7 @@ identification. Multiple authors may share one affiliation. Authors'
 names should not be abbreviated; use full first names wherever
 possible. Include authors' e-mail addresses whenever possible.
 
-\verb|\author| command have the below options: 
+\mintinline{latex}{\author} command have the below options: 
 
 \begin{itemize}
 \item \verb|style|: Style of author name (chinese)
@@ -255,8 +255,8 @@ Author block example:
 \subsection{Abstract and Keywords}
 
 Abstract shall be entered in an environment that starts
-with \verb|\begin{abstract}| and ends with
-\verb|\end{abstract}|. 
+with \mintinline{latex}{\begin{abstract}} and ends with
+\mintinline{latex}{\end{abstract}}. 
 
 \begin{minted}{latex}
 \begin{abstract}
@@ -264,8 +264,8 @@ with \verb|\begin{abstract}| and ends with
 \end{abstract}
 \end{minted}
 
-The key words are enclosed in a \verb|{keyword}|
-environment. Use \verb|\sep| to separate keywords.
+The key words are enclosed in a \mintinline{latex}{keywords}
+environment. Use \mintinline{latex}{\sep} to separate keywords.
 
 \begin{minted}{latex}
 \begin{keywords}
@@ -276,14 +276,15 @@ environment. Use \verb|\sep| to separate keywords.
 \end{keywords}
 \end{minted}
 
-At the end of front matter add \verb|\maketitle| command.
+At the end of front matter add \mintinline{latex}{\maketitle} command.
 
 \section{Sectioning Commands}
 
 Your work should use standard \LaTeX{} sectioning commands:
-\verb|section|, \verb|subsection|, \verb|subsubsection|, and
-\verb|paragraph|. They should be numbered; do not remove the numbering
-from the commands.
+\mintinline{latex}{\section}, \mintinline{latex}{\subsection},
+\mintinline{latex}{\subsubsection}, and
+\mintinline{latex}{\paragraph}. They should be numbered; do not remove
+the numbering from the commands.
 
 Simulating a sectioning command by setting the first word or words of
 a paragraph in boldface or italicized text is not allowed.
@@ -358,7 +359,7 @@ discussed in the next sections.
 A formula that appears in the running text is called an inline or
 in-text formula.  It is produced by the \verb|math| environment,
 which can be invoked with the usual
-\verb|\begin| \ldots \verb|\end| construction or with
+\mintinline{latex}{\begin} \ldots \mintinline{latex}{\end} construction or with
 the short form \verb|$| \ldots \verb|$|. You can use any of the symbols
 and structures, from $\alpha$ to $\omega$, available in
 \LaTeX~\cite{Lamport:LaTeX};
@@ -427,7 +428,8 @@ reference should be included: title, year, volume, number, pages,
 article DOI, etc.
 
 The bibliography is included in your source document with these two
-commands, placed just before the \verb|\end{document}| command:
+commands, placed just before the \mintinline{latex}{\end{document}}
+command:
 \begin{minted}{latex}
 \bibliography{bibfile}
 \end{minted}
@@ -483,15 +485,15 @@ during the article metadata extraction phase, and to ensure
 consistency in the spelling of the section heading.
 
 Authors should not prepare this section as a numbered or unnumbered
-{\verb|\section|}; please use the ``{\verb|acknowledgments|}'' environment.
+\mintinline{latex}{\section}; please use the ``\mintinline{latex}{acknowledgments}'' environment.
 
 \section{Appendices}
 
 If your work needs an appendix, add it before the
-``\verb|\end{document}|'' command at the conclusion of your source
+``\mintinline{latex}{\end{document}}'' command at the conclusion of your source
 document.
 
-Start the appendix with the ``\verb|appendix|'' command:
+Start the appendix with the ``\mintinline{latex}{\appendix}'' command:
 \begin{minted}{latex}
 \appendix
 \end{minted}
