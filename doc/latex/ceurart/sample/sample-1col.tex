@@ -141,9 +141,9 @@ There are a number of template
 parameters which modify some part of the \verb|ceurart| document class.
 This parameters are enclosed in square
 brackets and are a part of the {\verb|documentclass|} command:
-\begin{verbatim}
+\begin{minted}{latex}
   \documentclass[parameter]{ceurart}
-\end{verbatim}
+\end{minted}
 
 Frequently-used parameters, or combinations of parameters, include:
 \begin{itemize}
@@ -234,7 +234,7 @@ The author names and affiliations could be formatted in two ways:
 \end{enumerate}
 
 Author block example:
-\begin{verbatim}
+\begin{minted}{latex}
 \author[1,2]{Author Name}[%
     prefix=Prof.,
     degree=D.Sc.,
@@ -246,7 +246,7 @@ Author block example:
 
 \address[1]{Affiliation #1}
 \address[2]{Affiliation #2}
-\end{verbatim}
+\end{minted}
 
 \subsection{Abstract and Keywords}
 
@@ -254,23 +254,23 @@ Abstract shall be entered in an environment that starts
 with \verb|\begin{abstract}| and ends with
 \verb|\end{abstract}|. 
 
-\begin{verbatim}
+\begin{minted}{latex}
 \begin{abstract}
   This is an abstract.
 \end{abstract}
-\end{verbatim}
+\end{minted}
 
 The key words are enclosed in a \verb|{keyword}|
 environment. Use \verb|\sep| to separate keywords.
 
-\begin{verbatim}
+\begin{minted}{latex}
 \begin{keywords}
   First keyword \sep 
   Second keyword \sep 
   Third keyword \sep 
   Fourth keyword
 \end{keywords}
-\end{verbatim}
+\end{minted}
 
 At the end of front matter add \verb|\maketitle| command.
 
@@ -424,9 +424,9 @@ article DOI, etc.
 
 The bibliography is included in your source document with these two
 commands, placed just before the \verb|\end{document}| command:
-\begin{verbatim}
+\begin{minted}{latex}
 \bibliography{bibfile}
-\end{verbatim}
+\end{minted}
 where ``\verb|bibfile|'' is the name, without the ``\verb|.bib|''
 suffix, of the Bib\TeX{} file.
 
@@ -469,11 +469,11 @@ section, which is placed just before the reference section in your
 document.
 
 This section has a special environment:
-\begin{verbatim}
+\begin{minted}{latex}
 \begin{acknowledgments}
   These are different acknowledgments.
 \end{acknowledgments}
-\end{verbatim}
+\end{minted}
 so that the information contained therein can be more easily collected
 during the article metadata extraction phase, and to ensure
 consistency in the spelling of the section heading.
@@ -488,9 +488,9 @@ If your work needs an appendix, add it before the
 document.
 
 Start the appendix with the ``\verb|appendix|'' command:
-\begin{verbatim}
+\begin{minted}{latex}
 \appendix
-\end{verbatim}
+\end{minted}
 and note that in the appendix, sections are lettered, not
 numbered. 
 
