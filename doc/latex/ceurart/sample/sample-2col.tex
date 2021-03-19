@@ -13,6 +13,13 @@ twocolumn,
 \sloppy
 
 %%
+%% Minted listings support 
+%% Need pygment <http://pygments.org/> <http://pypi.python.org/pypi/Pygments>
+\usepackage{minted}
+%% auto break lines
+\setminted{breaklines=true}
+
+%%
 %% end of the preamble, start of the body of the document source.
 \begin{document}
 
@@ -156,8 +163,42 @@ capitalized style or they should all use the regular English (or
 native language) style. It does not make a good impression if you or
 your authors mix the styles.
 
-Use the \verb|title| command to define the title of your work. Do not
+Use the \verb|\title| command to define the title of your work. Do not
 insert line breaks in your title.
+
+\subsection{Title variants}
+
+\verb|\title| command have the below options:
+\begin{itemize}
+\item \verb|title|: Document title. This is default option. 
+\begin{minted}{latex}
+\title[mode=title]{This is a title}
+\end{minted}
+You can just omit it, like as follows:
+\begin{minted}{latex}
+\title{This is a title}
+\end{minted}
+
+\item \verb|alt|: Alternate title.
+\begin{minted}{latex}
+\title[mode=alt]{This is a alternate title}
+\end{minted}
+
+\item \verb|sub|: Sub title.
+\begin{minted}{latex}
+\title[mode=sub]{This is a sub title}
+\end{minted}
+
+\item \verb|trans|: Translated title.
+\begin{minted}{latex}
+\title[mode=trans]{This is a translated title}
+\end{minted}
+
+\item \verb|transsub|: Translated sub title.
+\begin{minted}{latex}
+\title[mode=transsub]{This is a translated sub title}
+\end{minted}
+\end{itemize}
 
 \subsection{Authors and Affiliations}
 
