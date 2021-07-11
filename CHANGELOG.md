@@ -1,3 +1,12 @@
+## [0.4.4](https://github.com/yamadharma/ceurart/compare/v0.4.3...v0.4.4) (2021-07-11)
+
+
+### Features
+
+* **sample:** add `listings` package support ([8200689](https://github.com/yamadharma/ceurart/commit/820068965c5ce72ae313c01a819cce66ea493b59))
+
+
+
 ## [0.4.3](https://github.com/yamadharma/ceurart/compare/v0.4.2...v0.4.3) (2021-03-19)
 
 
