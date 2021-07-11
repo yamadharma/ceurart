@@ -2,7 +2,7 @@
 
 ## List of files
 
-### Sample files using `listing` package
+### Sample files using `listings` package
 
   * sample-1col.tex: One column
   * sample-2col.tex: Two columns
