@@ -1,3 +1,12 @@
+## [0.4.5](https://github.com/yamadharma/ceurart/compare/v0.4.4...v0.4.5) (2021-07-30)
+
+
+### Features
+
+* **ceurart:** fix for LaTeX2e <2021-06-01> compatibility (#7) ([7d4402c](https://github.com/yamadharma/ceurart/commit/7d4402c3dd1197ed50b274dbef0a5a8ce508135f))
+
+
+
 ## [0.4.4](https://github.com/yamadharma/ceurart/compare/v0.4.3...v0.4.4) (2021-07-11)
 
 
