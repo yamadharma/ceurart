@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.3}%
-\def\RCSdate{2021/03/19}%
+\def\RCSversion{0.4.5}%
+\def\RCSdate{2021/07/30}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -102,6 +102,64 @@
 \bool_gset_false:N \g_ceur_pdfx_bool
 
 \file_if_exist:nTF { pdfx.sty } {%
+
+  % {{{ Temporary fix for error using pdfx on Tex Live 2021
+  
+  % pdfx v1.6.3 from 2019-02-27 is bad, so anything later is hopefully fixed...
+
+  % \IfFormatAtLeastTF do not exist in LaTeX versions older than 2020-10-01. 
+  \providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+  % Problem with issue https://github.com/latex3/latex2e/issues/605
+  % We do not need fix with older version of LaTeX
+  \IfFormatAtLeastTF{2021/06/01}{%
+
+    % temporarily reverts https://github.com/latex3/latex2e/commit/5fb2860f2fedc87b213730f06ec1d77bcab4814a
+    % resp. https://github.com/latex3/latex2e/commit/dd2ec509ec98e9c359a41e35aea6aade86485ca2
+    % as it breaks pdfx (see https://tex.stackexchange.com/questions/605854/error-using-pdfx-on-tex-live-2021)
+    
+    % this is the old implementation from base/ltpara.dtx, version 1.0g
+    \cs_new_protected:Npn \__old_para_end: {
+      % ltpara v1.0h as well as firstaid/latex2e-first-aid-for-external-files.dtx v1.0o inserted
+      % \scan_stop: here, which breaks pdfx
+      \mode_if_horizontal:TF {
+        \mode_if_inner:F {
+          \tex_unskip:D
+          \hook_use:n{para/end}
+          \@kernel@after@para@end
+          \mode_if_horizontal:TF {
+            \if_int_compare:w 0 < \tex_lastnodetype:D
+            \tex_kern:D \c_zero_dim
+          \fi:
+          \tex_par:D
+          \hook_use:n{para/after}
+          \@kernel@after@para@after }
+          { \msg_error:nnnn { hooks }{ para-mode }{end}{horizontal} }
+        }
+      }
+      \tex_par:D
+    }
+    
+    % \PackageWarning{ceurart}{Patching~\para_end:~implementation~to~fix~pdfx}
+    
+    \cs_set_eq:NN \par     \__old_para_end:
+    % these two aren't actually required to fix pdfx, so we'll skip them...
+    % \cs_set_eq:NN \@@par   \__old_para_end:
+    % \cs_set_eq:NN \endgraf \__old_para_end:
+    
+    \AtBeginDocument{
+      
+      % \PackageWarning{ceurart}{Restoring~old~\para_end:~implementation}
+      
+      % restore additional definitions
+      \cs_set_eq:NN \par     \para_end:
+      % see above: as we didn't replace them, no need to restore them.
+      % \cs_set_eq:NN \@@par   \para_end:
+      % \cs_set_eq:NN \endgraf \para_end:
+    }
+  }{}
+
+  % }}}
+  
   \RequirePackage[useBOM,pdf17,a-3u]{pdfx}
   \bool_gset_true:N \g_ceur_pdfx_bool
 }{%
