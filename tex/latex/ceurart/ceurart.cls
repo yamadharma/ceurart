@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.5}%
-\def\RCSdate{2021/07/30}%
+\def\RCSversion{0.4.6}%
+\def\RCSdate{2022/02/27}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -1392,8 +1392,8 @@
   % Authors list for PDF/A
   \csgdef { __pdfxauthor } { #2 }
   \int_compare:nNnTF { \theau@ } = { 1 }
-  { \xappto \pdfxauthors { \__pdfxauthor } }
-  { \xappto \pdfxauthors { \iow_char:N \\ sep ~ \__pdfxauthor } }
+  { \xappto \pdfxauthors { \detokenize\expandafter{\__pdfxauthor} } }
+  { \xappto \pdfxauthors { \iow_char:N \\ sep ~ \detokenize\expandafter{\__pdfxauthor} } }
 }
 
 \NewDocumentCommand \ceurauthors { } {
