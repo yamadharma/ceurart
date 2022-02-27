@@ -1817,7 +1817,7 @@
   \cs_set_eq:NN \sep \sep:
   %% Environment block
   \parindent \z@
-  \noindent \textbf {\sffamily Keywords }  \par
+  \noindent \textbf {\sffamily \keywordtitle }  \par
   \footnotesize
   #1
   \skip_vertical:n { \baselineskip }
