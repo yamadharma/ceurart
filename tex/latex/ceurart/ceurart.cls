@@ -189,6 +189,9 @@
 \let\tnotesep\@empty
 \let\@title\@empty
 
+\let\pdfxauthors\@empty
+\let\pdfxkeywords\@empty
+
 %
 % Load Common items
 %
@@ -358,6 +361,7 @@
   {
     \xmpdatawrite{Title}{\casprelimstitle}
     \xmpdatawrite{Author}{\pdfxauthors}
+    \xmpdatawrite{Keywords}{\pdfxkeywords}
     \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
 
     \ifx\@copyrightclause\@empty\else
@@ -380,7 +384,7 @@
       % pdfauthor={\csuse{__authors:}},
       % pdftitle={\@title},
       pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
-      % pdfkeywords={\@keywords},
+      pdfkeywords={\pdfxkeywords},
       linkcolor={hscolor},
       urlcolor={hscolor},
       citecolor={hscolor},
@@ -1802,22 +1806,23 @@
      \par\noindent \textit { PACS:\c_space_token } #1
    }
 
-\NewDocumentEnvironment { keywords } { O{ Keywords } } {
+\NewDocumentEnvironment { keywords } { +b } {
+  %% Keywords list for PDF/A
+  \csgdef { pdfxkeywords } { \detokenize\expandafter{ #1 } }
+  %% replace \sep by commas 
   \tex_global:D \tex_setbox:D \g_ceur_key_box = \vtop \bgroup
   \hsize=.9 \textwidth
   \vspace*{0pt}
   \cs_new:Nn \sep: {\unskip,~}
   \cs_set_eq:NN \sep \sep:
+  %% Environment block
   \parindent \z@
-
-  % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
-  % \rule{.25 \textwidth}{.2pt}\par
-  \noindent \textbf {\sffamily #1 }  \par
+  \noindent \textbf {\sffamily Keywords }  \par
   \footnotesize
-}{
+  #1
   \skip_vertical:n { \baselineskip }
   \egroup
-}
+} { }
 
 %% Acknowledgments
 
