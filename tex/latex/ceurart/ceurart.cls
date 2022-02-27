@@ -359,7 +359,7 @@
   
   \bool_if:NTF \g_ceur_pdfx_bool
   {
-    \xmpdatawrite{Title}{\casprelimstitle}
+    \xmpdatawrite{Title}{\detokenize\expandafter{\casprelimstitle}}
     \xmpdatawrite{Author}{\pdfxauthors}
     \xmpdatawrite{Keywords}{\pdfxkeywords}
     \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
