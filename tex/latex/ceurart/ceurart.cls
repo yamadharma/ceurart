@@ -724,7 +724,7 @@
   \seq_gput_right:Nn \g_ceur_ead_seq
   {
     % { \ttfamily \tl_to_str:n { #1 } }
-    { \href {mailto: #1 } { #1 } }
+    { \href {mailto: #1 } { \protect\nolinkurl{#1} } }
     \parsename { #2 }
     \space(\eadauthor)%
   }
