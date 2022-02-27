@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.5}%
-\def\RCSdate{2021/07/30}%
+\def\RCSversion{0.4.6}%
+\def\RCSdate{2022/02/27}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -189,6 +189,9 @@
 \let\tnotesep\@empty
 \let\@title\@empty
 
+\let\pdfxauthors\@empty
+\let\pdfxkeywords\@empty
+
 %
 % Load Common items
 %
@@ -356,8 +359,9 @@
   
   \bool_if:NTF \g_ceur_pdfx_bool
   {
-    \xmpdatawrite{Title}{\casprelimstitle}
+    \xmpdatawrite{Title}{\detokenize\expandafter{\casprelimstitle}}
     \xmpdatawrite{Author}{\pdfxauthors}
+    \xmpdatawrite{Keywords}{\pdfxkeywords}
     \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
 
     \ifx\@copyrightclause\@empty\else
@@ -380,7 +384,7 @@
       % pdfauthor={\csuse{__authors:}},
       % pdftitle={\@title},
       pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
-      % pdfkeywords={\@keywords},
+      pdfkeywords={\pdfxkeywords},
       linkcolor={hscolor},
       urlcolor={hscolor},
       citecolor={hscolor},
@@ -724,7 +728,7 @@
   \seq_gput_right:Nn \g_ceur_ead_seq
   {
     % { \ttfamily \tl_to_str:n { #1 } }
-    { \href {mailto: #1 } { #1 } }
+    { \href {mailto: #1 } { \protect\nolinkurl{#1} } }
     \parsename { #2 }
     \space(\eadauthor)%
   }
@@ -1392,8 +1396,8 @@
   % Authors list for PDF/A
   \csgdef { __pdfxauthor } { #2 }
   \int_compare:nNnTF { \theau@ } = { 1 }
-  { \xappto \pdfxauthors { \__pdfxauthor } }
-  { \xappto \pdfxauthors { \iow_char:N \\ sep ~ \__pdfxauthor } }
+  { \xappto \pdfxauthors { \detokenize\expandafter{\__pdfxauthor} } }
+  { \xappto \pdfxauthors { \iow_char:N \\ sep ~ \detokenize\expandafter{\__pdfxauthor} } }
 }
 
 \NewDocumentCommand \ceurauthors { } {
@@ -1802,22 +1806,23 @@
      \par\noindent \textit { PACS:\c_space_token } #1
    }
 
-\NewDocumentEnvironment { keywords } { O{ Keywords } } {
+\NewDocumentEnvironment { keywords } { +b } {
+  %% Keywords list for PDF/A
+  \csgdef { pdfxkeywords } { \detokenize\expandafter{ #1 } }
+  %% replace \sep by commas 
   \tex_global:D \tex_setbox:D \g_ceur_key_box = \vtop \bgroup
   \hsize=.9 \textwidth
   \vspace*{0pt}
   \cs_new:Nn \sep: {\unskip,~}
   \cs_set_eq:NN \sep \sep:
+  %% Environment block
   \parindent \z@
-
-  % A\,R\,T\,I\,C\,L\,E\ \ I\,N\,F\,O \par \skip_vertical:n { -3pt }
-  % \rule{.25 \textwidth}{.2pt}\par
-  \noindent \textbf {\sffamily #1 }  \par
+  \noindent \textbf {\sffamily \keywordtitle }  \par
   \footnotesize
-}{
+  #1
   \skip_vertical:n { \baselineskip }
   \egroup
-}
+} { }
 
 %% Acknowledgments
 
