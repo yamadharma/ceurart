@@ -1,3 +1,22 @@
+## [0.4.6](https://github.com/yamadharma/ceurart/compare/v0.4.5...v0.4.6) (2022-02-27)
+
+
+### Bug Fixes
+
+* **ceurart:** add support symbols with accent in title ([faabbd9](https://github.com/yamadharma/ceurart/commit/faabbd9e5be971fdcff4062c0e0f2fd840f7a7c8))
+* **ceurart:** change hardcoded keywors name to command ([99c6f60](https://github.com/yamadharma/ceurart/commit/99c6f60a2fd601fe199c9805c698fc9d432eac54))
+* **ceurart:** fix using accents in author name ([#3](https://github.com/yamadharma/ceurart/issues/3)) ([53c17c7](https://github.com/yamadharma/ceurart/commit/53c17c7bb4ba9f0fd45dfceff93a0830b5f17b67))
+* **ceurart:** add support underscore in email address ([#4](https://github.com/yamadharma/ceurart/issues/4)) ([c20b8df](https://github.com/yamadharma/ceurart/commit/c20b8df3ea42e56905efe8deff956a1512c6174e))
+* **sample:** change year in sample files ([ca8cbbd](https://github.com/yamadharma/ceurart/commit/ca8cbbd4210a4c5adc28e9e22232adbdf6173bb0))
+* **sample:** change year in sample+minted ([93743e0](https://github.com/yamadharma/ceurart/commit/93743e0f3d7e1055431d7a03232006f7693ee184))
+
+
+### Features
+
+* **ceurart:** add keywords to pdf/a properties ([#9](https://github.com/yamadharma/ceurart/issues/9)) ([2283b5d](https://github.com/yamadharma/ceurart/commit/2283b5dffccd3472eb25894e125b19516bba927e))
+
+
+
 ## [0.4.5](https://github.com/yamadharma/ceurart/compare/v0.4.4...v0.4.5) (2021-07-30)
 
 
