@@ -40,6 +40,10 @@
 %% The "title" command
 \title{A better way to format your document for CEUR-WS}
 
+\tnotemark[1]
+\tnotetext[1]{You can use this document as the template for preparing your
+  publication. We recommend using the latest version of the ceurart style.}
+
 %%
 %% The "author" command and its associated commands are used to define
 %% the authors and their affiliations.
@@ -48,6 +52,8 @@ orcid=0000-0002-0877-7063,
 email=kulyabov-ds@rudn.ru,
 url=https://yamadharma.github.io/,
 ]
+\cormark[1]
+\fnmark[1]
 \address[1]{Peoples' Friendship University of Russia (RUDN University),
   6 Miklukho-Maklaya St, Moscow, 117198, Russian Federation}
 \address[2]{Joint Institute for Nuclear Research,
@@ -58,6 +64,7 @@ orcid=0000-0001-7116-9338,
 email=i.tiddi@vu.nl,
 url=https://kmitd.github.io/ilaria/,
 ]
+\fnmark[1]
 \address[3]{Vrije Universiteit Amsterdam, De Boelelaan 1105, 1081 HV Amsterdam, The Netherlands}
 
 \author[4]{Manfred Jeusfeld}[%
@@ -65,7 +72,12 @@ orcid=0000-0002-9421-8566,
 email=Manfred.Jeusfeld@acm.org,
 url=http://conceptbase.sourceforge.net/mjf/,
 ]
+\fnmark[1]
 \address[4]{University of Skövde, Högskolevägen 1, 541 28 Skövde, Sweden}
+
+%% Footnotes
+\cortext[1]{Corresponding author.}
+\fntext[1]{These authors contributed equally.}
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -99,9 +111,7 @@ url=http://conceptbase.sourceforge.net/mjf/,
 CEUR-WS's article template provides a consistent \LaTeX{} style for
 use across CEUR-WS publications, and incorporates accessibility and
 metadata-extraction functionality. This document will explain the
-major features of the document class\footnote{You can use this
-  document as the template for preparing your publication. We
-  recommend using the latest version of the ceurart style.}.
+major features of the document class.
 
 If you are new to publishing with CEUR-WS, this document is a valuable
 guide to the process of preparing your work for publication.
@@ -147,8 +157,8 @@ brackets and are a part of the \verb|\documentclass| command:
 
 Frequently-used parameters, or combinations of parameters, include:
 \begin{itemize}
-\item {\verb|twocolumn|}: Two column layout.
-\item {\verb|hf|}: Enable header and footer\footnote{You can enable
+\item \verb|twocolumn| : Two column layout.
+\item \verb|hf| : Enable header and footer\footnote{You can enable
     the display of page numbers in the final version of the entire
     collection. In this case, you should adhere to the end-to-end
     pagination of individual papers.}.
@@ -214,21 +224,19 @@ possible. Include authors' e-mail addresses whenever possible.
 \verb|\author| command have the below options: 
 
 \begin{itemize}
-\item \verb|style|: Style of author name (chinese)
-\item \verb|prefix|: Prefix
-\item \verb|suffix|: Suffix
-\item \verb|degree|: Degree
-\item \verb|role|: Role
-\item \verb|orcid|: ORCID
-\item \verb|email|: E-mail
-\item \verb|url|: URL
+\item \verb|style| : Style of author name (chinese)
+\item \verb|prefix| : Prefix
+\item \verb|suffix| : Suffix
+\item \verb|degree| : Degree
+\item \verb|role| : Role
+\item \verb|orcid| : ORCID
+\item \verb|email| : E-mail
+\item \verb|url| : URL
 \end{itemize}
 
 Author names can have some kinds of marks and notes:
 \begin{itemize}
 \item affiliation mark: \verb|\author[<num>]|.
-% \item email: \verb|\ead{<email>}|,
-% \item url: \verb|\ead[url]{<url>}|.
 \end{itemize}
 
 The author names and affiliations could be formatted in two ways:
@@ -277,6 +285,53 @@ environment. Use \verb|\sep| to separate keywords.
 \end{lstlisting}
 
 At the end of front matter add \verb|\maketitle| command.
+
+\subsection{Various Marks in the Front Matter}
+
+The front matter becomes complicated due to various kinds
+of notes and marks to the title and author names. Marks in
+the title will be denoted by a star ($\star$) mark;
+footnotes are denoted by super scripted Arabic numerals,
+corresponding author by an Conformal asterisk (*) mark.
+
+\subsubsection{Title marks}
+
+Title mark can be entered by the command, \verb|\tnotemark[<num>]|
+and the corresponding text can be entered with the command
+\verb|\tnotetext[<num>]{<text>}|. An example will be:
+
+\begin{lstlisting}
+\title{A better way to format your document for CEUR-WS}
+
+\tnotemark[1]
+\tnotetext[1]{You can use this document as the template for preparing your
+  publication. We recommend using the latest version of the ceurart style.}
+\end{lstlisting}
+
+\verb|\tnotemark| and \verb|\tnotetext| can be anywhere in
+the front matter, but should be before \verb|\maketitle| command.
+
+\subsubsection{Author marks}
+
+Author names can have some kinds of marks and notes:
+\begin{itemize}
+\item footnote mark : \verb|\fnmark[<num>]|
+\item footnote text : \verb|\fntext[<num>]{<text>}|
+\item corresponding author mark : \verb|\cormark[<num>]|
+\item corresponding author text : \verb|\cortext[<num>]{<text>}|
+\end{itemize}
+
+\subsubsection{Other marks}
+
+At times, authors want footnotes which leave no marks in
+the author names. The note text shall be listed as part of
+the front matter notes. Class files provides
+\verb|\nonumnote| for this purpose. The usage
+\begin{lstlisting}
+\nonumnote{<text>}
+\end{lstlisting}
+and should be entered anywhere before the \verb|\maketitle|
+command for this to take effect. 
 
 \section{Sectioning Commands}
 
