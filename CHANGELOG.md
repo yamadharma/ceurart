@@ -1,3 +1,14 @@
+## [0.4.7](https://github.com/yamadharma/ceurart/compare/v0.4.6...v0.4.7) (2022-03-16)
+
+
+### Features
+
+* **ceurart:** add footmisc options to flush margins left ([cb25973](https://github.com/yamadharma/ceurart/commit/cb2597324bef7829091e282e777b04a1bef2d7f8))
+* **ceurart:** add symbols to fnmark ([21b105b](https://github.com/yamadharma/ceurart/commit/21b105b5d227035cd6ebf03717a73b12f8cb66f7))
+* **ceurart:** add to template various marks in the front matter ([#8](https://github.com/yamadharma/ceurart/issues/8)) ([f826d55](https://github.com/yamadharma/ceurart/commit/f826d5509fd2581864263bd9fdce49b3e6cc8ccf))
+
+
+
 ## [0.4.6](https://github.com/yamadharma/ceurart/compare/v0.4.5...v0.4.6) (2022-02-27)
 
 
