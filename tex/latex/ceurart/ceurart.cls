@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.6}%
-\def\RCSdate{2022/02/27}%
+\def\RCSversion{0.4.7}%
+\def\RCSdate{2022/03/16}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -87,7 +87,7 @@
 \RequirePackage{etoolbox,balance}
 \RequirePackage{booktabs,makecell,multirow,array,colortbl,dcolumn,stfloats}
 \RequirePackage{xspace,xstring}
-\RequirePackage{footmisc}
+\RequirePackage[hang,flushmargin]{footmisc}
 \RequirePackage[svgnames,dvipsnames]{xcolor}
 \RequirePackage{iftex}
 \RequirePackage{microtype}
@@ -267,6 +267,12 @@
 
 \DeclareRobustCommand\conference[1]{%
   \gdef\ceurConference@name{#1}%
+}
+
+\NewDocumentCommand \noindentfoot {} {
+  \raggedright
+  \hspace*{-\parindent}
+  \hspace*{-\footnotemargin}
 }
 
 %
@@ -958,34 +964,28 @@
 \seq_new:N \g_ceur_cor_seq
 \int_new:N \g_ceur_cor_int
 
-\NewDocumentCommand \cortext { O{} m }
-{
-  \tl_if_head_eq_catcode:nNTF { #1 } a
-  {
-    \msg_term:n { [COR:~alpha] }%
-    \seq_gput_right:Nn \g_ceur_cor_seq
-    { \int_incr:N \g_ceur_cor_int
+\NewDocumentCommand \cortext { O{} m } {
+  \tl_if_head_eq_catcode:nNTF { #1 } a  {
+    % \msg_term:n { [COR:~alpha] }%
+    \seq_gput_right:Nn \g_ceur_cor_seq {
+      \int_incr:N \g_ceur_cor_int
       \str_set:Nx \@currentlabel { \int_use:N \g_ceur_cor_int }
       \ceurLabel { #1 }
-      \tex_def:D \thefootnote
-      { \int_case:nn { \g_ceur_cor_int }
-        {
+      \tex_def:D \thefootnote {
+        \int_case:nn { \g_ceur_cor_int } {
           { 1 } { $\ast$ }
           { 2 } { $\ast\!\ast$ }
           { 3 } { $\ast\!\ast\!\ast$ }
         }
       }
-      \footnotetext { #2 }
+      \footnotetext { \noindentfoot #2 }
     }
-  }
-  {
-    \msg_term:n { [COR:~Number] }
-    \seq_gput_right:Nn \g_ceur_cor_seq
-    {
+  } {
+    % \msg_term:n { [COR:~Number] }
+    \seq_gput_right:Nn \g_ceur_cor_seq {
       \int_set:Nn \l_tmpa_int { #1 }
-      \tex_def:D \thefootnote
-      { \int_case:nn { \l_tmpa_int }
-        {
+      \tex_def:D \thefootnote {
+        \int_case:nn { \l_tmpa_int } {
           { 1 } { $\ast$ }
           { 2 } { $\ast\!\ast$ }
           { 3 } { $\ast\!\ast\!\ast$ }
@@ -1858,7 +1858,7 @@
     \href{https://creativecommons.org/licenses/by/4.0}%
     {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
   \end{minipage}
-  \enskip
+  \nobreak\enskip
   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
     \tiny
     \textcopyright\ \@copyrightyear\ %
@@ -1883,7 +1883,7 @@
     % {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
     {\hbox{\unhcopy\@tempboxa}}
   \end{minipage}
-  \enskip
+  \nobreak\enskip
   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
     {CEUR~Workshop~Proceedings~(\href{http://ceur-ws.org}{CEUR-WS.org})}%
   \end{minipage}
@@ -1891,8 +1891,7 @@
 
 \seq_new:N \g_ceur_logonote_seq
 
-\NewDocumentCommand \logonote { m }
-{
+\NewDocumentCommand \logonote { m } {
   \group_begin:
   \seq_gput_right:Nn \g_ceur_logonote_seq
   {

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+files=$@
+
+for i in $files
+do
+    outname=`echo "$i" | sed -e "s/+minted.tex/.tex/g"`
+    perl -p -e \
+	 's/\\mintinline{latex}{(.*?)}}/\\verb|\1}|/g; \
+	 s/\\mintinline{latex}{(.*?)}/\\verb|\1|/g; \
+	 s/\\begin{minted}{.*}/\\begin{lstlisting}/g; \
+	 s/\\end{minted}/\\end{lstlisting}/g; \
+	 s/\\usepackage{minted}/\\usepackage{listings}/g; \
+	 s/^\\setminted.*$/\\lstset{breaklines=true}/g' \
+	"$i" > "$outname"
+done
