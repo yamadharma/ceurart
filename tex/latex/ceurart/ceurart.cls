@@ -1,5 +1,5 @@
 %% ceurart.cls
-%% Copyright 2019--2020 CEUR Workshop Proceedings (CEUR-WS.org)
+%% Copyright 2019--2022 CEUR Workshop Proceedings (CEUR-WS.org)
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -313,7 +313,7 @@
     \printFirstPageNotes
   }
   \normalcolor \normalfont
-  \setcounter{footnote}{\int_use:N \g_ceur_fnote_int}
+  \setcounter{footnote}{\int_use:N \g_ceur_fnote_int}  
   \renewcommand\thefootnote{\arabic{footnote}}
   \gdef\@pdfauthor{\infoauthors}
   % \gdef\@pdfsubject{Complex ~CEUR ~Content}
@@ -876,7 +876,7 @@
    {
      \tl_if_head_eq_catcode:nNTF { #1 } a
        {
-         \msg_term:n { [TNOTE:~alpha] }%
+         % \msg_term:n { [TNOTE:~alpha] }%
          \seq_gput_right:Nn \g_ceur_tnote_seq
            { \int_incr:N \g_ceur_tnote_int
              \str_set:Nx \@currentlabel { \int_use:N \g_ceur_tnote_int }
@@ -893,7 +893,7 @@
             }
           }
         {
-          \msg_term:n { [TNOTE:~Number] }
+          % \msg_term:n { [TNOTE:~Number] }
           \seq_gput_right:Nn \g_ceur_tnote_seq
           {
             \int_set:Nn \l_tmpa_int { #1 }
@@ -921,10 +921,10 @@
   {
     \tex_def:D \thefootnote { }
     \footnotetext{%
-      \raggedright
-      \hspace*{-\parindent}
-      % \hspace*{-\labelsep}
-      \hspace*{-\footnotemargin}
+      % \raggedright
+      % \hspace*{-\parindent}
+      % % \hspace*{-\labelsep}
+      % \hspace*{-\footnotemargin}
       #1}
   }
   \group_end:
@@ -935,25 +935,39 @@
 \seq_new:N \g_ceur_fnote_seq
 \int_new:N \g_ceur_fnote_int
 
-\NewDocumentCommand \fntext { O{} m }
-{
-  \tl_if_head_eq_catcode:nNTF { #1 } a
-  {
-    \msg_term:n { [FN:~alpha] }%
-    \seq_gput_right:Nn \g_ceur_fnote_seq
-    { \int_incr:N \g_ceur_fnote_int
+\NewDocumentCommand \fntext { O{} m } {
+  \tl_if_head_eq_catcode:nNTF { #1 } a {
+    % \msg_term:n { [FN:~alpha] }%
+    \seq_gput_right:Nn \g_ceur_fnote_seq {
+      \int_incr:N \g_ceur_fnote_int
       \str_set:Nx \@currentlabel { \int_use:N \g_ceur_fnote_int }
       \ceurLabel { #1 }
-      \tex_def:D \thefootnote { \int_use:N \g_ceur_fnote_int }
+      % \tex_def:D \thefootnote { \int_use:N \g_ceur_fnote_int }
+      \tex_def:D \thefootnote {
+        \int_case:nn { \g_ceur_tnote_int } {
+          { 1 } { $^{\dagger}$ }
+          { 2 } { $^{\ddagger}$ }
+          { 3 } { $^{\S}$ }
+          { 4 } { $^{\P}$ }
+          { 5 } { $^{\|}$ }
+        }
+      }
       \footnotetext { #2 }
     }
-  }
-  {
-    \msg_term:n { [FN:~Number] }
-    \seq_gput_right:Nn \g_ceur_fnote_seq
-    {
+  } {
+    % \msg_term:n { [FN:~Number] }
+    \seq_gput_right:Nn \g_ceur_fnote_seq {
       \int_set:Nn \l_tmpa_int { #1 }
-      \tex_def:D \thefootnote { \int_use:N \l_tmpa_int }
+      % \tex_def:D \thefootnote { \int_use:N \l_tmpa_int }
+      \tex_def:D \thefootnote {
+        \int_case:nn { \l_tmpa_int } {
+          { 1 } { $^{\dagger}$ }
+          { 2 } { $^{\ddagger}$ }
+          { 3 } { $^{\S}$ }
+          { 4 } { $^{\P}$ }
+          { 5 } { $^{\|}$ }
+        }
+      }
       \footnotetext { #2 }
     }
   }
@@ -998,26 +1012,31 @@
 
 \newcommand \printcornotes { \seq_use:Nn \g_ceur_cor_seq { \par } }
 
-\NewDocumentCommand \process@marks { }
-   {
-     \cs_if_free:cTF { mark@corau\theauthor }
-       { \ignorespaces }
-       { \str_set:Nx \l_tmpa_str { \use:c{ mark@corau\theauthor } }
-         \int_case:nn { \l_tmpa_str }
-           {
-             { 1 } { \sep$\ast$ }
-             { 2 } { \sep$\ast\ast$ }
-             { 3 } { \sep$\ast\!\ast\!\ast$ }
-           }
-           \tex_def:D \sep{\unskip,}
-         }
-      \cs_if_free:cTF { mark@fnau\theauthor }
-        { \ignorespaces }
-        { \sep\use:c { mark@fnau\theauthor }
-          \tex_def:D \sep{\unskip,}
-        }
-      }
-
+\NewDocumentCommand \process@marks { } {
+  \cs_if_free:cTF { mark@corau\theauthor }
+  { \ignorespaces }
+  { \str_set:Nx \l_tmpa_str { \use:c{ mark@corau\theauthor } }
+    \int_case:nn { \l_tmpa_str } {
+      { 1 } { \sep$\ast$ }
+      { 2 } { \sep$\ast\ast$ }
+      { 3 } { \sep$\ast\!\ast\!\ast$ }
+    }
+    \tex_def:D \sep{\unskip,}
+  }
+  %% 
+  \cs_if_free:cTF { mark@fnau\theauthor }
+  { \ignorespaces }
+  { \str_set:Nx \l_tmpa_str { \use:c{ mark@fnau\theauthor } }
+    \int_case:nn { \l_tmpa_str } {
+      { 1 } { \sep${\dagger}$ }
+      { 2 } { \sep${\ddagger}$ }
+      { 3 } { \sep${\S}$ }
+      { 4 } { \sep${\P}$ }
+      { 5 } { \sep${\|}$ }
+    }
+    \tex_def:D \sep{\unskip,}
+  }
+}
 
 %%
 %% Author macros
@@ -1923,11 +1942,12 @@
   \int_compare:nTF { \g_ceur_jtype_int > 5 } {
     \ceuraddress
   } { }
-  \printtnotes
   \printnonumnotes
+  \printtnotes
   \bool_if:NTF \g_ceur_blind_bool {
   } {
     \printcornotes
+    \printfnotes
     \printmaltese
     \printaddrinfoot
     \printemails
@@ -1937,7 +1957,6 @@
     \printtwitter
     \printgplus
     \printlinkedin
-    \printfnotes
   }
   \printlogonotes
   \bool_if:NTF \g_ceur_longmktitle_bool {
