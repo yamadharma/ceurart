@@ -509,7 +509,7 @@
   }
 }
 
-\RenewDocumentCommand \title { O{mode = title} m } {
+\RenewDocumentCommand \title { O{mode = title} m o } {
   \pdfstringdef \@pdftitle { #2 }
   \csgdef { casprelimstitle } { #2 }
   \keys_set:nn { ceur / title } { #1 }
@@ -525,7 +525,7 @@
     \l_ceur_title_shape_tl
     \l_ceur_title_weight_tl
     \color { \l_ceur_title_color_tl }
-    #2
+    \IfValueTF{#3}{#3}{#2}
     \tl_set:Nn \l_tmpa_tl { title }
     \tl_if_eq:NNTF \l_ceur_title_type_tl \l_tmpa_tl
     { \processTmarks } { }
