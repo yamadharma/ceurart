@@ -160,7 +160,7 @@
 
   % }}}
   
-  \RequirePackage[useBOM,pdf17,a-3u]{pdfx}
+  \RequirePackage[useBOM,pdf17,a-1a]{pdfx}
   \bool_gset_true:N \g_ceur_pdfx_bool
 }{%
   \RequirePackage[unicode]{hyperref}
