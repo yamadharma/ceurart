@@ -1,3 +1,12 @@
+## [0.4.8](https://github.com/yamadharma/ceurart/compare/v0.4.7...v0.4.8) (2022-07-03)
+
+
+### Features
+
+* **ceurart:** switch to PDF/A-1a (instead of PDF/A-3u) ([3f7a9ec](https://github.com/yamadharma/ceurart/commit/3f7a9ece326b46b7c1585082b2d6ce47df739552))
+
+
+
 ## [0.4.7](https://github.com/yamadharma/ceurart/compare/v0.4.6...v0.4.7) (2022-03-16)
 
 
