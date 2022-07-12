@@ -1,3 +1,12 @@
+## [0.4.9](https://github.com/yamadharma/ceurart/compare/v0.4.8...v0.4.9) (2022-07-12)
+
+
+### Bug Fixes
+
+* **ceurart:** fix class revision ([fc43c58](https://github.com/yamadharma/ceurart/commit/fc43c58f7512ea08680f98edc8135f0ac17be038))
+
+
+
 ## [0.4.8](https://github.com/yamadharma/ceurart/compare/v0.4.7...v0.4.8) (2022-07-03)
 
 
