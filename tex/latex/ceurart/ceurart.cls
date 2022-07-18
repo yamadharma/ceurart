@@ -509,9 +509,11 @@
   }
 }
 
-\RenewDocumentCommand \title { O{mode = title} m o } {
-  \pdfstringdef \@pdftitle { #2 }
-  \csgdef { casprelimstitle } { #2 }
+\RenewDocumentCommand \title { O{mode=title} m o } {
+  \str_if_eq:eeT { #1 } { mode=title } {
+    \pdfstringdef \@pdftitle { #2 }
+    \csgdef { casprelimstitle } { #2 }
+  }
   \keys_set:nn { ceur / title } { #1 }
   \tl_if_empty:NTF \__short_title: {
     \cs_gset:Nn \__short_title: { #2 }
@@ -1433,7 +1435,7 @@
   { \seq_use:Nn \g_ceur_augr_seq { \par } }
   {
     \seq_use:cnnn { g_ceur_au\int_use:N\g_ceur_augr_int _seq }
-    { ,~ } { ,~ } { ~and~ }
+    { ,~ } { ,~ } { ,~ }
   }
   \par\vskip\l_ceur_augroup_after_dim
   \group_end:
