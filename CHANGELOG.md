@@ -1,3 +1,17 @@
+## [0.4.10](https://github.com/yamadharma/ceurart/compare/v0.4.9...v0.4.10) (2022-11-13)
+
+
+### Bug Fixes
+
+* **ceurart:** replace http by https for ceur-ws.org ([ce0f1b6](https://github.com/yamadharma/ceurart/commit/ce0f1b6b80fca88c28711ee756d5b1e4faf3fe52))
+
+
+### Features
+
+* **ceurart:** add new ceur-ws logo ([cedb505](https://github.com/yamadharma/ceurart/commit/cedb505949e61958db29967f7bb353fec52f54f3))
+
+
+
 ## [0.4.9](https://github.com/yamadharma/ceurart/compare/v0.4.8...v0.4.9) (2022-07-12)
 
 
