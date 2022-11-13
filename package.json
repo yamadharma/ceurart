@@ -1,6 +1,6 @@
 {
     "name": "ceurart",
-    "version": "0.4.9",
+    "version": "0.4.10",
     "description": "CEUR-WS proceedings style",
     "main": "index.js",
     "repository": "git@github.com:yamadharma/ceurart.git",
