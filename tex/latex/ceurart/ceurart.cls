@@ -1212,8 +1212,7 @@
      \seq_gput_right:Nn \g_ceur_linkedin_seq
        {
          \parsename { #2 }
-         \url{https://www.linkedin.com/profile/view?id=\tl_to_str:n{#1}}%
-         \space(\eadauthor)
+         \url{https://www.linkedin.com/in/\tl_to_str:n{#1}}\space(\eadauthor)%
        }
      }
 
