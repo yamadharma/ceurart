@@ -1,3 +1,13 @@
+## [0.4.11](https://github.com/yamadharma/ceurart/compare/v0.4.10...v0.4.11) (2023-06-30)
+
+
+### Bug Fixes
+
+* **ceurart:** fix boldface for abstract title ([b4d4938](https://github.com/yamadharma/ceurart/commit/b4d4938790716586f2f8d29135ddfd6285b75805))
+* **sample:** change 2022 -\> 2023 ([0c7997d](https://github.com/yamadharma/ceurart/commit/0c7997d4fb40a35078975abf32481cea4fa7f2ea))
+
+
+
 ## [0.4.10](https://github.com/yamadharma/ceurart/compare/v0.4.9...v0.4.10) (2022-11-13)
 
 
