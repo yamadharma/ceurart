@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.10}%
-\def\RCSdate{2022/11/12}%
+\def\RCSversion{0.4.11}%
+\def\RCSdate{2023/06/14}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -1744,7 +1744,8 @@
     % \skip_vertical:n { - \l_tmpa_dim }
     % }
     \skip_vertical:n { \baselineskip }
-    \noindent \abstractname \par
+    % \noindent \abstractname \par
+    \noindent { \textbf{\sffamily Abstract} } \par
     % \skip_vertical:n { -4pt}
     % \noindent \rule{.65\textwidth}{.2pt}\par
     \footnotesize
