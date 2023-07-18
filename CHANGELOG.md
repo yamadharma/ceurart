@@ -1,3 +1,12 @@
+## [0.4.12](https://github.com/yamadharma/ceurart/compare/v0.4.11...v0.4.12) (2023-07-18)
+
+
+### Bug Fixes
+
+* **sample:** fix links in bibliography ([7a7cafa](https://github.com/yamadharma/ceurart/commit/7a7cafaf24efa434c0842a64f0a81d30ae682dd1))
+
+
+
 ## [0.4.11](https://github.com/yamadharma/ceurart/compare/v0.4.10...v0.4.11) (2023-06-30)
 
 
