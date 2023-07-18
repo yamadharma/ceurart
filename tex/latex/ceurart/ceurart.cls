@@ -16,8 +16,8 @@
 % 
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.11}%
-\def\RCSdate{2023/06/14}%
+\def\RCSversion{0.4.12}%
+\def\RCSdate{2023/07/18}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
