@@ -1,5 +1,5 @@
 %% ceurart.cls
-%% Copyright 2019--2022 CEUR Workshop Proceedings (CEUR-WS.org)
+%% Copyright 2019--2023 CEUR Workshop Proceedings (CEUR-WS.org)
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -282,7 +282,7 @@
 \RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
-  \logonote{\@ceurLogoLine}
+  % \logonote{\@ceurLogoLine}
   % \ifbool { usecasgrabsbox }
   %   {
   %     \setcounter{page}{0}
@@ -368,7 +368,7 @@
     \xmpdatawrite{Title}{\detokenize\expandafter{\casprelimstitle}}
     \xmpdatawrite{Author}{\pdfxauthors}
     \xmpdatawrite{Keywords}{\pdfxkeywords}
-    \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
+    \xmpdatawrite{Subject}{Layout~by~CEURART}
 
     \ifx\@copyrightclause\@empty\else
       \xmpdatawrite{Copyright}{\iow_char:N \\ copyright\ \@copyrightyear\ \@copyrightclause}
@@ -389,7 +389,7 @@
       % pdfauthor={\csuse{__short_authors:}},
       % pdfauthor={\csuse{__authors:}},
       % pdftitle={\@title},
-      pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
+      pdfsubject={Layout~by~CEURART},
       pdfkeywords={\pdfxkeywords},
       linkcolor={hscolor},
       urlcolor={hscolor},
