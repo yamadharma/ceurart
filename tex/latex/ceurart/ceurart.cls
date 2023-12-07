@@ -16,8 +16,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.12}%
-\def\RCSdate{2023/07/18}%
+\def\RCSversion{0.5.0}%
+\def\RCSdate{2023/12/07}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -1891,23 +1891,23 @@
 
 \RequirePackage{calc}
 
-\def\@ceurLogoLine{%
-  % set width of ceur-ws logo equals to width of cc-by logo
-  \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
-  \ccLogoWidth=\dimexpr\wd\@tempboxa
-  \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
-  \@rightskip\@flushglue \rightskip\@rightskip
-  % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
-  \begin{minipage}[c]{\ccLogoWidth}
-    \href{https://ceur-ws.org}%
-    % {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
-    {\hbox{\unhcopy\@tempboxa}}
-  \end{minipage}
-  \nobreak\enskip
-  \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
-    {CEUR~Workshop~Proceedings~(\href{https://ceur-ws.org}{CEUR-WS.org})}%
-  \end{minipage}
-}
+% \def\@ceurLogoLine{%
+%   % set width of ceur-ws logo equals to width of cc-by logo
+%   \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
+%   \ccLogoWidth=\dimexpr\wd\@tempboxa
+%   \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
+%   \@rightskip\@flushglue \rightskip\@rightskip
+%   % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
+%   \begin{minipage}[c]{\ccLogoWidth}
+%     \href{https://ceur-ws.org}%
+%     % {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
+%     {\hbox{\unhcopy\@tempboxa}}
+%   \end{minipage}
+%   \nobreak\enskip
+%   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
+%     {CEUR~Workshop~Proceedings~(\href{https://ceur-ws.org}{CEUR-WS.org})}%
+%   \end{minipage}
+% }
 
 \seq_new:N \g_ceur_logonote_seq
 
