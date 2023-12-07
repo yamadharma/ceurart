@@ -1,3 +1,16 @@
+# [0.5.0](https://github.com/yamadharma/ceurart/compare/v0.4.12...v0.5.0) (2023-12-07)
+
+
+### Features
+
+* **ceurart:** change margins ([5e48f81](https://github.com/yamadharma/ceurart/commit/5e48f81519876becf3440c29cdef968fa71a947a))
+* **ceurart:** diasable ceur-ws logo ([8b3fcbc](https://github.com/yamadharma/ceurart/commit/8b3fcbc9e871fdcbe5e3c1f8dbed8dc40130be95))
+* **ceurart:** remove ceur logo file ([808dd3a](https://github.com/yamadharma/ceurart/commit/808dd3a4a63dfe9d197982bf45b17f564edc717d))
+* **ceurart:** remove ceur-ws logo license ([9da8b4a](https://github.com/yamadharma/ceurart/commit/9da8b4a8c5b2fbe408d1a265eb5ba0e70c333906))
+* **ceurart:** up version of class ([22891be](https://github.com/yamadharma/ceurart/commit/22891be73130df718866ed2303b8937628140891))
+
+
+
 ## [0.4.12](https://github.com/yamadharma/ceurart/compare/v0.4.11...v0.4.12) (2023-07-18)
 
 
