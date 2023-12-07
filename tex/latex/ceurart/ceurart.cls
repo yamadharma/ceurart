@@ -1,5 +1,5 @@
 %% ceurart.cls
-%% Copyright 2019--2022 CEUR Workshop Proceedings (CEUR-WS.org)
+%% Copyright 2019--2023 CEUR Workshop Proceedings (CEUR-WS.org)
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -13,11 +13,11 @@
 %
 % The Current Maintainer of this work is Dmitry S. Kulyabov.
 % The code was originally based on 'CAS Bundle' code.
-% 
+%
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.4.12}%
-\def\RCSdate{2023/07/18}%
+\def\RCSversion{0.5.0}%
+\def\RCSdate{2023/12/07}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -104,10 +104,10 @@
 \file_if_exist:nTF { pdfx.sty } {%
 
   % {{{ Temporary fix for error using pdfx on Tex Live 2021
-  
+
   % pdfx v1.6.3 from 2019-02-27 is bad, so anything later is hopefully fixed...
 
-  % \IfFormatAtLeastTF do not exist in LaTeX versions older than 2020-10-01. 
+  % \IfFormatAtLeastTF do not exist in LaTeX versions older than 2020-10-01.
   \providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
   % Problem with issue https://github.com/latex3/latex2e/issues/605
   % We do not need fix with older version of LaTeX
@@ -116,7 +116,7 @@
     % temporarily reverts https://github.com/latex3/latex2e/commit/5fb2860f2fedc87b213730f06ec1d77bcab4814a
     % resp. https://github.com/latex3/latex2e/commit/dd2ec509ec98e9c359a41e35aea6aade86485ca2
     % as it breaks pdfx (see https://tex.stackexchange.com/questions/605854/error-using-pdfx-on-tex-live-2021)
-    
+
     % this is the old implementation from base/ltpara.dtx, version 1.0g
     \cs_new_protected:Npn \__old_para_end: {
       % ltpara v1.0h as well as firstaid/latex2e-first-aid-for-external-files.dtx v1.0o inserted
@@ -138,18 +138,18 @@
       }
       \tex_par:D
     }
-    
+
     % \PackageWarning{ceurart}{Patching~\para_end:~implementation~to~fix~pdfx}
-    
+
     \cs_set_eq:NN \par     \__old_para_end:
     % these two aren't actually required to fix pdfx, so we'll skip them...
     % \cs_set_eq:NN \@@par   \__old_para_end:
     % \cs_set_eq:NN \endgraf \__old_para_end:
-    
+
     \AtBeginDocument{
-      
+
       % \PackageWarning{ceurart}{Restoring~old~\para_end:~implementation}
-      
+
       % restore additional definitions
       \cs_set_eq:NN \par     \para_end:
       % see above: as we didn't replace them, no need to restore them.
@@ -159,7 +159,7 @@
   }{}
 
   % }}}
-  
+
   \RequirePackage[useBOM,pdf17,a-1a]{pdfx}
   \bool_gset_true:N \g_ceur_pdfx_bool
 }{%
@@ -282,7 +282,7 @@
 \RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
-  \logonote{\@ceurLogoLine}
+  % \logonote{\@ceurLogoLine}
   % \ifbool { usecasgrabsbox }
   %   {
   %     \setcounter{page}{0}
@@ -313,17 +313,17 @@
     \printFirstPageNotes
   }
   \normalcolor \normalfont
-  \setcounter{footnote}{\int_use:N \g_ceur_fnote_int}  
+  \setcounter{footnote}{\int_use:N \g_ceur_fnote_int}
   \renewcommand\thefootnote{\arabic{footnote}}
   \gdef\@pdfauthor{\infoauthors}
   % \gdef\@pdfsubject{Complex ~CEUR ~Content}
 
   %% PDF/A
-  
+
   % List of supported metadata fields
-  
+
   % General information:
-  
+
   % \Author           - the document's human author. Separate multiple authors with \sep.
   % \Title            - the document's title.
   % \Keywords         - list of keywords, separated with \sep.
@@ -337,7 +337,7 @@
   % \Copyrighted      - 'True' if the document is copyrighted, and
   % 'False' if it isn't. This is automatically set to 'True' if either
   % \Copyright or \CopyrightURL is specified, but can be overridden.
-  
+
   % Publication information:
 
   % \PublicationType   - The type of publication. If defined, must be
@@ -362,13 +362,13 @@
   % \CoverDate         - Date on the cover of the journal issue, in a
   % format suitable for storing in a database field
   % with a 'date' data type.
-  
+
   \bool_if:NTF \g_ceur_pdfx_bool
   {
     \xmpdatawrite{Title}{\detokenize\expandafter{\casprelimstitle}}
     \xmpdatawrite{Author}{\pdfxauthors}
     \xmpdatawrite{Keywords}{\pdfxkeywords}
-    \xmpdatawrite{Subject}{CEUR~Workshop~Proceedings~(CEUR-WS.org)}
+    \xmpdatawrite{Subject}{Layout~by~CEURART}
 
     \ifx\@copyrightclause\@empty\else
       \xmpdatawrite{Copyright}{\iow_char:N \\ copyright\ \@copyrightyear\ \@copyrightclause}
@@ -389,14 +389,14 @@
       % pdfauthor={\csuse{__short_authors:}},
       % pdfauthor={\csuse{__authors:}},
       % pdftitle={\@title},
-      pdfsubject={CEUR~Workshop~Proceedings~(CEUR-WS.org)},
+      pdfsubject={Layout~by~CEURART},
       pdfkeywords={\pdfxkeywords},
       linkcolor={hscolor},
       urlcolor={hscolor},
       citecolor={hscolor},
       filecolor={hscolor},
       menucolor={hscolor},
-    }    
+    }
   }
 }
 
@@ -1023,7 +1023,7 @@
     }
     \tex_def:D \sep{\unskip,}
   }
-  %% 
+  %%
   \cs_if_free:cTF { mark@fnau\theauthor }
   { \ignorespaces }
   { \str_set:Nx \l_tmpa_str { \use:c{ mark@fnau\theauthor } }
@@ -1294,10 +1294,10 @@
   \ResetMarks
   \tl_if_blank:nTF { #3 } { }
   { \keys_set:nn { ceur / author } { #3 } }
-  % 
+  %
   \int_gincr:N \g_ceur_au_int
   \tex_gdef:D \theau@ { \int_use:N \g_ceur_au_int }
-  % 
+  %
   \seq_gput_right:Nn \g_ceur_prelimsau_seq { #2 }
   \bool_if:NTF \l_ceur_au_collab_bool
   { \seq_gput_right:cn { g_ceur_clau\int_use:N \g_ceur_augr_int _seq } }
@@ -1342,10 +1342,10 @@
     { ,\c_space_token \l_ceur_au_degree_tl }
     \tl_if_empty:NF \l_ceur_au_role_tl
     { \c_space_token (\l_ceur_au_role_tl) }
-    % 
+    %
     \ResetMarks
   }
-  % 
+  %
   \bool_if:NT \l_ceur_au_deceased_bool
   {
     \seq_gput_right:Nn \g_ceur_maltese_seq
@@ -1393,7 +1393,7 @@
   \csgdef { __short_authors_tmp } { #2 }
   \int_compare:nNnTF { \theau@ } = { 1 } {
     \xappto \__short_authors: { \__short_authors_tmp }
-  }{ 
+  }{
     \int_compare:nNnTF { \theau@ } < { \g_num_short_authors + 1 } {
       \xappto \__short_authors: { , ~ \__short_authors_tmp }
     }{
@@ -1402,7 +1402,7 @@
       }{ }
     }
   }
-  % 
+  %
   \@eadauthor={#2}
   \pdfstringdef\__info_au: { #2 }
   \int_compare:nNnTF { \theau@ } < { 4 }
@@ -1728,7 +1728,7 @@
   % \hsize = .65 \textwidth \parindent \z@
   \group_begin:
   % Check if abstract exist
-  \file_if_exist:nT { \jobname.abs } { 
+  \file_if_exist:nT { \jobname.abs } {
     \IfNoValueTF { #1 } {
     } { \tex_gdef:D \abstractname { #1 } }
     \parindent \z@
@@ -1829,7 +1829,7 @@
 \NewDocumentEnvironment { keywords } { +b } {
   %% Keywords list for PDF/A
   \csgdef { pdfxkeywords } { \detokenize\expandafter{ #1 } }
-  %% replace \sep by commas 
+  %% replace \sep by commas
   \tex_global:D \tex_setbox:D \g_ceur_key_box = \vtop \bgroup
   \hsize=.9 \textwidth
   \vspace*{0pt}
@@ -1891,23 +1891,23 @@
 
 \RequirePackage{calc}
 
-\def\@ceurLogoLine{%
-  % set width of ceur-ws logo equals to width of cc-by logo
-  \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
-  \ccLogoWidth=\dimexpr\wd\@tempboxa
-  \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
-  \@rightskip\@flushglue \rightskip\@rightskip
-  % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
-  \begin{minipage}[c]{\ccLogoWidth}
-    \href{https://ceur-ws.org}%
-    % {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
-    {\hbox{\unhcopy\@tempboxa}}
-  \end{minipage}
-  \nobreak\enskip
-  \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
-    {CEUR~Workshop~Proceedings~(\href{https://ceur-ws.org}{CEUR-WS.org})}%
-  \end{minipage}
-}
+% \def\@ceurLogoLine{%
+%   % set width of ceur-ws logo equals to width of cc-by logo
+%   \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
+%   \ccLogoWidth=\dimexpr\wd\@tempboxa
+%   \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
+%   \@rightskip\@flushglue \rightskip\@rightskip
+%   % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
+%   \begin{minipage}[c]{\ccLogoWidth}
+%     \href{https://ceur-ws.org}%
+%     % {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
+%     {\hbox{\unhcopy\@tempboxa}}
+%   \end{minipage}
+%   \nobreak\enskip
+%   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
+%     {CEUR~Workshop~Proceedings~(\href{https://ceur-ws.org}{CEUR-WS.org})}%
+%   \end{minipage}
+% }
 
 \seq_new:N \g_ceur_logonote_seq
 
@@ -2091,7 +2091,7 @@
   \group_begin:
   \@title
   \group_end:
-  % 
+  %
   \bool_if:NTF \g_ceur_blind_bool {
     \vspace* { 10 mm }
   } {
@@ -2296,7 +2296,7 @@
 %   \renewcommand{\footrulewidth}{\z@}%
 %   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
 %   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
-% }  
+% }
 
 % \fancypagestyle{standard}{%
 %   \fancyhf{}%
@@ -2305,7 +2305,7 @@
 %   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
 %   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
 %   \fancyhead[L]{\hffont \__short_title:}%
-% }  
+% }
 
 \cs_new:Npn \__first_footerline: {
   \group_begin:
@@ -2592,12 +2592,12 @@
   \dim_add:Nn \l_tmpa_dim { \box_dp:N \g_tmpa_box }
   \fp_set:Nn  \l_tmpa_fp  { \dim_to_fp:n { \l_tmpa_dim } }
   \fp_set:Nn  \l_tmpb_fp  { \dim_to_fp:n { \baselineskip } }
-  % 
+  %
   \fp_set:Nn \l_wrap_figlines_fp
   { \fp_eval:n { ( \l_tmpa_fp / \l_tmpb_fp )  + .5 } }
   \int_set:Nn \l_wrap_figlines_int
   { \fp_to_int:N \l_wrap_figlines_fp }
-  % 
+  %
   \iow_term:x { ...~wr-fig:~[BL:~\the\baselineskip] ~ ...}
   \iow_term:x { ...~wr-fig:~[LINE-FP:~ \fp_use:N \l_wrap_figlines_fp]~ ...}
   \iow_term:x { ...~wr-fig:~[LINE-INT:~ \int_use:N \l_wrap_figlines_int]~ ...}
@@ -2943,6 +2943,22 @@
 \DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
 \DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
 \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+
+%%
+%% Page geometry
+%%
+
+\RequirePackage{geometry}
+\geometry{a4paper}
+\geometry{%
+  twoside=false,
+  vmargin=1cm,
+  hmargin=1in,
+  centering, 
+  columnsep=2pc,
+  heightrounded,
+  includeheadfoot,
+}
 
 \endinput
 
