@@ -164,5 +164,3 @@
 * **template:** change overleaf template link ([c607974](https://github.com/yamadharma/ceurart/commit/c607974df986c23c489af10cf9dc82a494d4008d))
 * revert to latex3 bools ([e406103](https://github.com/yamadharma/ceurart/commit/e4061030763edfe491a3e75f61c6d861d4baeb95))
 
-
-
