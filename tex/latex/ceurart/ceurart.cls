@@ -16,8 +16,8 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.5.0}%
-\def\RCSdate{2023/12/07}%
+\def\RCSversion{0.5.1}%
+\def\RCSdate{2023/12/14}%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
 
@@ -282,7 +282,7 @@
 \RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
   \logonote{\@copyrightLine}
-  % \logonote{\@ceurLogoLine}
+  % \logonote{\@ceurLogoLine} % 2023-23-13/Manfred: The CEUR logo is no longer included via CEURART. Instead, we include it during the watermarking when a paper is actually published
   % \ifbool { usecasgrabsbox }
   %   {
   %     \setcounter{page}{0}
@@ -407,7 +407,7 @@
   % % pdfauthor={\csuse{__short_authors:}},
   % % pdfauthor={\csuse{__authors:}},
   % % pdftitle={\@title},
-  % pdfsubject={CEUR Workshop Proceedings (CEUR-WS.org)},
+  % pdfsubject={Layout by CEURART},
 
 
 %
@@ -2954,7 +2954,7 @@
   twoside=false,
   vmargin=1cm,
   hmargin=1in,
-  centering, 
+  centering,
   columnsep=2pc,
   heightrounded,
   includeheadfoot,

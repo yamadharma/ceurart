@@ -1,3 +1,12 @@
+## [0.5.1](https://github.com/yamadharma/ceurart/compare/v0.5.0...v0.5.1) (2023-12-14)
+
+
+### Features
+
+* **ceurart:** clean unneeded files ([bd659e9](https://github.com/yamadharma/ceurart/commit/bd659e990eb0ef8191d0e987f1683686f07e05de))
+
+
+
 # [0.5.0](https://github.com/yamadharma/ceurart/compare/v0.4.12...v0.5.0) (2023-12-07)
 
 
