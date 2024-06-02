@@ -1,5 +1,5 @@
 %% ceurart.cls
-%% Copyright 2019--2023 CEUR Workshop Proceedings (CEUR-WS.org)
+%% Copyright 2019--2024 CEUR Workshop Proceedings (CEUR-WS.org)
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
