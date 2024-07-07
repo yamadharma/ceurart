@@ -16,12 +16,16 @@
 %
 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.5.1}%
-\def\RCSdate{2023/12/14}%
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{\RCSfile}[\RCSdate, \RCSversion: Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)]
+\def\RCSversion{0.5.2}%
+\def\RCSdate{2024-07-07}%
+\RequirePackage{expl3}
+\ProvidesExplClass
+{\RCSfile} % Package name
+{\RCSdate} % Release date
+{\RCSversion} % Release version
+{Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)} % Description
 
-\RequirePackage{expl3,xparse}
+\RequirePackage{xparse}
 \@ifundefined{regex_match:nnTF}{\RequirePackage{l3regex}}{}
 
 \ExplSyntaxOn
@@ -368,7 +372,7 @@
     \xmpdatawrite{Title}{\detokenize\expandafter{\casprelimstitle}}
     \xmpdatawrite{Author}{\pdfxauthors}
     \xmpdatawrite{Keywords}{\pdfxkeywords}
-    \xmpdatawrite{Subject}{Layout~by~CEURART}
+    \xmpdatawrite{Subject}{Layout~by~CEURART~v\RCSversion}
 
     \ifx\@copyrightclause\@empty\else
       \xmpdatawrite{Copyright}{\iow_char:N \\ copyright\ \@copyrightyear\ \@copyrightclause}
@@ -389,7 +393,7 @@
       % pdfauthor={\csuse{__short_authors:}},
       % pdfauthor={\csuse{__authors:}},
       % pdftitle={\@title},
-      pdfsubject={Layout~by~CEURART},
+      pdfsubject={Layout~by~CEURART~v\RCSversion},
       pdfkeywords={\pdfxkeywords},
       linkcolor={hscolor},
       urlcolor={hscolor},
@@ -1866,28 +1870,47 @@
 \let\@copyrightclause\@empty
 % \copyrightclause{\textcolor{red}{Author: Please provide a copyright holder}}
 
+%% CC-BY logo
+\RequirePackage{csquotes}
+\RequirePackage[type={CC},modifier={by},version={4.0},imageposition=left]{doclicense}
 
 %% CC-BY logo width
 \newdimen\ccLogoWidth
+\ccLogoWidth=3.5em
 
 \def\@copyrightLine{%
-  \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
-  \ccLogoWidth=\dimexpr\wd\@tempboxa
-  \@rightskip\@flushglue \rightskip\@rightskip
-  % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
+  % \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
+  % \ccLogoWidth=\dimexpr\wd\@tempboxa
+  % \@rightskip\@flushglue \rightskip\@rightskip
+  % % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
+  % \begin{minipage}[c]{\ccLogoWidth}
+  %   \href{https://creativecommons.org/licenses/by/4.0}%
+  %   {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
+  % \end{minipage}
+  % \nobreak\enskip
+  % \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
+  %   \tiny
+  %   \textcopyright\ \@copyrightyear\ %
+  %   \ifx\@copyrightclause\@empty%
+  %     \textcolor{red}{Author: Please fill in the \string\copyrightclause\space macro}%
+  %   \else\@copyrightclause%
+  %   \fi
+  % \end{minipage}
+  % \\
   \begin{minipage}[c]{\ccLogoWidth}
-    \href{https://creativecommons.org/licenses/by/4.0}%
-    {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
+    \doclicenseImage[imagewidth=\ccLogoWidth]
   \end{minipage}
   \nobreak\enskip
   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
     \tiny
     \textcopyright\ \@copyrightyear\ %
     \ifx\@copyrightclause\@empty%
-      \textcolor{red}{Author: Please fill in the \string\copyrightclause\space macro}%
+      \doclicenseText
+      % \textcolor{red}{Author: Please fill in the \string\copyrightclause\space macro}%
     \else\@copyrightclause%
     \fi
   \end{minipage}
+
 }
 
 \RequirePackage{calc}
