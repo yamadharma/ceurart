@@ -1,3 +1,18 @@
+## [0.5.2](https://github.com/yamadharma/ceurart/compare/v0.5.1...v0.5.2) (2024-07-07)
+
+
+### Bug Fixes
+
+* **ceurart:** fix copyright year ([5098288](https://github.com/yamadharma/ceurart/commit/509828845a9467309690b1e9946c863f44d88ce3))
+* **ceurart:** update URL in \linkedinauthor ([fa29495](https://github.com/yamadharma/ceurart/commit/fa29495fff8f5585d90f347587b067d0d4dbd7c6)), closes [#17](https://github.com/yamadharma/ceurart/issues/17)
+
+
+### Features
+
+* **ceurart:** remove cc-by.pdf, use doclicense.sty ([4ae7081](https://github.com/yamadharma/ceurart/commit/4ae7081a85a4f4a1176d9362772088fa27873efc))
+
+
+
 ## [0.5.1](https://github.com/yamadharma/ceurart/compare/v0.5.0...v0.5.1) (2023-12-14)
 
 
