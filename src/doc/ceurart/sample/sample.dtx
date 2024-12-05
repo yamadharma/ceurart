@@ -1,10 +1,17 @@
 % \iffalse meta-comment
 % !TEX program  = luaLaTeX
+% vim: textwidth=75
 %<*internal>
 \iffalse
 %</internal>
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% README.md %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %<*readme>
+-------:| -----------------------------------------------------------------
+ sample:| The sample document for CEURART class
+ Author:| Dmitry S. Kulyabov, Ilaria Tiddi, Manfred Jeusfeld
+ E-mail:| kulyabov-ds@rudn.ru, i.tiddi@vu.nl, Manfred.Jeusfeld@acm.org
+License:| Released under the Creative Commons License Attribution 4.0 International (CC BY 4.0)
+    See:| https://creativecommons.org/licenses/by/4.0/deed.en
+
 # A better way to format your document for CEUR-WS
 
 ## Description
@@ -12,26 +19,15 @@
 ## Installation
 
 Run
-
 ```
 $ lualatex sample.dtx
 ```
-
 to generate the `.ins`, `.tex`, and `.pdf` files.
 %</readme>
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LICENSE.md %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %<*license>
-%% Copyright 2022--2024 CEUR Workshop Proceedings (CEUR-WS.org)
-%
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either version 1.3
-% of this license or (at your option) any later version.
-% The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2005/12/01 or later.
-%
-% This work has the LPPL maintenance status `maintained'.
+Copyright 2022--2024 CEUR Workshop Proceedings (CEUR-WS.org)
+Use permitted under Creative Commons License Attribution 4.0 International (CC BY 4.0).
+This work has the maintenance status `maintained'.
 %</license>
 %<*internal>
 \fi
@@ -41,44 +37,25 @@ to generate the `.ins`, `.tex`, and `.pdf` files.
 \fi
 %</internal>
 %<*install>
-\def\batchfile{sample.ins}
-\input docstrip
+\input docstrip.tex
 \keepsilent
 \showprogress
 \askforoverwritefalse
 \preamble
-----------------------------------------------------------------
-democls --- brief description
-email: you+obfuscation@your.domain
-GitHub: https://github.com/YourGitHubProfile
-Released under the LaTeX Project Public License v1.3c or later
-See http://www.latex-project.org/lppl.txt
-----------------------------------------------------------------
-
+-------:| -----------------------------------------------------------------
+ sample:| The sample document for CEURART class
+ Author:| Dmitry S. Kulyabov, Ilaria Tiddi, Manfred Jeusfeld
+ E-mail:| kulyabov-ds@rudn.ru, i.tiddi@vu.nl, Manfred.Jeusfeld@acm.org
+License:| Released under the Creative Commons License Attribution 4.0 International (CC BY 4.0)
+    See:| https://creativecommons.org/licenses/by/4.0/deed.en
 \endpreamble
 \postamble
-
-Copyright (C) 2009 by You <you+obfuscation@your.domain>
-
-This work may be distributed and/or modified under the conditions of the LaTeX
-Project Public License (LPPL), either version 1.3c of this license or (at your
-option) any later version. The latest version of this license is in the file:
-
-http://www.latex-project.org/lppl.txt
-
-This work is "maintained" (as per LPPL maintenance status) by
-You.
-
-This work consists of the file
-  democls.dtx
-and the derived files
-  democls.ins,
-  democls.cls,
-  democls.pdf, and
-  example.tex.
-
+This work consists of the file sample.dtx and a Makefile.
+Running "make" generates the derived files README, sample*.tex, and sample*.pdf.
+Running "make userinstall" installs the files in the user's TeX tree.
+Running "make install" installs the files in the local TeX tree.
 \endpostamble
-% \usedir{tex/latex/democls}
+% \usedir{tex/latex/ceurart}
 \generate{%
   \file{\jobname__1col.tex}{\from{\jobname.dtx}{all,1col,listings}}
   \file{\jobname__2col.tex}{\from{\jobname.dtx}{all,2col,listings}}
@@ -90,19 +67,42 @@ and the derived files
 %%% Local Variables:
 %%% mode: docTeX
 %%% TeX-master: t
-%%% LaTeX-command: "latex %s"
+%%% LaTeX-command: "lualatex %s"
 %%% End:
 %</install>
 %<install>\endbatchfile
+%<*internal>
+% \usedir{source/latex/ceurart}
+\generate{
+  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
+}
+\nopreamble\nopostamble
+% \usedir{doc/latex/ceurart}
+\generate{
+  \file{README.md}{\from{\jobname.dtx}{readme}}
+  \file{LICENSE.md}{\from{\jobname.dtx}{license}}
+}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+% \fi
+%
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{sample.dtx}
+%</driver>
 %<*all>
 %%
-%% The first command in your LaTeX source must be the \documentclass
-%% command.
+%% The first command in your LaTeX source must be the \documentclass command.
 %%
 %% Options:
 %% twocolumn : Two column layout.
 %% hf: enable header and footer.
-\documentclass[
+\documentclass[%
 %</all>
 %<2col>twocolumn
 %<hf>,hf
@@ -189,12 +189,8 @@ url=http://conceptbase.sourceforge.net/mjf/,
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  A clear and well-documented \LaTeX{} document is presented as an
-  article formatted for publication by CEUR-WS in a conference
-  proceedings. Based on the ``ceurart'' document class, this article
-  presents and explains many of the common variations, as well as many
-  of the formatting elements an author may use in the preparation of
-  the documentation of their work.
+  A clear and well-documented \LaTeX{} document is presented as an article formatted for publication by CEUR-WS in a conference proceedings.
+  Based on the \enquote{ceurart} document class, this article presents and explains many of the common variations, as well as many of the formatting elements an author may use in the preparation of the documentation of their work.
 \end{abstract}
 
 %%
@@ -214,41 +210,57 @@ url=http://conceptbase.sourceforge.net/mjf/,
 
 \section{Introduction}
 
-CEUR-WS's article template provides a consistent \LaTeX{} style for
-use across CEUR-WS publications, and incorporates accessibility and
-metadata-extraction functionality. This document will explain the
-major features of the document class.
+CEUR-WS's article template provides a consistent \LaTeX{} style for use across CEUR-WS publications, and incorporates accessibility and metadata-extraction functionality.
+This document will explain the major features of the document class.
 
-If you are new to publishing with CEUR-WS, this document is a valuable
-guide to the process of preparing your work for publication.
+If you are new to publishing with CEUR-WS, this document is a valuable guide to the process of preparing your work for publication.
 
-The ``\verb|ceurart|'' document class can be used to prepare articles
-for any CEUR-WS publication, and for any stage of publication, from
-review to final ``camera-ready'' copy with {\itshape very} few changes
-to the source.
+The ``\verb|ceurart|'' document class can be used to prepare articles for any CEUR-WS publication, and for any stage of publication, from review to final ``camera-ready'' copy with {\itshape very} few changes to the source.
 
-This class depends on the following packages
-for its proper functioning:
+This class depends on the following packages for its proper functioning:
 
 \begin{itemize}
-\item \verb|natbib.sty| for citation processing;
-\item \verb|geometry.sty| for margin settings;
-\item \verb|graphicx.sty| for graphics inclusion;
-\item \verb|hyperref.sty| optional package if hyperlinking is required in
-  the document;
-\item \verb|fontawesome5.sty| optional package for bells and whistles.
+\item
+%<listings>\verb|natbib.sty|
+%<minted>\mintinline{latex}{natbib.sty}
+ for citation processing;
+\item
+%<listings>\verb|geometry.sty|
+%<minted>\mintinline{latex}{geometry.sty}
+ for margin settings;
+\item
+%<listings>\verb|graphicx.sty|
+%<minted>\mintinline{latex}{graphicx.sty}
+ for graphics inclusion;
+\item
+%<listings>\verb|hyperref.sty|
+%<minted>\mintinline{latex}{hyperref.sty}
+ optional package if hyperlinking is required in the document;
+\item
+%<listings>\verb|fontawesome5.sty|
+%<minted>\mintinline{latex}{fontawesome5.sty}
+ optional package for bells and whistles.
 \end{itemize}
 
 All the above packages are part of any standard \LaTeX{} installation. Therefore, the users need not be bothered about downloading any extra packages.
 
 \section{Modifications}
 
-Modifying the template---including but not limited to: adjusting margins, typeface sizes, line spacing, paragraph and list definitions, and the use of the \verb|\vspace| command to manually adjust the vertical spacing between elements of your work---is not allowed.
+Modifying the template---including but not limited to: adjusting margins, typeface sizes, line spacing, paragraph and list definitions, and the use of the
+%<listings>\verb|\vspace|
+%<minted>\mintinline{latex}{\vspace}
+ command to manually adjust the vertical spacing between elements of your work---is not allowed.
 
 \section{Template parameters}
 
-There are a number of template parameters which modify some part of the \verb|ceurart| document class.
-This parameters are enclosed in square brackets and are a part of the \verb|\documentclass| command:
+There are a number of template parameters which modify some part of the
+%<listings>\verb|ceurart|
+%<minted>\mintinline{latex}{ceurart}
+ document class.
+This parameters are enclosed in square brackets and are a part of the
+%<listings>\verb|\documentclass|
+%<minted>\mintinline{latex}{\documentclass}
+ command:
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \documentclass[parameter]{ceurart}
@@ -257,15 +269,22 @@ This parameters are enclosed in square brackets and are a part of the \verb|\doc
 
 Frequently-used parameters, or combinations of parameters, include:
 \begin{itemize}
-\item \verb|twocolumn| : Two column layout.
-\item \verb|hf| : Enable header and footer\footnote{You can enable the display of page numbers in the final version of the entire collection. In this case, you should adhere to the end-to-end pagination of individual papers.}.
+\item
+%<listings>\verb|twocolumn|
+%<minted>\mintinline{latex}{twocolumn}
+ : Two column layout.
+\item
+%<listings>\verb|hf|
+%<minted>\mintinline{latex}{hf}
+ : Enable header and footer\footnote{You can enable the display of page numbers in the final version of the entire collection. In this case, you should adhere to the end-to-end pagination of individual papers.}.
 \end{itemize}
 
 \section{Front matter}
 
 \subsection{Title Information}
 
-The titles of papers should be either all use the emphasizing capitalized style or they should all use the regular English (or native language) style. It does not make a good impression if you or your authors mix the styles.
+The titles of papers should be either all use the emphasizing capitalized style or they should all use the regular English (or native language) style.
+It does not make a good impression if you or your authors mix the styles.
 
 Use the
 %<listings>\verb|\title|
@@ -278,7 +297,10 @@ command to define the title of your work. Do not insert line breaks in your titl
 %<minted>\mintinline{latex}{\title}
 command have the below options:
 \begin{itemize}
-\item \verb|title|: Document title. This is default option.
+\item
+%<listings>\verb|title|
+%<minted>\mintinline{latex}{title}
+: Document title. This is default option.
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \title[mode=title]{This is a title}
@@ -292,34 +314,49 @@ You can just omit it, like as follows:
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-\item \verb|alt|: Alternate title.
+\item
+%<listings>\verb|alt|
+%<minted>\mintinline{latex}{alt}
+: Alternate title.
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \title[mode=alt]{This is a alternate title}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-\item \verb|sub|: Sub title.
+\item
+%<listings>\verb|sub|
+%<minted>\mintinline{latex}{sub}
+: Sub title.
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \title[mode=sub]{This is a sub title}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
-You can just use \verb|\subtitle| command, as follows:
+You can just use
+%<listings>\verb|\subtitle|
+%<minted>\mintinline{latex}{\subtitle}
+ command, as follows:
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \subtitle{This is a sub title}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-\item \verb|trans|: Translated title.
+\item
+%<listings>\verb|trans|
+%<minted>\mintinline{latex}{trans}
+: Translated title.
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \title[mode=trans]{This is a translated title}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-\item \verb|transsub|: Translated sub title.
+\item
+%<listings>\verb|transsub|
+%<minted>\mintinline{latex}{transsub}
+: Translated sub title.
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \title[mode=transsub]{This is a translated sub title}
@@ -329,25 +366,55 @@ You can just use \verb|\subtitle| command, as follows:
 
 \subsection{Authors and Affiliations}
 
-Each author must be defined separately for accurate metadata identification. Multiple authors may share one affiliation. Authors' names should not be abbreviated; use full first names wherever possible. Include authors' e-mail addresses whenever possible.
+Each author must be defined separately for accurate metadata identification.
+Multiple authors may share one affiliation.
+Authors' names should not be abbreviated; use full first names wherever possible.
+Include authors' e-mail addresses whenever possible.
 
 %<listings>\verb|\author|
 %<minted>\mintinline{latex}{\author}
 command have the below options:
 \begin{itemize}
-\item \verb|style| : Style of author name (chinese)
-\item \verb|prefix| : Prefix
-\item \verb|suffix| : Suffix
-\item \verb|degree| : Degree
-\item \verb|role| : Role
-\item \verb|orcid| : ORCID
-\item \verb|email| : E-mail
-\item \verb|url| : URL
+\item
+%<listings>\verb|style|
+%<minted>\mintinline{latex}{style}
+ : Style of author name (chinese)
+\item
+%<listings>\verb|prefix|
+%<minted>\mintinline{latex}{prefix}
+ : Prefix
+\item
+%<listings>\verb|suffix|
+%<minted>\mintinline{latex}{suffix}
+ : Suffix
+\item
+%<listings>\verb|degree|
+%<minted>\mintinline{latex}{degree}
+ : Degree
+\item
+%<listings>\verb|role|
+%<minted>\mintinline{latex}{role}
+ : Role
+\item
+%<listings>\verb|orcid|
+%<minted>\mintinline{latex}{orcid}
+ : ORCID
+\item
+%<listings>\verb|email|
+%<minted>\mintinline{latex}{email}
+ : E-mail
+\item
+%<listings>\verb|url|
+%<minted>\mintinline{latex}{url}
+ : URL
 \end{itemize}
 
 Author names can have some kinds of marks and notes:
 \begin{itemize}
-\item affiliation mark: \verb|\author[<num>]|.
+\item affiliation mark:
+%<listings>\verb|\author[<num>]|
+%<minted>\mintinline{latex}{\author[<num>]}
+.
 \end{itemize}
 
 The author names and affiliations could be formatted in two ways:
@@ -375,7 +442,13 @@ Author block example:
 
 \subsection{Abstract and Keywords}
 
-Abstract shall be entered in an environment that starts with \verb|\begin{abstract}| and ends with \verb|\end{abstract}|.
+Abstract shall be entered in an environment that starts with
+%<listings>\verb|\begin{abstract}|
+%<minted>\mintinline{latex}{\begin{abstract}}
+ and ends with
+%<listings>\verb|\end{abstract}|
+%<minted>\mintinline{latex}{\end{abstract}}
+.
 
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
@@ -385,7 +458,13 @@ Abstract shall be entered in an environment that starts with \verb|\begin{abstra
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-The key words are enclosed in a \verb|keywords| environment. Use \verb|\sep| to separate keywords.
+The key words are enclosed in a
+%<listings>\verb|keywords|
+%<minted>\mintinline{latex}{keywords}
+environment. Use
+%<listings>\verb|\sep|
+%<minted>\mintinline{latex}{\sep}
+ to separate keywords.
 
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
@@ -398,16 +477,29 @@ The key words are enclosed in a \verb|keywords| environment. Use \verb|\sep| to 
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-At the end of front matter add \verb|\maketitle| command.
+At the end of front matter add
+%<listings>\verb|\maketitle|
+%<minted>\mintinline{latex}{\maketitle}
+ command.
 
 \subsection{Various Marks in the Front Matter}
 
-The front matter becomes complicated due to various kinds of notes and marks to the title and author names. Marks in the title will be denoted by a star ($\star$) mark; footnotes are denoted by super scripted Arabic numerals, corresponding author by an Conformal asterisk (\verb|*|) mark.
+The front matter becomes complicated due to various kinds of notes and marks to the title and author names.
+Marks in the title will be denoted by a star ($\star$) mark; footnotes are denoted by super scripted Arabic numerals, corresponding author by an Conformal asterisk (
+%<listings>\verb|*|
+%<minted>\mintinline{latex}{*}
+) mark.
 
 \subsubsection{Title marks}
 
-Title mark can be entered by the command, \verb|\tnotemark[<num>]| and the corresponding text can be entered with the command \verb|\tnotetext[<num>]{<text>}|. An example will be:
+Title mark can be entered by the command,
+%<listings>\verb|\tnotemark[<num>]|
+%<minted>\mintinline{latex}{\tnotemark[<num>]}
+and the corresponding text can be entered with the command
+%<listings>\verb|\tnotetext[<num>]{<text>}|.
+%<minted>\mintinline{latex}{\tnotetext[<num>]{<text>}}.
 
+An example will be:
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \title{A better way to format your document for CEUR-WS}
@@ -417,44 +509,93 @@ Title mark can be entered by the command, \verb|\tnotemark[<num>]| and the corre
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-\verb|\tnotemark| and \verb|\tnotetext| can be anywhere in the front matter, but should be before \verb|\maketitle| command.
+
+%<listings>\verb|\tnotemark|
+%<minted>\mintinline{latex}{\tnotemark}
+ and
+%<listings>\verb|\tnotetext|
+%<minted>\mintinline{latex}{\tnotetext}
+ can be anywhere in the front matter, but should be before
+%<listings>\verb|\maketitle|
+%<minted>\mintinline{latex}{\maketitle}
+ command.
 
 \subsubsection{Author marks}
 
 Author names can have some kinds of marks and notes:
 \begin{itemize}
-\item footnote mark : \verb|\fnmark[<num>]|
-\item footnote text : \verb|\fntext[<num>]{<text>}|
-\item corresponding author mark : \verb|\cormark[<num>]|
-\item corresponding author text : \verb|\cortext[<num>]{<text>}|
+\item footnote mark :
+%<listings>\verb|\fnmark[<num>]|
+%<minted>\mintinline{latex}{\fnmark[<num>]}
+
+\item footnote text :
+%<listings>\verb|\fntext[<num>]{<text>}|
+%<minted>\mintinline{latex}{\fntext[<num>]{<text>}}
+
+\item corresponding author mark :
+%<listings>\verb|\cormark[<num>]|
+%<minted>\mintinline{latex}{\cormark[<num>]}
+
+\item corresponding author text :
+%<listings>\verb|\cortext[<num>]{<text>}|
+%<minted>\mintinline{latex}{\cortext[<num>]{<text>}}
+
 \end{itemize}
 
 \subsubsection{Other marks}
 
-At times, authors want footnotes which leave no marks in the author names. The note text shall be listed as part of the front matter notes. Class files provides \verb|\nonumnote| for this purpose. The usage
+At times, authors want footnotes which leave no marks in the author names. The note text shall be listed as part of the front matter notes. Class files provides
+%<listings>\verb|\nonumnote|
+%<minted>\mintinline{latex}{\nonumnote}
+ for this purpose. The usage
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \nonumnote{<text>}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
-and should be entered anywhere before the \verb|\maketitle| command for this to take effect.
+and should be entered anywhere before the
+%<listings>\verb|\maketitle|
+%<minted>\mintinline{latex}{\maketitle}
+ command for this to take effect.
 
 \section{Sectioning Commands}
 
 Your work should use standard \LaTeX{} sectioning commands:
-\verb|\section|, \verb|\subsection|,
-\verb|\subsubsection|, and
-\verb|\paragraph|. They should be numbered; do not remove the numbering from the commands.
+%<listings>\verb|\section|%
+%<minted>\mintinline{latex}{\section}%
+,
+%<listings>\verb|\subsection|%
+%<minted>\mintinline{latex}{\subsection}%
+,
+%<listings>\verb|\subsubsection|%
+%<minted>\mintinline{latex}{\subsubsection}%
+, and
+%<listings>\verb|\paragraph|%
+%<minted>\mintinline{latex}{\paragraph}%
+.
+They should be numbered; do not remove the numbering from the commands.
 
 Simulating a sectioning command by setting the first word or words of a paragraph in boldface or italicized text is not allowed.
 
 \section{Tables}
 
-The ``\verb|ceurart|'' document class includes the ``\verb|booktabs|'' package --- \url{https://ctan.org/pkg/booktabs} --- for preparing high-quality tables.
+The
+%<listings>\verb|ceurart|
+%<minted>\mintinline{latex}{ceurart}
+document class includes the
+%<listings>\verb|booktabs|
+%<minted>\mintinline{latex}{booktabs}
+package---\url{https://ctan.org/pkg/booktabs}---for preparing high-quality tables.
 
 Table captions are placed \textit{above} the table.
 
-Because tables cannot be split across pages, the best placement for them is typically the top of the page nearest their initial cite. To ensure this proper ``floating'' placement of tables, use the environment \verb|table| to enclose the table's contents and the table caption. The contents of the table itself must go in the \verb|tabular| environment, to be aligned properly in rows and columns, with the desired horizontal and vertical rules.
+Because tables cannot be split across pages, the best placement for them is typically the top of the page nearest their initial cite. To ensure this proper ``floating'' placement of tables, use the environment
+%<listings>\verb|table|
+%<minted>\mintinline{latex}{table}
+to enclose the table's contents and the table caption. The contents of the table itself must go in the
+%<listings>\verb|tabular|
+%<minted>\mintinline{latex}{tabular}
+environment, to be aligned properly in rows and columns, with the desired horizontal and vertical rules.
 
 Immediately following this sentence is the point at which Table~\ref{tab:freq} is included in the input file; compare the placement of the table here with the table in the printed output of this document.
 
@@ -473,7 +614,13 @@ Immediately following this sentence is the point at which Table~\ref{tab:freq} i
   \end{tabular}
 \end{table*}
 
-To set a wider table, which takes up the whole width of the page's live area, use the environment \verb|table*| to enclose the table's contents and the table caption.  As with a single-column table, this wide table will ``float'' to a location deemed more desirable. Immediately following this sentence is the point at which Table~\ref{tab:commands} is included in the input file; again, it is instructive to compare the placement of the table here with the table in the printed output of this document.
+To set a wider table, which takes up the whole width of the page's live area, use the environment
+%<listings>\verb|table*|
+%<minted>\mintinline{latex}{table*}
+to enclose the table's contents and the table caption.  As with a single-column table, this wide table will
+\enquote{float}
+to a location deemed more desirable.
+Immediately following this sentence is the point at which Table~\ref{tab:commands} is included in the input file; again, it is instructive to compare the placement of the table here with the table in the printed output of this document.
 
 \begin{table}
   \caption{Some Typical Commands}
@@ -491,42 +638,57 @@ To set a wider table, which takes up the whole width of the page's live area, us
 
 \section{Math Equations}
 
-You may want to display math equations in three distinct styles: inline, numbered or non-numbered display.  Each of the three are discussed in the next sections.
+You may want to display math equations in three distinct styles: inline, numbered or non-numbered display.
+Each of the three are discussed in the next sections.
 
 \subsection{Inline (In-text) Equations}
 
-A formula that appears in the running text is called an inline or
-in-text formula.  It is produced by the \verb|math| environment,
-which can be invoked with the usual
-\verb|\begin| \ldots \verb|\end| construction or with
-the short form \verb|$| \ldots \verb|$|. You can use any of the symbols
-and structures, from $\alpha$ to $\omega$, available in
-\LaTeX~\cite{Lamport:LaTeX};
-this section will simply show a few
-examples of in-text equations in context. Notice how this equation:
+A formula that appears in the running text is called an inline or in-text formula.
+It is produced by the
+%<listings>\verb|math|
+%<minted>\mintinline{latex}{math}
+environment, which can be invoked with the usual
+%<listings>\verb|\begin|
+%<minted>\mintinline{latex}{\begin}
+\ldots{}
+%<listings>\verb|\end|
+%<minted>\mintinline{latex}{\end}
+construction or with the short form
+%<listings>\verb|$|
+%<minted>\mintinline{latex}{$}
+\ldots{}
+%<listings>\verb|$|%
+%<minted>\mintinline{latex}{$}%
+.
+You can use any of the symbols and structures, from $\alpha$ to $\omega$, available in \LaTeX~\cite{Lamport:LaTeX}; this section will simply show a few examples of in-text equations in context.
+Notice how this equation:
 \begin{math}
   \lim_{n\rightarrow \infty} \frac{1}{n} = 0,
 \end{math}
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
+set here in in-line math style, looks slightly different when set in display style.
+(See next section).
 
 \subsection{Display Equations}
 
-A numbered display equation---one set off by vertical space from the
-text and centered horizontally---is produced by the \verb|equation|
-environment. An unnumbered display equation is produced by the
-\verb|displaymath| environment.
+A numbered display equation---one set off by vertical space from the text and centered horizontally---is produced by the
+%<listings>\verb|equation|
+%<minted>\mintinline{latex}{equation}
+environment.
+An unnumbered display equation is produced by the
+%<listings>\verb|displaymath|
+%<minted>\mintinline{latex}{displaymath}
+environment.
 
-Again, in either environment, you can use any of the symbols and
-structures available in \LaTeX{}; this section will just give a couple
-of examples of display equations in context.  First, consider the
-equation, shown as an inline equation above:
+Again, in either environment, you can use any of the symbols and structures available in \LaTeX{}; this section will just give a couple of examples of display equations in context.
+First, consider the equation, shown as an inline equation above:
 \begin{equation}
   \lim_{n\rightarrow \infty} \frac{1}{n} = 0.
 \end{equation}
-Notice how it is formatted somewhat differently in
-the \verb|displaymath|
-environment.  Now, we'll enter an unnumbered equation:
+Notice how it is formatted somewhat differently in the
+%<listings>\verb|displaymath|
+%<minted>\mintinline{latex}{displaymath}
+environment.
+Now, we'll enter an unnumbered equation:
 \begin{displaymath}
   S_{n} = \sum_{i=1}^{n} x_{i} ,
 \end{displaymath}
@@ -538,10 +700,13 @@ just to demonstrate \LaTeX's able handling of numbering.
 
 \section{Figures}
 
-The ``\verb|figure|'' environment should be used for figures. One or
-more images can be placed within a figure. If your figure contains
-third-party material, you must clearly identify it as such, as shown
-in the example below.
+The
+%<listings>\verb|figure|
+%<minted>\mintinline{latex}{figure}
+environment should be used for figures.
+One or more images can be placed within a figure.
+If your figure contains third-party material, you must clearly identify it as such, as shown in the example below.
+
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{sample-franklin}
@@ -550,33 +715,32 @@ in the example below.
     Commons. (\url{https://goo.gl/VLCRBB}).}
 \end{figure}
 
-Your figures should contain a caption which describes the figure to
-the reader. Figure captions go below the figure. Your figures should
-also include a description suitable for screen readers, to
-assist the visually-challenged to better understand your work.
+Your figures should contain a caption which describes the figure to the reader.
+Figure captions go below the figure. Your figures should also include a description suitable for screen readers, to assist the visually-challenged to better understand your work.
 
 Figure captions are placed below the figure.
 
 \section{Citations and Bibliographies}
 
-The use of Bib\TeX{} for the preparation and formatting of one's
-references is strongly recommended. Authors' names should be complete
---- use full first names (``Donald E. Knuth'') not initials
-(``D. E. Knuth'') --- and the salient identifying features of a
-reference should be included: title, year, volume, number, pages,
-article DOI, etc.
+The use of Bib\LaTeX{} for the preparation and formatting of one's references is strongly recommended.
+Authors' names should be complete---use full first names (``Donald E. Knuth'') not initials (``D. E. Knuth'')---and the salient identifying features of a reference should be included: title, year, volume, number, pages, article DOI, etc.
 
-The bibliography is included in your source document with these two
-commands, placed just before the \verb|\end{document}|
+The bibliography is included in your source document with these two commands, placed just before the
+%<listings>\verb|\end{document}|
+%<minted>\mintinline{latex}{\end{document}}
 command:
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \bibliography{bibfile}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
-where ``\verb|bibfile|'' is the name, without the ``\verb|.bib|''
+where
+%<listings>\verb|bibfile|
+%<minted>\mintinline{latex}{bibfile}
+ is the name, without the
+%<listings>\verb|.bib|
+%<minted>\mintinline{latex}{.bib}
 suffix, of the Bib\TeX{} file.
-
 
 \subsection{Some examples}
 
@@ -609,41 +773,43 @@ citations: \cite{TUGInstmem, Thornburg01, R, UMassCitations}.
 
 \section{Acknowledgments}
 
-Identification of funding sources and other support, and thanks to
-individuals and groups that assisted in the research and the
-preparation of the work should be included in an acknowledgment
-section, which is placed just before the reference section in your
-document.
+Identification of funding sources and other support, and thanks to individuals and groups that assisted in the research and the preparation of the work should be included in an acknowledgment section, which is placed just before the reference section in your document.
 
 This section has a special environment:
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \begin{acknowledgments}
-  These are different acknowledgments.
+These are different acknowledgments.
 \end{acknowledgments}
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
-so that the information contained therein can be more easily collected
-during the article metadata extraction phase, and to ensure
-consistency in the spelling of the section heading.
+so that the information contained therein can be more easily collected during the article metadata extraction phase, and to ensure consistency in the spelling of the section heading.
 
 Authors should not prepare this section as a numbered or unnumbered
-\verb|\section|; please use the ``\verb|acknowledgments|'' environment.
+%<listings>\verb|\section|%
+%<minted>\mintinline{latex}{\section}%
+; please use the
+%<listings>\verb|acknowledgments|
+%<minted>\mintinline{latex}{acknowledgments}
+environment.
 
 \section{Appendices}
 
 If your work needs an appendix, add it before the
-``\verb|\end{document}|'' command at the conclusion of your source
-document.
+%<listings>\verb|\end{document}|
+%<minted>\mintinline{latex}{\end{document}}
+command at the conclusion of your source document.
 
-Start the appendix with the ``\verb|\appendix|'' command:
+Start the appendix with the
+%<listings>\verb|\appendix|
+%<minted>\mintinline{latex}{\appendix}
+command:
 %<listings>\begin{lstlisting}[language={[latex]TeX}]
 %<minted>\begin{minted}{latex}
 \appendix
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
-and note that in the appendix, sections are lettered, not
-numbered.
+and note that in the appendix, sections are lettered, not numbered.
 
 %%
 %% The acknowledgments section is defined using the "acknowledgments" environment
@@ -651,10 +817,7 @@ numbered.
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
 \begin{acknowledgments}
-  Thanks to the developers of ACM consolidated LaTeX styles
-  \url{https://github.com/borisveytsman/acmart} and to the developers
-  of Elsevier updated \LaTeX{} templates
-  \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.
+Thanks to the developers of ACM consolidated LaTeX styles \url{https://github.com/borisveytsman/acmart} and to the developers of Elsevier updated \LaTeX{} templates \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.
 \end{acknowledgments}
 
 %%
@@ -666,7 +829,6 @@ numbered.
 \appendix
 
 \section{Online Resources}
-
 
 The sources for the ceur-art style are available via
 \begin{itemize}
@@ -713,9 +875,18 @@ The links on the site are to mirrors.
 The mirror is selected automatically.
 A page will open where you can download archives for all supported operating systems.
 \begin{itemize}
-  \item For Windows, a self-extracting archive \verb|install-tl-windows.exe| is provided and at the time of writing this guide it is available at the \href{https://mirror.ctan.org/systems/texlive/tlnet/install-tl-windows.exe}{link}.
-    Alternatively, you can download a regular \verb|zip| archive \href{https://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip}{install-tl.zip} with the same files and unzip it yourself.
-  \item For Unix-like operating systems, the archive is called \verb|install-tl-unx.tar.gz| and is available at \href{https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz}{this address}.
+  \item For Windows, a self-extracting archive
+%<listings>\verb|install-tl-windows.exe|
+%<minted>\mintinline{latex}{install-tl-windows.exe}
+is provided and at the time of writing this guide it is available at the \href{https://mirror.ctan.org/systems/texlive/tlnet/install-tl-windows.exe}{link}.
+Alternatively, you can download a regular
+%<listings>\verb|zip|
+%<minted>\mintinline{latex}{zip}
+ archive \href{https://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip}{install-tl.zip} with the same files and unzip it yourself.
+  \item For Unix-like operating systems, the archive is called
+%<listings>\verb|install-tl-unx.tar.gz|
+%<minted>\mintinline{latex}{install-tl-unx.tar.gz}
+ and is available at \href{https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz}{this address}.
 \end{itemize}
 
 \subsection{Installation process of \TeX{}Live for GNU/Linux}
@@ -764,7 +935,10 @@ To change the directory, perform the following steps in order:
 \begin{itemize}
   \item press the \texttt{D} key and then \texttt{Enter} to confirm;
   \item will open a new menu where we will enter \texttt{1} and press \texttt{Enter} to confirm;
-  \item now enter the path to the main installation directory: \verb|~/texlive/2024| and press \texttt{Enter};
+  \item now enter the path to the main installation directory:
+%<listings>\verb|~/texlive/2024|
+%<minted>\mintinline{shell}{~/texlive/2024}
+ and press \texttt{Enter};
   \item and then type in \texttt{R} and press \texttt{Enter}.
 \end{itemize}
 
