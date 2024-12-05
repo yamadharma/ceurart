@@ -1726,7 +1726,7 @@
 \tl_new:N \l_ceur_abs_title_tl
 \box_new:N \g_ceur_abs_box
 
-\tex_gdef:D \abstractname { \textbf{\sffamily Abstract} }
+\tex_gdef:D \abstractname { Abstract }
 
 \NewDocumentEnvironment { Abstract } { o } {
   % \global\setbox \g_ceur_abs_box = \vtop \bgroup
@@ -1750,7 +1750,7 @@
     % }
     \skip_vertical:n { \baselineskip }
     % \noindent \abstractname \par
-    \noindent { \textbf{\sffamily Abstract} } \par
+    \noindent { \textbf{\sffamily \abstractname} } \par
     % \skip_vertical:n { -4pt}
     % \noindent \rule{.65\textwidth}{.2pt}\par
     \footnotesize
