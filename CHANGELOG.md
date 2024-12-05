@@ -1,3 +1,20 @@
+## [0.5.3](https://github.com/yamadharma/ceurart/compare/v0.5.2...v0.5.3) (2024-12-05)
+
+
+### Bug Fixes
+
+* **ceurart:** fix astract name ([9e39507](https://github.com/yamadharma/ceurart/commit/9e395071fd9171cf9021c9886c3f96f323c902bc)), closes [#19](https://github.com/yamadharma/ceurart/issues/19)
+* **main:** remove unneeded cc-by.pdf ([c19c153](https://github.com/yamadharma/ceurart/commit/c19c153f5e1801d79f38bee6d00d93367fe3152f))
+
+
+### Features
+
+* **sample:** add TeXlive installation description ([18c3844](https://github.com/yamadharma/ceurart/commit/18c384468e1c0be95e1936443c5d51b139e8726f))
+* **sample:** make sample as dtx package ([f35f147](https://github.com/yamadharma/ceurart/commit/f35f1472c65d8928ed9e04aadc2b52823f6dcadb))
+* **sample:** move sample files to single sample.dtx ([2df4e8a](https://github.com/yamadharma/ceurart/commit/2df4e8ac87b2b258f9d179fa001544c7ad5cd759))
+
+
+
 ## [0.5.2](https://github.com/yamadharma/ceurart/compare/v0.5.1...v0.5.2) (2024-07-07)
 
 
