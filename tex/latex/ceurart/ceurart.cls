@@ -1849,14 +1849,14 @@
   \egroup
 } { }
 
-%% Acknowledgments
+% %% Acknowledgments
 
-\NewDocumentEnvironment { acknowledgments } { }
-{
-  \group_begin:
-  \section*{Acknowledgments}
-}
-{ \group_end: }
+% \NewDocumentEnvironment { acknowledgments } { }
+% {
+%   \group_begin:
+%   \section*{Acknowledgments}
+% }
+% { \group_end: }
 
 
 %% Copyright
@@ -2967,6 +2967,80 @@
 \DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
 \DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
 \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+
+%%% Supplementary
+
+\ProvideDocumentCommand \DivFontShape {} { \sffamily \bfseries }
+
+%% Author Contributions
+
+\def\authorcontributionsname{Author~Contributions}
+
+\ProvideDocumentEnvironment { authorcontributions } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
+} {}
+
+%% Funding
+
+\def\fundingname{Funding}
+
+\ProvideDocumentEnvironment { funding } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
+} {}
+
+%% Data Availability Statement
+
+\def\dataavailabilityname{Data~Availability~Statement}
+
+\ProvideDocumentEnvironment { dataavailability } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
+} {}
+
+%% Conflicts of Interest
+
+\def\conflictsofinterestname{Conflicts~of~Interest}
+
+\ProvideDocumentEnvironment { conflictsofinterest } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
+} {}
+
+%% Acknowledgments
+
+\def\acknowledgmentsname{Acknowledgments}
+
+\ProvideDocumentEnvironment { acknowledgments } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\acknowledgmentsname}:~} { #1 }}
+} {}
+
+%% Acknowledgments
+
+\def\acknowledgmentsname{Acknowledgments}
+
+\ProvideDocumentEnvironment { acknowledgments } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\acknowledgmentsname}:~} { #1 }}
+} {}
+
+%% Declaration on Generative AI
+
+\def\aideclarationname{Declaration~on~Generative~AI}
+
+\ProvideDocumentEnvironment { aideclaration } { +b } {%
+  \smallskip
+  \noindent
+  {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
+} {}
 
 %%
 %% Page geometry
