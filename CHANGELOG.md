@@ -1,3 +1,14 @@
+# [0.6.0](https://github.com/yamadharma/ceurart/compare/v0.5.3...v0.6.0) (2024-12-31)
+
+
+### Features
+
+* **ceurart:** add preliminary ceurart.dtx ([52584db](https://github.com/yamadharma/ceurart/commit/52584db477ce8e75d996abd7eaea7dee1027e131))
+* **sample:** add author's ethics statement ([e6585e6](https://github.com/yamadharma/ceurart/commit/e6585e60518b68dc79fc81f240f8e832d84d71de))
+* **sample:** regenerate sample files ([41aceb9](https://github.com/yamadharma/ceurart/commit/41aceb91f0e59f11f5fe459d78e9aee3b1a07921))
+
+
+
 ## [0.5.3](https://github.com/yamadharma/ceurart/compare/v0.5.2...v0.5.3) (2024-12-05)
 
 
