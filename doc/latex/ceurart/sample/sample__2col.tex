@@ -5,12 +5,7 @@
 %% The original source files were:
 %%
 %% sample.dtx  (with options: `all,2col,listings')
-%% -------:| -----------------------------------------------------------------
-%%  sample:| The sample document for CEURART class
-%%  Author:| Dmitry S. Kulyabov, Ilaria Tiddi, Manfred Jeusfeld
-%%  E-mail:| kulyabov-ds@rudn.ru, i.tiddi@vu.nl, Manfred.Jeusfeld@acm.org
-%% License:| Released under the Creative Commons License Attribution 4.0 International (CC BY 4.0)
-%%     See:| https://creativecommons.org/licenses/by/4.0/deed.en
+%% 
 %%
 %% The first command in your LaTeX source must be the \documentclass command.
 %%
@@ -579,7 +574,84 @@ cites might contain `duplicate' DOI and URLs (some SIAM articles)
 \cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
 citations: \cite{TUGInstmem, Thornburg01, R, UMassCitations}.
 
-\section{Acknowledgments}
+\section{Ethical disclaimers}
+
+A disclaimer is a note of disclaimer of responsibility~\cite{kulyabov_2024_editorial_author-ethics_en}.
+For example, authors' statements about conflicts of interest, author contributions, acknowledgements, etc.
+
+Authors should not prepare these disclaimers as a numbered or unnumbered
+\verb|\section|%
+; please use the special environments instead.
+
+\subsection{Author contributions}
+
+The Committee on Publication Ethics (COPE) draws attention to the problem of authorship \cite{cope_book_authorship_en}.
+The CRediT system (\url{https://credit.niso.org/}) is proposed to formalize author roles.
+The CRediT (Contributor Roles Taxonomy) offers 14 possible author roles \cite{holcombe_2019_contributorship-not-authorship_en}.
+This is not really a taxonomy, but a faceted classification. Author roles are not always independent in themselves.
+
+The following statements should be used \emph{Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y.}
+Please add at the end of the statement:
+\emph{All authors have read and agreed to the published version of the manuscript.}
+
+This section has a special environment:
+\begin{lstlisting}[language={[latex]TeX}]
+\begin{authorcontributions}
+…
+\end{authorcontributions}
+\end{lstlisting}
+
+\subsection{Funding}
+
+Disclaimer \emph{funding} refers primarily to external funding if the research was externally initiated.
+If the research is entirely the initiative of the author's team, it is better to indicate gratitude for partial funding of some of the stages of the research in the \emph{Acknowledgments} section.
+The fact that the author's team has received external funding should be recorded in the disclaimer as a matter of course.
+When mentioning the sponsor, its exact data (name of the organization, grant number, etc.) and the country of its location should be specified (for example \emph{This research was funded by NAME OF FUNDER grant number XXX}).
+If there is any support, it is recommended to clarify in the \emph{Conflicts of interest} section at which stages of the research and how the support was used.
+If there is no external funding, it is written: \emph{This research received no external funding}.
+If it is impossible to obtain information from the authors about the source of funding, then write: \emph{Not specified}.
+
+This section has a special environment:
+\begin{lstlisting}[language={[latex]TeX}]
+\begin{funding}
+…
+\end{funding}
+\end{lstlisting}
+
+\subsection{Data availability statement}
+
+Data are particularly important in reproducible researches.
+The data availability statement tells the reader where the research data related to the article are located and under what conditions the data can be accessed.
+References to the dataset are also provided.
+
+If no new data is created or analyzed, please write:
+\emph{No new data were created or analyzed in this study. Data sharing is not applicable.}
+
+This section has a special environment:
+\begin{lstlisting}[language={[latex]TeX}]
+\begin{dataavailability}
+…
+\end{dataavailability}
+\end{lstlisting}
+
+\subsection{Conflicts of interest}
+
+This disclaimer must be included.
+
+Conflicts of interest can comment on various aspects, but usually the author's past or current employment is indicated.
+Grants (especially from for-profit companies) received not only by the author but also by the organization for which he or she works are indicated.
+If the author is associated with a sponsor, it is indicated where the research was conducted.
+
+If there is no conflict of interest, then the corresponding statement should also be included: \emph{The authors declare no conflict of interest}.
+
+This section has a special environment:
+\begin{lstlisting}[language={[latex]TeX}]
+\begin{conflictsofinterest}
+…
+\end{conflictsofinterest}
+\end{lstlisting}
+
+\subsection{Acknowledgments}
 
 Identification of funding sources and other support, and thanks to individuals and groups that assisted in the research and the preparation of the work should be included in an acknowledgment section, which is placed just before the reference section in your document.
 
@@ -591,11 +663,22 @@ These are different acknowledgments.
 \end{lstlisting}
 so that the information contained therein can be more easily collected during the article metadata extraction phase, and to ensure consistency in the spelling of the section heading.
 
-Authors should not prepare this section as a numbered or unnumbered
-\verb|\section|%
-; please use the
-\verb|acknowledgments|
-environment.
+\subsection{Declaration on Generative AI}
+
+  Either:
+\emph{The author(s) have not employed any Generative AI tools.}\\
+  or (by using the activity taxonomy in \url{https://ceur-ws.org/genai-tax.html}):
+\emph{During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar
+and spelling check. Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate
+images. After using these tool(s)/service(s), the author(s) reviewed and edited the content as
+needed and take(s) full responsibility for the publication’s content.}
+
+This section has a special environment:
+\begin{lstlisting}[language={[latex]TeX}]
+\begin{aideclaration}
+…
+\end{aideclaration}
+\end{lstlisting}
 
 \section{Appendices}
 
@@ -611,6 +694,25 @@ command:
 \end{lstlisting}
 and note that in the appendix, sections are lettered, not numbered.
 
+\vspace{\baselineskip}
+
+\begin{authorcontributions}
+  Conceptualization, Manfred Jeusfeld and Ilaria Tiddi; methodology, Manfred Jeusfeld; writing---original draft preparation, Dmitry S. Kulyabov; writing---review and editing, Manfred Jeusfeld.
+  All authors have read and agreed to the published version of the manuscript.
+\end{authorcontributions}
+
+\begin{funding}
+    This research received no external funding.
+\end{funding}
+
+\begin{dataavailability}
+    No new data were created or analysed during this study. Data sharing is not applicable.
+\end{dataavailability}
+
+\begin{conflictsofinterest}
+    The authors declare no conflict of interest.
+\end{conflictsofinterest}
+
 %%
 %% The acknowledgments section is defined using the "acknowledgments" environment
 %% (and NOT an unnumbered section). This ensures the proper
@@ -619,6 +721,10 @@ and note that in the appendix, sections are lettered, not numbered.
 \begin{acknowledgments}
 Thanks to the developers of ACM consolidated LaTeX styles \url{https://github.com/borisveytsman/acmart} and to the developers of Elsevier updated \LaTeX{} templates \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.
 \end{acknowledgments}
+
+\begin{aideclaration}
+    The authors have not employed any Generative AI tools.
+\end{aideclaration}
 
 %%
 %% Define the bibliography file to be used
@@ -735,9 +841,6 @@ This will start the installation, which will take a long time.
 %%% mode: LaTeX
 %%% TeX-master: t
 %%% End:
-%% This work consists of the file sample.dtx and a Makefile.
-%% Running "make" generates the derived files README, sample*.tex, and sample*.pdf.
-%% Running "make userinstall" installs the files in the user's TeX tree.
-%% Running "make install" installs the files in the local TeX tree.
+%% 
 %%
 %% End of file `sample__2col.tex'.
