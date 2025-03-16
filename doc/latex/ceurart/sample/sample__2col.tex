@@ -5,7 +5,12 @@
 %% The original source files were:
 %%
 %% sample.dtx  (with options: `all,2col,listings')
-%% 
+%% -------:| -----------------------------------------------------------------
+%%  sample:| The sample document for CEURART class
+%%  Author:| Dmitry S. Kulyabov, Ilaria Tiddi, Manfred Jeusfeld
+%%  E-mail:| kulyabov-ds@rudn.ru, i.tiddi@vu.nl, Manfred.Jeusfeld@acm.org
+%% License:| Released under the Creative Commons License Attribution 4.0 International (CC BY 4.0)
+%%     See:| https://creativecommons.org/licenses/by/4.0/deed.en
 %%
 %% The first command in your LaTeX source must be the \documentclass command.
 %%
@@ -31,15 +36,13 @@ twocolumn
 %%
 %% Rights management information.
 %% CC-BY is default license.
-\copyrightyear{2024}
+\copyrightyear{2025}
 \copyrightclause{Copyright for this paper by its authors.
-  Use permitted under Creative Commons License Attribution 4.0
-  International (CC BY 4.0).}
+  Use permitted under Creative Commons License Attribution 4.0 International (CC BY 4.0).}
 
 %%
 %% This command is for the conference information
-\conference{Woodstock'24: Symposium on the irreproducible science,
-  June 10--14, 2024, Woodstock, NY}
+\conference{Woodstock'25: Symposium on the irreproducible science, June 9--13, 2025, Woodstock, NY}
 
 %%
 %% The "title" command
@@ -167,7 +170,7 @@ Frequently-used parameters, or combinations of parameters, include:
 
 \section{Front matter}
 
-\subsection{Title Information}
+\subsection{Title information}
 
 The titles of papers should be either all use the emphasizing capitalized style or they should all use the regular English (or native language) style.
 It does not make a good impression if you or your authors mix the styles.
@@ -228,7 +231,7 @@ You can just use
 \end{lstlisting}
 \end{itemize}
 
-\subsection{Authors and Affiliations}
+\subsection{Authors and affiliations}
 
 Each author must be defined separately for accurate metadata identification.
 Multiple authors may share one affiliation.
@@ -292,7 +295,7 @@ Author block example:
 \address[2]{Affiliation #2}
 \end{lstlisting}
 
-\subsection{Abstract and Keywords}
+\subsection{Abstract and keywords}
 
 Abstract shall be entered in an environment that starts with
 \verb|\begin{abstract}|
@@ -325,7 +328,7 @@ At the end of front matter add
 \verb|\maketitle|
  command.
 
-\subsection{Various Marks in the Front Matter}
+\subsection{Various marks in the front matter}
 
 The front matter becomes complicated due to various kinds of notes and marks to the title and author names.
 Marks in the title will be denoted by a star ($\star$) mark; footnotes are denoted by super scripted Arabic numerals, corresponding author by an Conformal asterisk (
@@ -384,7 +387,7 @@ and should be entered anywhere before the
 \verb|\maketitle|
  command for this to take effect.
 
-\section{Sectioning Commands}
+\section{Sectioning commands}
 
 Your work should use standard \LaTeX{} sectioning commands:
 \verb|\section|%
@@ -453,12 +456,12 @@ Immediately following this sentence is the point at which Table~\ref{tab:command
   \end{tabular}
 \end{table}
 
-\section{Math Equations}
+\section{Math equations}
 
 You may want to display math equations in three distinct styles: inline, numbered or non-numbered display.
 Each of the three are discussed in the next sections.
 
-\subsection{Inline (In-text) Equations}
+\subsection{Inline (in-text) equations}
 
 A formula that appears in the running text is called an inline or in-text formula.
 It is produced by the
@@ -480,7 +483,7 @@ Notice how this equation:
 set here in in-line math style, looks slightly different when set in display style.
 (See next section).
 
-\subsection{Display Equations}
+\subsection{Display equations}
 
 A numbered display equation---one set off by vertical space from the text and centered horizontally---is produced by the
 \verb|equation|
@@ -528,7 +531,7 @@ Figure captions go below the figure. Your figures should also include a descript
 
 Figure captions are placed below the figure.
 
-\section{Citations and Bibliographies}
+\section{Citations and bibliographies}
 
 The use of Bib\LaTeX{} for the preparation and formatting of one's references is strongly recommended.
 Authors' names should be complete---use full first names (``Donald E. Knuth'') not initials (``D. E. Knuth'')---and the salient identifying features of a reference should be included: title, year, volume, number, pages, article DOI, etc.
@@ -577,79 +580,26 @@ citations: \cite{TUGInstmem, Thornburg01, R, UMassCitations}.
 \section{Ethical disclaimers}
 
 A disclaimer is a note of disclaimer of responsibility~\cite{kulyabov_2024_editorial_author-ethics_en}.
-For example, authors' statements about conflicts of interest, author contributions, acknowledgements, etc.
 
 Authors should not prepare these disclaimers as a numbered or unnumbered
 \verb|\section|%
 ; please use the special environments instead.
 
-\subsection{Author contributions}
 
-The Committee on Publication Ethics (COPE) draws attention to the problem of authorship \cite{cope_book_authorship_en}.
-The CRediT system (\url{https://credit.niso.org/}) is proposed to formalize author roles.
-The CRediT (Contributor Roles Taxonomy) offers 14 possible author roles \cite{holcombe_2019_contributorship-not-authorship_en}.
-This is not really a taxonomy, but a faceted classification. Author roles are not always independent in themselves.
 
-The following statements should be used \emph{Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y.}
-Please add at the end of the statement:
-\emph{All authors have read and agreed to the published version of the manuscript.}
 
-This section has a special environment:
-\begin{lstlisting}[language={[latex]TeX}]
-\begin{authorcontributions}
-…
-\end{authorcontributions}
-\end{lstlisting}
 
-\subsection{Funding}
 
-Disclaimer \emph{funding} refers primarily to external funding if the research was externally initiated.
-If the research is entirely the initiative of the author's team, it is better to indicate gratitude for partial funding of some of the stages of the research in the \emph{Acknowledgments} section.
-The fact that the author's team has received external funding should be recorded in the disclaimer as a matter of course.
-When mentioning the sponsor, its exact data (name of the organization, grant number, etc.) and the country of its location should be specified (for example \emph{This research was funded by NAME OF FUNDER grant number XXX}).
-If there is any support, it is recommended to clarify in the \emph{Conflicts of interest} section at which stages of the research and how the support was used.
-If there is no external funding, it is written: \emph{This research received no external funding}.
-If it is impossible to obtain information from the authors about the source of funding, then write: \emph{Not specified}.
 
-This section has a special environment:
-\begin{lstlisting}[language={[latex]TeX}]
-\begin{funding}
-…
-\end{funding}
-\end{lstlisting}
 
-\subsection{Data availability statement}
 
-Data are particularly important in reproducible researches.
-The data availability statement tells the reader where the research data related to the article are located and under what conditions the data can be accessed.
-References to the dataset are also provided.
 
-If no new data is created or analyzed, please write:
-\emph{No new data were created or analyzed in this study. Data sharing is not applicable.}
 
-This section has a special environment:
-\begin{lstlisting}[language={[latex]TeX}]
-\begin{dataavailability}
-…
-\end{dataavailability}
-\end{lstlisting}
 
-\subsection{Conflicts of interest}
 
-This disclaimer must be included.
 
-Conflicts of interest can comment on various aspects, but usually the author's past or current employment is indicated.
-Grants (especially from for-profit companies) received not only by the author but also by the organization for which he or she works are indicated.
-If the author is associated with a sponsor, it is indicated where the research was conducted.
 
-If there is no conflict of interest, then the corresponding statement should also be included: \emph{The authors declare no conflict of interest}.
 
-This section has a special environment:
-\begin{lstlisting}[language={[latex]TeX}]
-\begin{conflictsofinterest}
-…
-\end{conflictsofinterest}
-\end{lstlisting}
 
 \subsection{Acknowledgments}
 
@@ -665,9 +615,9 @@ so that the information contained therein can be more easily collected during th
 
 \subsection{Declaration on Generative AI}
 
-  Either:
+Either:\\
 \emph{The author(s) have not employed any Generative AI tools.}\\
-  or (by using the activity taxonomy in \url{https://ceur-ws.org/genai-tax.html}):
+or (by using the activity taxonomy in \url{https://ceur-ws.org/genai-tax.html}): \\
 \emph{During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar
 and spelling check. Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate
 images. After using these tool(s)/service(s), the author(s) reviewed and edited the content as
@@ -676,7 +626,7 @@ needed and take(s) full responsibility for the publication’s content.}
 This section has a special environment:
 \begin{lstlisting}[language={[latex]TeX}]
 \begin{aideclaration}
-…
+...
 \end{aideclaration}
 \end{lstlisting}
 
@@ -694,24 +644,10 @@ command:
 \end{lstlisting}
 and note that in the appendix, sections are lettered, not numbered.
 
-\vspace{\baselineskip}
 
-\begin{authorcontributions}
-  Conceptualization, Manfred Jeusfeld and Ilaria Tiddi; methodology, Manfred Jeusfeld; writing---original draft preparation, Dmitry S. Kulyabov; writing---review and editing, Manfred Jeusfeld.
-  All authors have read and agreed to the published version of the manuscript.
-\end{authorcontributions}
 
-\begin{funding}
-    This research received no external funding.
-\end{funding}
 
-\begin{dataavailability}
-    No new data were created or analysed during this study. Data sharing is not applicable.
-\end{dataavailability}
 
-\begin{conflictsofinterest}
-    The authors declare no conflict of interest.
-\end{conflictsofinterest}
 
 %%
 %% The acknowledgments section is defined using the "acknowledgments" environment
@@ -734,7 +670,7 @@ Thanks to the developers of ACM consolidated LaTeX styles \url{https://github.co
 %% If your work has an appendix, this is the place to put it.
 \appendix
 
-\section{Online Resources}
+\section{Online resources}
 
 The sources for the ceur-art style are available via
 \begin{itemize}
@@ -767,7 +703,7 @@ For Windows, use the Chocolatey package manager (\url{https://chocolatey.org/}):
 choco install texlive
 \end{lstlisting}
 
-\subsection{Manual \TeX{}Live Installation}
+\subsection{Manual \TeX{}Live installation}
 
 Let's describe the process of on-premise installing the \TeX{}Live distribution.
 After launching, the installer will allow you to choose the installation scheme, i.e. specify a number of settings and select the desired packages.
@@ -841,6 +777,9 @@ This will start the installation, which will take a long time.
 %%% mode: LaTeX
 %%% TeX-master: t
 %%% End:
-%% 
+%% This work consists of the file sample.dtx and a Makefile.
+%% Running "make" generates the derived files README, sample*.tex, and sample*.pdf.
+%% Running "make userinstall" installs the files in the user's TeX tree.
+%% Running "make install" installs the files in the local TeX tree.
 %%
 %% End of file `sample__2col.tex'.
