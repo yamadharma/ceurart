@@ -2784,7 +2784,7 @@
 
 %%%% Author Contributions
 
-\def\authorcontributionsname{Author~Contributions}
+\def\authorcontributionsname{Author~contributions}
 
 \ProvideDocumentEnvironment { authorcontributions } { +b } {%
   % \smallskip
@@ -2806,7 +2806,7 @@
 
 %%%% Data Availability Statement
 
-\def\dataavailabilityname{Data~Availability~Statement}
+\def\dataavailabilityname{Data~availability~statement}
 
 \ProvideDocumentEnvironment { dataavailability } { +b } {%
   % \smallskip
@@ -2817,7 +2817,7 @@
 
 %%%% Conflicts of Interest
 
-\def\conflictsofinterestname{Conflicts~of~Interest}
+\def\conflictsofinterestname{Conflicts~of~interest}
 
 \ProvideDocumentEnvironment { conflictsofinterest } { +b } {%
   % \smallskip
