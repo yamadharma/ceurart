@@ -1,30 +1,26 @@
-%% ceurart.cls
-%% Copyright 2019--2024 CEUR Workshop Proceedings (CEUR-WS.org)
-%
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either version 1.3
-% of this license or (at your option) any later version.
-% The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2005/12/01 or later.
-%
-% This work has the LPPL maintenance status `maintained'.
-%
-% The Current Maintainer of this work is Dmitry S. Kulyabov.
-% The code was originally based on 'CAS Bundle' code.
-%
-
+%%
+%% This is file `ceurart.cls',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ceurart.dtx  (with options: `class')
+%% -------:| -----------------------------------------------------------------
+%% ceurart:| Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)
+%%  Author:| Dmitry S. Kulyabov
+%%  E-mail:| yamadharma@gmail.com
+%% License:| Released under the LaTeX Project Public License v1.3c or later
+%%     See:| http://www.latex-project.org/lppl.txt
+%% 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.6.0}%
-\def\RCSdate{2024-12-21}%
+\def\RCSversion{0.6.1}%
+\def\RCSdate{2025-03-16}%
 \RequirePackage{expl3}
 \ProvidesExplClass
 {\RCSfile} % Package name
 {\RCSdate} % Release date
 {\RCSversion} % Release version
 {Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)} % Description
-
 \RequirePackage{xparse}
 \@ifundefined{regex_match:nnTF}{\RequirePackage{l3regex}}{}
 
@@ -45,25 +41,14 @@
 \bool_new:N \g_ceur_hf_bool
 \bool_gset_false:N \g_ceur_hf_bool
 
-% \ifhf
-%   \bool_gset_true:N \g_ceur_hf_bool
-% \fi
 %% header and footer
-% \newif\ifhf
-% \global\hffalse
 
 \newcounter{blind}
 \setcounter{blind}{0}
 
-% \def\blstr#1{\gdef\@blstr{#1}}
-% \def\@blstr{1}
-% \newdimen\@bls
-% \@bls=\baselineskip
 
-%\newif\if@twocolumn
 \DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
 \DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
-% \DeclareOption{hf}{\global\hftrue}
 
 \DeclareOption{singleblind}{\setcounter{blind}{1}}
 \DeclareOption{doubleblind}{\setcounter{blind}{2}}
@@ -71,8 +56,6 @@
 \DeclareOption{final}{\global\casfinallayouttrue}
 \DeclareOption{review}{\global\casreviewlayouttrue}
 
-% \ExecuteOptions{a4paper,10pt,oneside,review}
-% \ExecuteOptions{a4paper,oneside,10pt,DIV=calc}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 \PassOptionsToClass{a4paper,twoside=false}{scrartcl}
 \ProcessOptions\relax
@@ -185,9 +168,6 @@
 \urlstyle{rm}
 \colorlet{scolor}{black}
 \colorlet{hscolor}{DarkSlateGrey}
-% \AtEndDocument{\hypersetup
-%   {pdftitle={\csuse{__short_title:}},
-%   pdfauthor={\csuse{__short_authors:}}}}
 
 \let\comma\@empty
 \let\tnotesep\@empty
@@ -196,9 +176,6 @@
 \let\pdfxauthors\@empty
 \let\pdfxkeywords\@empty
 
-%
-% Load Common items
-%
 
 %%
 %%
@@ -259,15 +236,6 @@
 %%
 %%
 
-% \newcommand\ceurConference[4][]{%
-%   \gdef\ceurConference@shortname{#1}%
-%   \gdef\ceurConference@name{#2}%
-%   \gdef\ceurConference@date{#3}%
-%   \gdef\ceurConference@venue{#4}%
-%   \ifx\ceurConference@shortname\@empty
-%     \gdef\ceurConference@shortname{#2}%
-%   \fi
-% }
 
 \DeclareRobustCommand\conference[1]{%
   \gdef\ceurConference@name{#1}%
@@ -279,9 +247,6 @@
   \hspace*{-\footnotemargin}
 }
 
-%
-% Specific to Single Column
-%
 
 \RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
@@ -404,7 +369,6 @@
   }
 }
 
-
   % pdfcreator={ceurart.cls},
   % % pdfproducer={pdfTeX;},
   % % pdftitle={\csuse{__short_title:}},
@@ -413,14 +377,6 @@
   % % pdftitle={\@title},
   % pdfsubject={Layout by CEURART},
 
-
-%
-% Front matter macros
-%
-% The front matter macros are derived/adopted from stm-prelims.sty
-% written by CV Radhakrishnan <cvr@cvr.cc> and copyrighted by him.
-% Usage of those macros and methods are gratefully acknowledged.
-%
 
 \keys_define:nn { ceur / title } {
   mode      .choice:     ,
@@ -538,7 +494,6 @@
   }
 }
 
-%  \gappto\usestmtitle{#1}%
 
 \renewcommand \@title { \seq_use:Nn \g_ceur_title_seq { } }
 
@@ -584,7 +539,6 @@
 \NewDocumentCommand \fnmark { O{} } {
   \writemarks { fnau\theau@ } { #1 }
 }
-
 
 \NewDocumentCommand  \fnref { m } {
   \processFnRef { #1 }
@@ -817,9 +771,6 @@
   \group_end:
 }
 
-%
-% Contrib Role
-%
 
 \seq_gclear_new:N \g_ceur_credits_seq
 
@@ -858,7 +809,6 @@
    { \int_set:Nn \l_tmpa_int { 0 }
      \clist_map_inline:nn { #1 }
       {
-%        \msg_term:n { ##1 .. [\cs:w X@##1:\cs_end:] }
         \cs_if_free:cTF { X@##1: }
           { \csdef{X@##1:}{0} }
           {
@@ -1289,7 +1239,6 @@
 \csgdef { pdfxauthors } { }
 
 \csgdef { __short_authors_tmp } { }
-% Number of person in short authors list
 \int_new:N \g_num_short_authors
 \g_num_short_authors = 1
 
@@ -1849,14 +1798,6 @@
   \egroup
 } { }
 
-% %% Acknowledgments
-
-% \NewDocumentEnvironment { acknowledgments } { }
-% {
-%   \group_begin:
-%   \section*{Acknowledgments}
-% }
-% { \group_end: }
 
 
 %% Copyright
@@ -1868,7 +1809,6 @@
   \def\@copyrightclause{#1}%
 }
 \let\@copyrightclause\@empty
-% \copyrightclause{\textcolor{red}{Author: Please provide a copyright holder}}
 
 %% CC-BY logo
 \RequirePackage{csquotes}
@@ -1915,23 +1855,6 @@
 
 \RequirePackage{calc}
 
-% \def\@ceurLogoLine{%
-%   % set width of ceur-ws logo equals to width of cc-by logo
-%   \setbox\@tempboxa\hbox{\includegraphics[height=\baselineskip,clip]{cc-by}}%
-%   \ccLogoWidth=\dimexpr\wd\@tempboxa
-%   \setbox\@tempboxa\hbox{\includegraphics[width=\ccLogoWidth,clip]{ceur-ws-logo}}
-%   \@rightskip\@flushglue \rightskip\@rightskip
-%   % \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
-%   \begin{minipage}[c]{\ccLogoWidth}
-%     \href{https://ceur-ws.org}%
-%     % {\lower\baselineskip\hbox{\unhcopy\@tempboxa}}\enskip
-%     {\hbox{\unhcopy\@tempboxa}}
-%   \end{minipage}
-%   \nobreak\enskip
-%   \begin{minipage}[c]{\linewidth - \ccLogoWidth - 2\footnotemargin}
-%     {CEUR~Workshop~Proceedings~(\href{https://ceur-ws.org}{CEUR-WS.org})}%
-%   \end{minipage}
-% }
 
 \seq_new:N \g_ceur_logonote_seq
 
@@ -1952,9 +1875,6 @@
 
 \newcommand \printlogonotes { \seq_use:Nn \g_ceur_logonote_seq { \par } }
 
-%
-% Print all footnotes in the title page
-%
 
 \bool_new:N \g_ceur_longmktitle_bool
 \int_new:N \g_ceur_jtype_int
@@ -1991,9 +1911,6 @@
   \normalcolor
 }
 
-%
-% Date History
-%
 \tl_new:N \g_ceur_recd_tl
 \tl_new:N \g_ceur_accd_tl
 \tl_new:N \g_ceur_revd_tl
@@ -2017,9 +1934,6 @@
   { \tl_if_gput_right:Nn \g_ceur_pub_print_tl { #2 } }
 }
 
-%
-% Verse/Recto
-%
 \tl_new:N \l_ceur_verso_tl
 \tl_new:N \l_ceur_recto_tl
 
@@ -2028,9 +1942,6 @@
 \NewDocumentCommand \recto { m }
 { \tl_set:Nn \l_ceur_recto_tl { #1 } }
 
-%
-% Maketitle
-%
 
 \newcounter{au}
 \newcounter{cnote}
@@ -2186,7 +2097,6 @@
   % % \iow_term:x { ...~[ht+dp: \dim_use:N \g_tmpb_dim  ] }
   %
   \dim_gset:Nn \g_tmpa_dim { \textheight }
-%  \vbox_unpack:N \g_ceur_notes_box
   % \iow_term:x { ...~[tmpa:~ \dim_use:N \g_tmpa_dim ] }
   % \dim_gsub:Nn \g_tmpa_dim { \box_ht:N \g_ceur_notes_box }
   % \iow_term:x { ...~[tmpa-noteht:~ \dim_use:N \g_tmpa_dim ] }
@@ -2218,9 +2128,6 @@
 }
 \ExplSyntaxOff
 
-%
-% Headings
-%
 \def\@seccntDot{.}
 \def\@seccntformat#1{\csname the#1\endcsname\@seccntDot\hskip 0.5em}
 
@@ -2238,42 +2145,14 @@
 
 \AtBeginDocument{\global\@afterindentfalse}
 
-% \renewcommand\section{\@startsection{section}{1}{\z@}%
-%     {15pt \@plus 3\p@ \@minus 3\p@}%
-%     {4\p@}%
-%     {%\let\@hangfrom\relax
-%      \sectionfont\raggedright\hst[13pt]}}
 
-% \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-%     {10pt \@plus 3\p@ \@minus 2\p@}%
-%     {.1\p@}%
-%     {%\let\@hangfrom\relax
-%      \ssectionfont\raggedright }}
 
-% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-%     {10pt \@plus 1\p@ \@minus .3\p@}%
-%     {.1\p@}%
-%     {%\let\@hangfrom\relax
-%      \sssectionfont\raggedright}}
 
-% \renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
-%     {10pt \@plus0.01pt \@minus0.01pt}%
-%     {-6pt}%
-%     {\ssssparaindent%
-%      \ssssectionfont\itshape\raggedright}}
 
-% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
-%     {0pt \@plus0.1pt \@minus0.1pt}%
-%     {-6pt}%
-%     {\hspace*{\subparaindent}
-%      \sssssectionfont\raggedright}}
 
 \def\thesubsection{\thesection.\arabic{subsection}}
 \def\thesubsubsection{\thesubsection.\arabic{subsubsection}}
 
-%
-% Sundry lengths
-%
 \def\xstrut#1#2{\vrule height#1 depth #2 width\z@}
 \def\hstrut#1{\vrule height#1 depth \z@ width 0pt}
 \def\dstrut#1{\vrule height0pt depth#1 width 0pt}
@@ -2284,21 +2163,16 @@
 \def\lastpage{100}
 
 \AtEndDocument{%
-%   \clearpage
    \immediate\write\@auxout{\string\csxdef{lastpage}{\thepage}}
 }
 
 \ExplSyntaxOn
 
-%
-% pagestyle
-%
 
 \RequirePackage{scrlayer-scrpage}
 \clearpairofpagestyles
 
 \setkomafont{pageheadfoot}{\sffamily\small}
-% \setkomafont{pagehead}{\sffamily\small}
 
 \bool_if:NTF \g_ceur_hf_bool {
   \KOMAoptions{headsepline}
@@ -2310,26 +2184,9 @@
   \ihead[]{\__short_authors:{} ~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
 }{ }
 
-% \newcommand{\hffont}{\sffamily\small}
 
-% \RequirePackage{scrlayer-fancyhdr}
 
-% \fancypagestyle{first}{%
-%   \fancyhf{}%
-%   \renewcommand{\headrulewidth}{\z@}%
-%   \renewcommand{\footrulewidth}{\z@}%
-%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
-%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
-% }
 
-% \fancypagestyle{standard}{%
-%   \fancyhf{}%
-%   \renewcommand{\headrulewidth}{\z@}%
-%   \renewcommand{\footrulewidth}{\z@}%
-%   \fancyfoot[R]{\hffont Page~ \thepage {} ~of~ \lastpage}%
-%   \fancyfoot[L]{\hffont \__short_authors: :~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}%
-%   \fancyhead[L]{\hffont \__short_title:}%
-% }
 
 \cs_new:Npn \__first_footerline: {
   \group_begin:
@@ -2372,25 +2229,9 @@
   }
 }
 
-% \newcommand \ps@first {
-%   \cs_set_eq:NN \@oddhead \__first_head:
-%   \cs_set_eq:NN \@evenhead \__first_head:
-%   \cs_set_eq:NN \@evenfoot \__first_foot:
-%   \cs_set_eq:NN \@oddfoot \__first_foot:
-% }
 
-% \newcommand \ps@ceur {
-%   \cs_set_eq:NN \@oddhead \__ceur_head:
-%   \cs_set_eq:NN \@evenhead \__ceur_head:
-%   \cs_set_eq:NN \@evenfoot \__ceur_foot:
-%   \cs_set_eq:NN \@oddfoot \__ceur_foot:
-% }
 
-% \ps@ceur
 
-%
-% Floats
-%
 
 \def\topfraction{.9}
 \def\bottomfraction{.9}
@@ -2468,7 +2309,6 @@
   \sffamily\small
 }
 { \end@float }
-
 
 \RenewDocumentEnvironment { table* } { O{width=\FullWidth} } {
   \__reset_tbl:
@@ -2549,9 +2389,6 @@
 }
 { \end@dblfloat }
 
-%
-% wrapped figure
-%
 \RequirePackage{wrapfig}
 
 \dim_new:N \l_wrap_figwidth_dim
@@ -2672,9 +2509,6 @@
 \cs_set:Nn \__fwidth: { 1in }
 \cs_set:Nn \__fpos: { l }
 
-%
-% short authors/title
-%
 
 \tl_new:N \__short_authors:
 \newcommand\shortauthors[1]{ \cs_gset:Nn \__short_authors: { #1 } }
@@ -2702,10 +2536,6 @@
 \NewDocumentCommand \endbio { } {
  \ifbool{ cas_no_pic_bio } { } {
   \egroup
-%  \fp_set:Nn \l_wrap_figlines_fp
-%    { \fp_eval:n { ( ( \l_tmpa_fp +
-%      \numexpr\dimexpr\the\ht\l_bio_text_box )
-%      / \l_tmpb_fp )  + .5 } }
   \int_gset:Nn \l_ca_temp_inta
       { \numexpr\dimexpr(\the\ht\l_bio_text_box + 2\baselineskip )/
         \dimexpr\the\baselineskip }
@@ -2730,9 +2560,6 @@
 
 \ExplSyntaxOff
 
-%
-% Customized Enumeration
-%
 \def\blstr#1{\gdef\@bslstr{#1}}
 \def\@blstr{1}
 \newdimen\leftMargin
@@ -2818,10 +2645,6 @@
   \setlength{\parskip}{0pt plus1pt minus1pt}
 }
 
-%
-% Customized theorem
-% (non-italic enunciations)
-%
 
 \def\newdefinition#1{%
   \@ifnextchar[{\@odfn{#1}}{\@ndfn{#1}}}%]
@@ -2868,9 +2691,6 @@
 \def\@opargbegintheorem#1#2#3{\trivlist
   \let\baselinestretch\@blstr
       \item[\hskip \labelsep{\bfseries #1\ #2\ (#3).}]\itshape}
-%
-% Unnumbered roman proofs
-%
 \def\newproof#1{%
   \@ifnextchar[{\@oprf{#1}}{\@nprf{#1}}}
 \def\@nprf#1#2{%
@@ -2919,12 +2739,10 @@
 %% Bibliography
 %%
 
-% \RequirePackage[numbers,sort&compress]{natbib}
 \RequirePackage[numbers]{natbib}
 \AtBeginDocument{\bibsep=0pt}
 
 \bibliographystyle{elsarticle-num-names}
-% \bibliographystyle{elsarticle-num}
 
 %%
 %% Fonts
@@ -2943,14 +2761,6 @@
 }
 
 %% Math font for pdfLaTeX
-% \ifpdftex
-% \file_if_exist:nTF { libertinust1math.sty }
-% {
-%   \RequirePackage{libertinust1math}
-% }{
-%   \iow_term:x { Libertinus math fonts are not available }
-% }
-% \fi
 
 \ExplSyntaxOff
 
@@ -2972,79 +2782,73 @@
 
 \ProvideDocumentCommand \DivFontShape {} { \sffamily \bfseries }
 
-%% Author Contributions
+%%%% Author Contributions
 
 \def\authorcontributionsname{Author~Contributions}
 
 \ProvideDocumentEnvironment { authorcontributions } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
+  \section*{\authorcontributionsname} { #1 }
 } {}
 
-%% Funding
+%%%% Funding
 
 \def\fundingname{Funding}
 
 \ProvideDocumentEnvironment { funding } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
+  \section*{\fundingname} { #1 }
 } {}
 
-%% Data Availability Statement
+%%%% Data Availability Statement
 
 \def\dataavailabilityname{Data~Availability~Statement}
 
 \ProvideDocumentEnvironment { dataavailability } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
+  \section*{\dataavailabilityname} { #1 }
 } {}
 
-%% Conflicts of Interest
+%%%% Conflicts of Interest
 
 \def\conflictsofinterestname{Conflicts~of~Interest}
 
 \ProvideDocumentEnvironment { conflictsofinterest } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
+  \section*{\conflictsofinterestname} { #1 }
 } {}
 
-%% Acknowledgments
+%%%% Acknowledgments
 
 \def\acknowledgmentsname{Acknowledgments}
 
 \ProvideDocumentEnvironment { acknowledgments } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\acknowledgmentsname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\acknowledgmentsname}:~{ #1 }}
+  \section*{\acknowledgmentsname} { #1 }
 } {}
 
-%% Acknowledgments
-
-\def\acknowledgmentsname{Acknowledgments}
-
-\ProvideDocumentEnvironment { acknowledgments } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\acknowledgmentsname}:~} { #1 }}
-} {}
-
-%% Declaration on Generative AI
+%%%% Declaration on Generative AI
 
 \def\aideclarationname{Declaration~on~Generative~AI}
 
 \ProvideDocumentEnvironment { aideclaration } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
+  \section*{\aideclarationname} { #1 }
 } {}
 
-%%
-%% Page geometry
-%%
+%%% Page geometry
 
 \RequirePackage{geometry}
 \geometry{a4paper}
@@ -3057,15 +2861,22 @@
   heightrounded,
   includeheadfoot,
 }
-
-\endinput
-
-%
-% End of class 'ceurart'
-%
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% coding: utf-8-unix
-%%% End:
+%% 
+%% Copyright (C) 2019-2025 CEUR Workshop Proceedings (CEUR-WS.org)
+%% 
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License (LPPL), either
+%% version 1.3c of this license or (at your option) any later
+%% version.  The latest version of this license is in the file:
+%% 
+%% http://www.latex-project.org/lppl.txt
+%% 
+%% This work is "maintained" (as per LPPL maintenance status) by Dmitry S. Kulyabov.
+%% 
+%% This work consists of the file ceurart.dtx and a Makefile.
+%% Running "make" generates the derived files README, ceurart.pdf and ceurart.cls.
+%% Running "make inst" installs the files in the user's TeX tree.
+%% Running "make install" installs the files in the local TeX tree.
+%% 
+%%
+%% End of file `ceurart.cls'.

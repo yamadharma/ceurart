@@ -8,7 +8,7 @@
   ceurart:| Typesetting articles for CEUR Workshop Proceedings (CEUR-WS.org)
    Author:| Dmitry S. Kulyabov
    E-mail:| yamadharma@gmail.com
-Copyright:| 2019-2024 CEUR Workshop Proceedings (CEUR-WS.org)
+Copyright:| 2019-2025 CEUR Workshop Proceedings (CEUR-WS.org)
   License:| Released under the LaTeX Project Public License v1.3c or later
       See:| http://www.latex-project.org/lppl.txt
 
@@ -37,7 +37,7 @@ License:| Released under the LaTeX Project Public License v1.3c or later
 \endpreamble
 \postamble
 
-Copyright (C) 2019-2024 CEUR Workshop Proceedings (CEUR-WS.org)
+Copyright (C) 2019-2025 CEUR Workshop Proceedings (CEUR-WS.org)
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -85,8 +85,8 @@ Running "make install" installs the files in the local TeX tree.
 %</driver>
 %<*class>
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.6.0}%
-\def\RCSdate{2024-12-21}%
+\def\RCSversion{0.6.1}%
+\def\RCSdate{2025-03-16}%
 \RequirePackage{expl3}
 \ProvidesExplClass
 {\RCSfile} % Package name
@@ -119,7 +119,7 @@ Running "make install" installs the files in the local TeX tree.
 %
 %\maketitle
 %
-%\changes{v1.00}{2024/12/31}{First public release}
+%\changes{v1.00}{2025/12/31}{First public release}
 %
 % \begin{abstract}
 % ==== Put abstract text here. ====
@@ -3093,83 +3093,78 @@ Running "make install" installs the files in the local TeX tree.
 \DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
 \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
 
+
 %%% Supplementary
 
 \ProvideDocumentCommand \DivFontShape {} { \sffamily \bfseries }
 
-%% Author Contributions
+%%%% Author Contributions
 
 \def\authorcontributionsname{Author~Contributions}
 
 \ProvideDocumentEnvironment { authorcontributions } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
+  \section*{\authorcontributionsname} { #1 }
 } {}
 
-%% Funding
+%%%% Funding
 
 \def\fundingname{Funding}
 
 \ProvideDocumentEnvironment { funding } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
+  \section*{\fundingname} { #1 }
 } {}
 
-%% Data Availability Statement
+%%%% Data Availability Statement
 
 \def\dataavailabilityname{Data~Availability~Statement}
 
 \ProvideDocumentEnvironment { dataavailability } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
+  \section*{\dataavailabilityname} { #1 }
 } {}
 
-%% Conflicts of Interest
+%%%% Conflicts of Interest
 
 \def\conflictsofinterestname{Conflicts~of~Interest}
 
 \ProvideDocumentEnvironment { conflictsofinterest } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
+  \section*{\conflictsofinterestname} { #1 }
 } {}
 
-%% Acknowledgments
+%%%% Acknowledgments
 
 \def\acknowledgmentsname{Acknowledgments}
 
 \ProvideDocumentEnvironment { acknowledgments } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\acknowledgmentsname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\acknowledgmentsname}:~{ #1 }}
+  \section*{\acknowledgmentsname} { #1 }
 } {}
 
-%% Acknowledgments
-
-\def\acknowledgmentsname{Acknowledgments}
-
-\ProvideDocumentEnvironment { acknowledgments } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\acknowledgmentsname}:~} { #1 }}
-} {}
-
-%% Declaration on Generative AI
+%%%% Declaration on Generative AI
 
 \def\aideclarationname{Declaration~on~Generative~AI}
 
 \ProvideDocumentEnvironment { aideclaration } { +b } {%
-  \smallskip
-  \noindent
-  {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
+  % \smallskip
+  % \noindent
+  % {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
+  \section*{\aideclarationname} { #1 }
 } {}
 
-%%
-%% Page geometry
-%%
+%%% Page geometry
 
 \RequirePackage{geometry}
 \geometry{a4paper}
