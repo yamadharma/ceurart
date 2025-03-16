@@ -1,3 +1,17 @@
+## [0.6.1](https://github.com/yamadharma/ceurart/compare/v0.6.0...v0.6.1) (2025-03-16)
+
+
+### Bug Fixes
+
+* **ceurart:** change type of ethical clauses printing ([2746598](https://github.com/yamadharma/ceurart/commit/274659874d5435025535898d86c67efe78bf01c4))
+* **ceurart:** fix title case ([14a2211](https://github.com/yamadharma/ceurart/commit/14a221107901f63ef36ddd0c6740c0efde8e64e1))
+* **ceurart:** regenerate class file ([55279e9](https://github.com/yamadharma/ceurart/commit/55279e92917a1cf8a7643103dfe760247a0094cc))
+* **sample:** fix directory structure ([a812b18](https://github.com/yamadharma/ceurart/commit/a812b18afbb9f9bda5515365fc60d656e28bd43f))
+* **sample:** fix year 2024 -\> 2025 ([788fb03](https://github.com/yamadharma/ceurart/commit/788fb03960680d42473f743c58955db51ca89cdf))
+* **sample:** update sample files ([026f4fb](https://github.com/yamadharma/ceurart/commit/026f4fbf7913ea7199ebd13e2c880bd104437b1e))
+
+
+
 # [0.6.0](https://github.com/yamadharma/ceurart/compare/v0.5.3...v0.6.0) (2024-12-31)
 
 
