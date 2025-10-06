@@ -1,3 +1,18 @@
+## [0.6.2](https://github.com/yamadharma/ceurart/compare/v0.6.1...v0.6.2) (2025-10-06)
+
+
+### Bug Fixes
+
+* **ceurart:** change version ([d596ffc](https://github.com/yamadharma/ceurart/commit/d596ffc81b376a894362f05fdcfea2562ba4af6e))
+
+
+### Features
+
+* **sample:** remove 2col layout ([0cd8606](https://github.com/yamadharma/ceurart/commit/0cd8606e9ae15e78238315c976cdc1e507621cfc))
+* **sample:** replace figure ([3920933](https://github.com/yamadharma/ceurart/commit/392093391884d91ca64a4a131444dd2833c5b072))
+
+
+
 ## [0.6.1](https://github.com/yamadharma/ceurart/compare/v0.6.0...v0.6.1) (2025-03-16)
 
 
