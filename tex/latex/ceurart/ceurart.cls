@@ -13,8 +13,8 @@
 %%     See:| http://www.latex-project.org/lppl.txt
 %% 
 \def\RCSfile{ceurart}%
-\def\RCSversion{0.6.1}%
-\def\RCSdate{2025-03-16}%
+\def\RCSversion{0.6.2}%
+\def\RCSdate{2025-10-06}%
 \RequirePackage{expl3}
 \ProvidesExplClass
 {\RCSfile} % Package name
