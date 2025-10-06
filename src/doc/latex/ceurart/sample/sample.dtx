@@ -58,11 +58,11 @@ Running "make install" installs the files in the local TeX tree.
 % \usedir{tex/latex/ceurart}
 \generate{%
   \file{\jobname__1col.tex}{\from{\jobname.dtx}{all,1col,listings}}
-  \file{\jobname__2col.tex}{\from{\jobname.dtx}{all,2col,listings}}
+  % \file{\jobname__2col.tex}{\from{\jobname.dtx}{all,2col,listings}}
   \file{\jobname__1col_minted.tex}{\from{\jobname.dtx}{all,1col,minted}}
-  \file{\jobname__2col_minted.tex}{\from{\jobname.dtx}{all,2col,minted}}
+  % \file{\jobname__2col_minted.tex}{\from{\jobname.dtx}{all,2col,minted}}
   \file{\jobname__1col_minted_hf.tex}{\from{\jobname.dtx}{all,1col,minted,hf}}
-  \file{\jobname__2col_minted_hf.tex}{\from{\jobname.dtx}{all,2col,minted,hf}}
+  % \file{\jobname__2col_minted_hf.tex}{\from{\jobname.dtx}{all,2col,minted,hf}}
 }
 %%% Local Variables:
 %%% mode: docTeX
@@ -100,12 +100,12 @@ Running "make install" installs the files in the local TeX tree.
 %% The first command in your LaTeX source must be the \documentclass command.
 %%
 %% Options:
-%% twocolumn : Two column layout.
+%% twocolumn : Two column layout. Do not use twocolumn for papers submitted to CEUR-WS!
 %% hf: enable header and footer.
 \documentclass[%
 %</all>
-%<2col>twocolumn
-%<hf>,hf
+%<2col>twocolumn,
+%<hf>hf
 %<*all>
 ]{ceurart}
 
@@ -933,9 +933,18 @@ and note that in the appendix, sections are lettered, not numbered.
 Thanks to the developers of ACM consolidated LaTeX styles \url{https://github.com/borisveytsman/acmart} and to the developers of Elsevier updated \LaTeX{} templates \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.
 \end{acknowledgments}
 
-\begin{aideclaration}
-    The authors have not employed any Generative AI tools.
-\end{aideclaration}
+%% The declaration on generative AI comes in effect
+%% in Janary 2025. See also
+%% https://ceur-ws.org/GenAI/Policy.html
+\section*{Declaration on Generative AI}
+\emph{Either:}\\
+The author(s) have not employed any Generative AI tools.
+
+\noindent
+\emph{Or (by using the activity taxonomy in ceur-ws.org/genai-tax.html):}\\
+During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar and spelling check.
+Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate images.
+After using these tool(s)/service(s), the author(s) reviewed and edited the content as needed and take(s) full responsibility for the publication’s content.
 
 %%
 %% Define the bibliography file to be used
@@ -950,7 +959,6 @@ Thanks to the developers of ACM consolidated LaTeX styles \url{https://github.co
 The sources for the ceur-art style are available via
 \begin{itemize}
 \item \href{https://github.com/yamadharma/ceurart}{GitHub},
-% \item \href{https://www.overleaf.com/project/5e76702c4acae70001d3bc87}{Overleaf},
 \item \href{https://www.overleaf.com/latex/templates/template-for-submissions-to-ceur-workshop-proceedings-ceur-ws-dot-org/pkfscdkgkhcq}{Overleaf template}.
 \end{itemize}
 
@@ -1053,8 +1061,8 @@ To change the directory, perform the following steps in order:
   \item press the \texttt{D} key and then \texttt{Enter} to confirm;
   \item will open a new menu where we will enter \texttt{1} and press \texttt{Enter} to confirm;
   \item now enter the path to the main installation directory:
-%<listings>\verb|~/texlive/2024|
-%<minted>\mintinline{shell}{~/texlive/2024}
+%<listings>\verb|~/texlive/2025|
+%<minted>\mintinline{shell}{~/texlive/2025}
  and press \texttt{Enter};
   \item and then type in \texttt{R} and press \texttt{Enter}.
 \end{itemize}
