@@ -1,3 +1,12 @@
+## [0.6.3](https://github.com/yamadharma/ceurart/compare/v0.6.2...v0.6.3) (2026-01-14)
+
+
+### Bug Fixes
+
+* **sample:** add text about Libertinus font ([36cafb9](https://github.com/yamadharma/ceurart/commit/36cafb9f1316168f7bfa96303501607259e90d92))
+
+
+
 ## [0.6.2](https://github.com/yamadharma/ceurart/compare/v0.6.1...v0.6.2) (2025-10-06)
 
 

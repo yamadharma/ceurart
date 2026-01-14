@@ -1,6 +1,7 @@
 % \iffalse meta-comment
 % !TEX program  = luaLaTeX
 % vim: textwidth=75
+% tex-fmt: off
 %<*internal>
 \iffalse
 %</internal>
@@ -133,13 +134,13 @@ Running "make install" installs the files in the local TeX tree.
 %%
 %% Rights management information.
 %% CC-BY is default license.
-\copyrightyear{2025}
+\copyrightyear{2026}
 \copyrightclause{Copyright for this paper by its authors.
   Use permitted under Creative Commons License Attribution 4.0 International (CC BY 4.0).}
 
 %%
 %% This command is for the conference information
-\conference{Woodstock'25: Symposium on the irreproducible science, June 9--13, 2025, Woodstock, NY}
+\conference{Woodstock'22: Symposium on the irreproducible science, June 07--11, 2022, Woodstock, NY}
 
 %%
 %% The "title" command
@@ -240,7 +241,14 @@ This class depends on the following packages for its proper functioning:
  optional package for bells and whistles.
 \end{itemize}
 
-All the above packages are part of any standard \LaTeX{} installation. Therefore, the users need not be bothered about downloading any extra packages.
+All the above packages are part of any standard \LaTeX{} installation.
+For the TexLive package, you should however make sure that the Libertinus font family is included.
+For Debian/Ubuntu, the command is:
+%<listings>\begin{lstlisting}[language=bash]
+%<minted>\begin{minted}{bash}
+sudo apt install texlive-fonts-extra
+%<listings>\end{lstlisting}
+%<minted>\end{minted}
 
 \section{Modifications}
 
@@ -507,7 +515,6 @@ An example will be:
 %<listings>\end{lstlisting}
 %<minted>\end{minted}
 
-
 %<listings>\verb|\tnotemark|
 %<minted>\mintinline{latex}{\tnotemark}
  and
@@ -766,7 +773,6 @@ cites might contain `duplicate' DOI and URLs (some SIAM articles)
 \cite{MR781536} and \cite{MR781537}. A couple of citations with DOIs:
 \cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
 citations: \cite{TUGInstmem, Thornburg01, R, UMassCitations}.
-
 
 \section{Ethical disclaimers}
 
