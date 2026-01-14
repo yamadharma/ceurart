@@ -18,7 +18,7 @@
 %% twocolumn : Two column layout. Do not use twocolumn for papers submitted to CEUR-WS!
 %% hf: enable header and footer.
 \documentclass[%
-,hf
+hf
 ]{ceurart}
 
 %%
@@ -37,13 +37,13 @@
 %%
 %% Rights management information.
 %% CC-BY is default license.
-\copyrightyear{2025}
+\copyrightyear{2026}
 \copyrightclause{Copyright for this paper by its authors.
   Use permitted under Creative Commons License Attribution 4.0 International (CC BY 4.0).}
 
 %%
 %% This command is for the conference information
-\conference{Woodstock'25: Symposium on the irreproducible science, June 9--13, 2025, Woodstock, NY}
+\conference{Woodstock'22: Symposium on the irreproducible science, June 07--11, 2022, Woodstock, NY}
 
 %%
 %% The "title" command
@@ -139,7 +139,12 @@ This class depends on the following packages for its proper functioning:
  optional package for bells and whistles.
 \end{itemize}
 
-All the above packages are part of any standard \LaTeX{} installation. Therefore, the users need not be bothered about downloading any extra packages.
+All the above packages are part of any standard \LaTeX{} installation.
+For the TexLive package, you should however make sure that the Libertinus font family is included.
+For Debian/Ubuntu, the command is:
+\begin{minted}{bash}
+sudo apt install texlive-fonts-extra
+\end{minted}
 
 \section{Modifications}
 
@@ -657,9 +662,18 @@ and note that in the appendix, sections are lettered, not numbered.
 Thanks to the developers of ACM consolidated LaTeX styles \url{https://github.com/borisveytsman/acmart} and to the developers of Elsevier updated \LaTeX{} templates \url{https://www.ctan.org/tex-archive/macros/latex/contrib/els-cas-templates}.
 \end{acknowledgments}
 
-\begin{aideclaration}
-    The authors have not employed any Generative AI tools.
-\end{aideclaration}
+%% The declaration on generative AI comes in effect
+%% in Janary 2025. See also
+%% https://ceur-ws.org/GenAI/Policy.html
+\section*{Declaration on Generative AI}
+\emph{Either:}\\
+The author(s) have not employed any Generative AI tools.
+
+\noindent
+\emph{Or (by using the activity taxonomy in ceur-ws.org/genai-tax.html):}\\
+During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar and spelling check.
+Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate images.
+After using these tool(s)/service(s), the author(s) reviewed and edited the content as needed and take(s) full responsibility for the publication’s content.
 
 %%
 %% Define the bibliography file to be used
@@ -763,7 +777,7 @@ To change the directory, perform the following steps in order:
   \item press the \texttt{D} key and then \texttt{Enter} to confirm;
   \item will open a new menu where we will enter \texttt{1} and press \texttt{Enter} to confirm;
   \item now enter the path to the main installation directory:
-\mintinline{shell}{~/texlive/2024}
+\mintinline{shell}{~/texlive/2025}
  and press \texttt{Enter};
   \item and then type in \texttt{R} and press \texttt{Enter}.
 \end{itemize}
