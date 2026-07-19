@@ -11,7 +11,7 @@
 %%  E-mail:| yamadharma@gmail.com
 %% License:| Released under the LaTeX Project Public License v1.3c or later
 %%     See:| http://www.latex-project.org/lppl.txt
-%% 
+%%
 \def\RCSfile{ceurart}%
 \def\RCSversion{0.6.2}%
 \def\RCSdate{2025-10-06}%
@@ -46,7 +46,6 @@
 \newcounter{blind}
 \setcounter{blind}{0}
 
-
 \DeclareOption{twocolumn}{\global\dctrue \global\scfalse}
 \DeclareOption{hf}{\bool_gset_true:N \g_ceur_hf_bool}
 
@@ -62,9 +61,9 @@
 \LoadClass{scrartcl}
 \KOMAoptions{DIV=10}
 \ifdc
-  \KOMAoptions{fontsize=9pt}
+\KOMAoptions{fontsize=9pt}
 \else
-  \KOMAoptions{fontsize=11pt}
+\KOMAoptions{fontsize=11pt}
 \fi
 
 \RequirePackage{graphicx}
@@ -116,9 +115,9 @@
           \mode_if_horizontal:TF {
             \if_int_compare:w 0 < \tex_lastnodetype:D
             \tex_kern:D \c_zero_dim
-          \fi:
-          \tex_par:D
-          \hook_use:n{para/after}
+            \fi:
+            \tex_par:D
+            \hook_use:n{para/after}
           \@kernel@after@para@after }
           { \msg_error:nnnn { hooks }{ para-mode }{end}{horizontal} }
         }
@@ -175,7 +174,6 @@
 
 \let\pdfxauthors\@empty
 \let\pdfxkeywords\@empty
-
 
 %%
 %%
@@ -236,7 +234,6 @@
 %%
 %%
 
-
 \DeclareRobustCommand\conference[1]{%
   \gdef\ceurConference@name{#1}%
 }
@@ -246,7 +243,6 @@
   \hspace*{-\parindent}
   \hspace*{-\footnotemargin}
 }
-
 
 \RenewDocumentCommand \maketitle {} {
   \nonumnote{\itshape \ceurConference@name}
@@ -340,15 +336,15 @@
     \xmpdatawrite{Subject}{Layout~by~CEURART~v\RCSversion}
 
     \ifx\@copyrightclause\@empty\else
-      \xmpdatawrite{Copyright}{\iow_char:N \\ copyright\ \@copyrightyear\ \@copyrightclause}
-      \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
+    \xmpdatawrite{Copyright}{\iow_char:N \\ copyright\ \@copyrightyear\ \@copyrightclause}
+    \xmpdatawrite{CopyrightURL}{https://creativecommons.org/licenses/by/4.0}
     \fi
 
     \xmpdatawrite{Journaltitle}{CEUR~Workshop~Proceedings}
     \xmpdatawrite{Journalnumber}{1613-0073}
     \bool_if:NTF \g_ceur_hf_bool {
-        \xmpdatawrite{Firstpage}{\firstpage}
-        \xmpdatawrite{Lastpage}{\lastpage}
+      \xmpdatawrite{Firstpage}{\firstpage}
+      \xmpdatawrite{Lastpage}{\lastpage}
     }{ }
   }{
     \hypersetup{%
@@ -369,14 +365,13 @@
   }
 }
 
-  % pdfcreator={ceurart.cls},
-  % % pdfproducer={pdfTeX;},
-  % % pdftitle={\csuse{__short_title:}},
-  % % pdfauthor={\csuse{__short_authors:}},
-  % % pdfauthor={\csuse{__authors:}},
-  % % pdftitle={\@title},
-  % pdfsubject={Layout by CEURART},
-
+% pdfcreator={ceurart.cls},
+% % pdfproducer={pdfTeX;},
+% % pdftitle={\csuse{__short_title:}},
+% % pdfauthor={\csuse{__short_authors:}},
+% % pdfauthor={\csuse{__authors:}},
+% % pdftitle={\@title},
+% pdfsubject={Layout by CEURART},
 
 \keys_define:nn { ceur / title } {
   mode      .choice:     ,
@@ -494,20 +489,19 @@
   }
 }
 
-
 \renewcommand \@title { \seq_use:Nn \g_ceur_title_seq { } }
 
 \renewcommand{\subtitle}[1]{\title[mode=sub]{#1}}
 
 \NewDocumentCommand \wrAun { m }      %  unexpanded write to aux
-   { \iow_now:Nn \@auxout { #1 } }
+{ \iow_now:Nn \@auxout { #1 } }
 \NewDocumentCommand \wrAux { m }      %  expanded write to aux
-   { \iow_now:Nx \@auxout { #1 } }
+{ \iow_now:Nx \@auxout { #1 } }
 
 \NewDocumentCommand \wrShipAux { m }   % expanded write at shipout
-   { \iow_shipout:Nx \@auxout { #1 } }
+{ \iow_shipout:Nx \@auxout { #1 } }
 \NewDocumentCommand \wrShipAun { m }   % unexpanded write at shipout
-   { \iow_shipout:Nn \@auxout { #1 } }
+{ \iow_shipout:Nn \@auxout { #1 } }
 
 \NewDocumentCommand \ceurLabel { m } {
   \@bsphack \wrAux
@@ -543,7 +537,7 @@
 \NewDocumentCommand  \fnref { m } {
   \processFnRef { #1 }
   \wrAux { \token_to_str:N \csxdef {mark@fnau\theau@}
-    { \seq_use:Nn \l_fnmk_seq  { , } } }
+  { \seq_use:Nn \l_fnmk_seq  { , } } }
 }
 
 \NewDocumentCommand \corref { m } {
@@ -608,39 +602,39 @@
 
 \seq_clear_new:N \l_affmk_seq
 \NewDocumentCommand \processAffRef { m }
-   {
-     \seq_clear:N \l_affmk_seq
-     \clist_map_inline:nn { #1 }
-     {
-       \seq_put_right:Nx \l_affmk_seq
-       {\ceurRef{##1}}
-      }
-    }
+{
+  \seq_clear:N \l_affmk_seq
+  \clist_map_inline:nn { #1 }
+  {
+    \seq_put_right:Nx \l_affmk_seq
+    {\ceurRef{##1}}
+  }
+}
 
 \NewDocumentCommand \processAffNum { m }
-   {
-     \seq_clear:N \l_affmk_seq
-     \clist_map_inline:nn { #1 }
-     {
-       \seq_put_right:Nn \l_affmk_seq
-       { \int_to_arabic:n {##1} }
-      }
-    }
+{
+  \seq_clear:N \l_affmk_seq
+  \clist_map_inline:nn { #1 }
+  {
+    \seq_put_right:Nn \l_affmk_seq
+    { \int_to_arabic:n {##1} }
+  }
+}
 
 \NewDocumentCommand \listAff { }
-   {
-     \tl_if_blank:nTF { \l_affmk_seq }
-       { \tl_gset:Nn \g_ceur_comma_tl { 0 } }
-       {
-         \seq_use:Nn \l_affmk_seq { , }
-         \tex_def:D \sep{\unskip,}
-       }
-   }
+{
+  \tl_if_blank:nTF { \l_affmk_seq }
+  { \tl_gset:Nn \g_ceur_comma_tl { 0 } }
+  {
+    \seq_use:Nn \l_affmk_seq { , }
+    \tex_def:D \sep{\unskip,}
+  }
+}
 
 \NewDocumentCommand \ead { O{} m }
-   {
-     \tl_if_empty:nTF { #1 } { \@ead {#2} } { \@uad[#1]{#2} }
-   }
+{
+  \tl_if_empty:nTF { #1 } { \@ead {#2} } { \@uad[#1]{#2} }
+}
 
 \NewDocumentCommand \eadsep { } { }
 
@@ -655,33 +649,33 @@
 \newcommand\theead { \int_use:N \g_ead_int }
 
 \NewDocumentCommand \@uad { O{} m }
-   {
-     \group_begin:
-     \wrAux { \token_to_str:N \urlauthor
-       { \exp_not:n {#2}}{\the\@eadauthor}}%
-     \group_end:
-   }
+{
+  \group_begin:
+  \wrAux { \token_to_str:N \urlauthor
+  { \exp_not:n {#2}}{\the\@eadauthor}}%
+  \group_end:
+}
 
 \NewDocumentCommand \urlauthor { m m } {
   \int_gincr:N \g_uad_int
   \seq_gput_right:Nn \g_ceur_uad_seq
   {
     { %\ttfamily \tl_to_str:n
-      \url{ #1 } }
+    \url{ #1 } }
     \parsename { #2 }
     \space(\eadauthor)
   }
 }
 \NewDocumentCommand \@stmuads { }
-  { \seq_use:Nn \g_ceur_uad_seq { ;~ } }
+{ \seq_use:Nn \g_ceur_uad_seq { ;~ } }
 
 \NewDocumentCommand \@ead { m }
-   {
-     \group_begin:
-     \wrAux { \token_to_str:N \emailauthor
-       { \exp_not:n { #1 }}{ \the\@eadauthor }}
-     \group_end:
-   }
+{
+  \group_begin:
+  \wrAux { \token_to_str:N \emailauthor
+  { \exp_not:n { #1 }}{ \the\@eadauthor }}
+  \group_end:
+}
 
 \newtoks \@eadauthor
 \newbool{@cormark}
@@ -771,13 +765,12 @@
   \group_end:
 }
 
-
 \seq_gclear_new:N \g_ceur_credits_seq
 
 \NewDocumentCommand \ContribRole { m }
 {
   \wrAux { \token_to_str:N \creditauthor
-    { #1 } { \the\@eadauthor } }
+  { #1 } { \the\@eadauthor } }
 }
 
 \NewDocumentCommand \creditauthor { m m }
@@ -798,71 +791,71 @@
 }
 
 \NewDocumentCommand \writemarks { m m }
-   { \wrAux { \token_to_str:N \csgdef{mark@#1}{#2} } }
+{ \wrAux { \token_to_str:N \csgdef{mark@#1}{#2} } }
 
 \seq_new:N \g_ceur_title_seq
 
 \NewDocumentCommand \tnotemark { O{} }
-   { \writemarks { title } { #1 } }
+{ \writemarks { title } { #1 } }
 
 \NewDocumentCommand \@tnoteref { m }
-   { \int_set:Nn \l_tmpa_int { 0 }
-     \clist_map_inline:nn { #1 }
+{ \int_set:Nn \l_tmpa_int { 0 }
+  \clist_map_inline:nn { #1 }
+  {
+    \cs_if_free:cTF { X@##1: }
+    { \csdef{X@##1:}{0} }
+    {
+      \tl_set:Nx \l_tmpa_tl { \cs:w X@##1:\cs_end: }
+      \int_case:nn { \l_tmpa_tl }
       {
-        \cs_if_free:cTF { X@##1: }
-          { \csdef{X@##1:}{0} }
-          {
-            \tl_set:Nx \l_tmpa_tl { \cs:w X@##1:\cs_end: }
-            \int_case:nn { \l_tmpa_tl }
-              {
-                 { 1 }  { $^\star$ }
-                 { 2 }  { $^{,\star\star}$ }
-                 { 3 }  { $^{,\star\star\star}$ }
-              }
-          }
+        { 1 }  { $^\star$ }
+        { 2 }  { $^{,\star\star}$ }
+        { 3 }  { $^{,\star\star\star}$ }
       }
     }
+  }
+}
 
 \seq_new:N \g_ceur_tnote_seq
 \int_new:N \g_ceur_tnote_int
 
 \NewDocumentCommand \tnotetext { O{} m }
-   {
-     \tl_if_head_eq_catcode:nNTF { #1 } a
-       {
-         % \msg_term:n { [TNOTE:~alpha] }%
-         \seq_gput_right:Nn \g_ceur_tnote_seq
-           { \int_incr:N \g_ceur_tnote_int
-             \str_set:Nx \@currentlabel { \int_use:N \g_ceur_tnote_int }
-              \ceurLabel { #1 }
-             \renewcommand\thefootnote
-              { \int_case:nn { \g_ceur_tnote_int }
-                 {
-                   { 1 } { $^\star$ }
-                   { 2 }  { $^{\star\star}$ }
-                   { 3 }  { $^{\star\star\star}$ }
-                 }
-              }
-              \footnotetext { #2 }
-            }
-          }
+{
+  \tl_if_head_eq_catcode:nNTF { #1 } a
+  {
+    % \msg_term:n { [TNOTE:~alpha] }%
+    \seq_gput_right:Nn \g_ceur_tnote_seq
+    { \int_incr:N \g_ceur_tnote_int
+      \str_set:Nx \@currentlabel { \int_use:N \g_ceur_tnote_int }
+      \ceurLabel { #1 }
+      \renewcommand\thefootnote
+      { \int_case:nn { \g_ceur_tnote_int }
         {
-          % \msg_term:n { [TNOTE:~Number] }
-          \seq_gput_right:Nn \g_ceur_tnote_seq
-          {
-            \int_set:Nn \l_tmpa_int { #1 }
-            \renewcommand\thefootnote
-              { \int_case:nn { \l_tmpa_int }
-                {
-                  { 1 } { $^\star$ }
-                  { 2 }  { $^{\star\star}$ }
-                  { 3 }  { $^{\star\star\star}$ }
-                }
-              }
-             \footnotetext { #2 }
-           }
-         }
-       }
+          { 1 } { $^\star$ }
+          { 2 }  { $^{\star\star}$ }
+          { 3 }  { $^{\star\star\star}$ }
+        }
+      }
+      \footnotetext { #2 }
+    }
+  }
+  {
+    % \msg_term:n { [TNOTE:~Number] }
+    \seq_gput_right:Nn \g_ceur_tnote_seq
+    {
+      \int_set:Nn \l_tmpa_int { #1 }
+      \renewcommand\thefootnote
+      { \int_case:nn { \l_tmpa_int }
+        {
+          { 1 } { $^\star$ }
+          { 2 }  { $^{\star\star}$ }
+          { 3 }  { $^{\star\star\star}$ }
+        }
+      }
+      \footnotetext { #2 }
+    }
+  }
+}
 
 \newcommand \printtnotes { \seq_use:Nn \g_ceur_tnote_seq { \par } }
 
@@ -879,7 +872,7 @@
       % \hspace*{-\parindent}
       % % \hspace*{-\labelsep}
       % \hspace*{-\footnotemargin}
-      #1}
+    #1}
   }
   \group_end:
 }
@@ -1123,11 +1116,11 @@
 }
 \DeclareDocumentCommand \ceurausetup { m } {
   \tl_set:Nn \l_ceur_au_setup_tl {
-    \keys_set:nn { ceur / ausetup } { #1 } }
+  \keys_set:nn { ceur / ausetup } { #1 } }
 }
 \DeclareDocumentCommand \ceurclbsetup { m } {
   \tl_set:Nn \l_ceur_clb_setup_tl {
-    \keys_set:nn { ceur / ausetup } { #1 } }
+  \keys_set:nn { ceur / ausetup } { #1 } }
 }
 
 \ceurausetup { }
@@ -1146,92 +1139,92 @@
   }
 }
 \NewDocumentCommand \facebookauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_facebook_seq
-       {
-         \parsename { #2 }
-         \url{https://www.facebook.com/\tl_to_str:n{#1}}\space(\eadauthor) %
-       }
-     }
+{
+  \seq_gput_right:Nn \g_ceur_facebook_seq
+  {
+    \parsename { #2 }
+    \url{https://www.facebook.com/\tl_to_str:n{#1}}\space(\eadauthor) %
+  }
+}
 \NewDocumentCommand \gplusauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_gplus_seq
-       {
-         \parsename { #2 }
-         \url{https://plus.google.com/\tl_to_str:n{#1}}\space(\eadauthor)%
-       }
-     }
+{
+  \seq_gput_right:Nn \g_ceur_gplus_seq
+  {
+    \parsename { #2 }
+    \url{https://plus.google.com/\tl_to_str:n{#1}}\space(\eadauthor)%
+  }
+}
 \NewDocumentCommand \linkedinauthor { m m }
-   {
-     \seq_gput_right:Nn \g_ceur_linkedin_seq
-       {
-         \parsename { #2 }
-         % \url{https://www.linkedin.com/profile/view?id=\tl_to_str:n{#1}}%
-         \url{https://www.linkedin.com/in/\tl_to_str:n{#1}}%
-         \space(\eadauthor)
-       }
-     }
+{
+  \seq_gput_right:Nn \g_ceur_linkedin_seq
+  {
+    \parsename { #2 }
+    % \url{https://www.linkedin.com/profile/view?id=\tl_to_str:n{#1}}%
+    \url{https://www.linkedin.com/in/\tl_to_str:n{#1}}%
+    \space(\eadauthor)
+  }
+}
 
 \NewDocumentCommand \printmaltese { }
-    {
-      \seq_use:Nn { \g_ceur_maltese_seq } { }
-    }
+{
+  \seq_use:Nn { \g_ceur_maltese_seq } { }
+}
 \NewDocumentCommand \printfacebook { }
+{
+  \seq_if_empty:NTF \g_ceur_facebook_seq { }
+  {
+    \tex_def:D \thefootnote{}
+    \footnotetext
     {
-      \seq_if_empty:NTF \g_ceur_facebook_seq { }
-        {
-          \tex_def:D \thefootnote{}
-          \footnotetext
-          {
-            \bool_if:NTF \g_ceur_nologo_bool
-             { Facebook:\c_space_token }
-             { \faIcon{facebook-f}\c_space_token }
-            \seq_use:Nn \g_ceur_facebook_seq {,\c_space_token }
-          }
-        }
-      }
+      \bool_if:NTF \g_ceur_nologo_bool
+      { Facebook:\c_space_token }
+      { \faIcon{facebook-f}\c_space_token }
+      \seq_use:Nn \g_ceur_facebook_seq {,\c_space_token }
+    }
+  }
+}
 \NewDocumentCommand \printtwitter { }
+{
+  \seq_if_empty:NTF \g_ceur_twitter_seq { }
+  {
+    \tex_def:D \thefootnote{}
+    \footnotetext
     {
-      \seq_if_empty:NTF \g_ceur_twitter_seq { }
-        {
-          \tex_def:D \thefootnote{}
-          \footnotetext
-          {
-            \bool_if:NTF \g_ceur_nologo_bool
-             { Twitter:\c_space_token }
-             { \faIcon{twitter}\c_space_token }
-            \seq_use:Nn \g_ceur_twitter_seq {,\c_space_token }
-          }
-        }
-      }
+      \bool_if:NTF \g_ceur_nologo_bool
+      { Twitter:\c_space_token }
+      { \faIcon{twitter}\c_space_token }
+      \seq_use:Nn \g_ceur_twitter_seq {,\c_space_token }
+    }
+  }
+}
 \NewDocumentCommand \printgplus { }
+{
+  \seq_if_empty:NTF \g_ceur_gplus_seq { }
+  {
+    \tex_def:D \thefootnote{}
+    \footnotetext
     {
-      \seq_if_empty:NTF \g_ceur_gplus_seq { }
-        {
-          \tex_def:D \thefootnote{}
-          \footnotetext
-          {
-            \bool_if:NTF \g_ceur_nologo_bool
-             { Google+:\c_space_token }
-             { \faIcon{google-plus-g}\c_space_token }
-            \seq_use:Nn \g_ceur_gplus_seq {,\c_space_token }
-          }
-        }
-      }
+      \bool_if:NTF \g_ceur_nologo_bool
+      { Google+:\c_space_token }
+      { \faIcon{google-plus-g}\c_space_token }
+      \seq_use:Nn \g_ceur_gplus_seq {,\c_space_token }
+    }
+  }
+}
 \NewDocumentCommand \printlinkedin { }
+{
+  \seq_if_empty:NTF \g_ceur_linkedin_seq { }
+  {
+    \tex_def:D \thefootnote{}
+    \footnotetext
     {
-      \seq_if_empty:NTF \g_ceur_linkedin_seq { }
-        {
-          \tex_def:D \thefootnote{}
-          \footnotetext
-          {
-            \bool_if:NTF \g_ceur_nologo_bool
-             { LinkedIn:\c_space_token }
-             { \faIcon{linkedin-in}\c_space_token }
-            \seq_use:Nn \g_ceur_linkedin_seq {,\c_space_token }
-          }
-        }
-      }
+      \bool_if:NTF \g_ceur_nologo_bool
+      { LinkedIn:\c_space_token }
+      { \faIcon{linkedin-in}\c_space_token }
+      \seq_use:Nn \g_ceur_linkedin_seq {,\c_space_token }
+    }
+  }
+}
 
 \seq_new:N \g_ceur_prelimsau_seq
 
@@ -1310,38 +1303,38 @@
   }
   \tl_if_empty:NF \l_ceur_au_email_tl {
     \wrAux { \token_to_str:N \emailauthor
-      { \l_ceur_au_email_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_email_tl } { \exp_not:n {#2} } }
   }
   \tl_set:Nx \l_ceur_au_url_tl_tmp { \l_ceur_au_url_tl }
   \tl_if_empty:NF \l_ceur_au_url_tl_tmp {
     \wrAux { \token_to_str:N \urlauthor
-      { \l_ceur_au_url_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_url_tl } { \exp_not:n {#2} } }
   }
   % various social media
   \tl_if_empty:NTF \l_ceur_au_facebook_tl { }
   {
     \wrAux { \token_to_str:N \facebookauthor
-      { \l_ceur_au_facebook_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_facebook_tl } { \exp_not:n {#2} } }
   }
   \tl_if_empty:NF \l_ceur_au_twitter_tl
   {
     \wrAux { \token_to_str:N \twitterauthor
-      { \l_ceur_au_twitter_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_twitter_tl } { \exp_not:n {#2} } }
   }
   \tl_if_empty:NF \l_ceur_au_gplus_tl
   {
     \wrAux { \token_to_str:N \gplusauthor
-      { \l_ceur_au_gplus_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_gplus_tl } { \exp_not:n {#2} } }
   }
   \tl_if_empty:NF \l_ceur_au_linkedin_tl
   {
     \wrAux { \token_to_str:N \linkedinauthor
-      { \l_ceur_au_linkedin_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_linkedin_tl } { \exp_not:n {#2} } }
   }
   \tl_if_empty:NF \l_ceur_au_orcid_tl
   {
     \wrAux { \token_to_str:N \orcidauthor
-      { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
+    { \l_ceur_au_orcid_tl } { \exp_not:n {#2} } }
   }
   % Short authors list
   \csgdef { __short_authors_tmp } { #2 }
@@ -1437,21 +1430,21 @@
 \tl_new:N \l_addrtype_tl
 
 \keys_define:nn { ceur / address }
-   {
-     foot     .bool_gset:N  = \g_ceur_addr_foot_bool       ,
-     name     .tl_set:N    = \l_ceur_addr_name_tl          ,
-     type     .multichoice:                               ,
-      type/alt     .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
-          { Alternate~address } }  ,
-      type/addl    .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
-          { Additional~address } } ,
-      type/regular .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
-          {  } } ,
-      type/custom  .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
-          { \l_ceur_addr_name_tl } } ,
-   }
+{
+  foot     .bool_gset:N  = \g_ceur_addr_foot_bool       ,
+  name     .tl_set:N    = \l_ceur_addr_name_tl          ,
+  type     .multichoice:                               ,
+  type/alt     .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
+  { Alternate~address } }  ,
+  type/addl    .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
+  { Additional~address } } ,
+  type/regular .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
+  {  } } ,
+  type/custom  .code:n = { \tl_set:Nn \l_ceur_addr_type_tl
+  { \l_ceur_addr_name_tl } } ,
+}
 \DeclareDocumentCommand \ceurAddrSetup { m  }
-   { \keys_set:nn { ceur / address } { #1 } }
+{ \keys_set:nn { ceur / address } { #1 } }
 
 \keys_set:nn { ceur / address }
 {
@@ -1523,7 +1516,7 @@
       { \footnotetext{#2} }
       {
         \footnotetext{\textit{\l_ceur_addr_type_tl}:
-          \c_space_token #2 }
+        \c_space_token #2 }
       }
     }
     {
@@ -1540,66 +1533,66 @@
         \tl_if_empty:NTF \l_ceur_addr_type_tl
         { \footnotetext{#2} }
         { \footnotetext{\textit{\l_ceur_addr_type_tl}:
-            \c_space_token #2 } }
+        \c_space_token #2 } }
       }
     }
   }
 }
 
 \keys_define:nn { ceur / affsetup }
-   {
-     type      .choice: ,
-     type / normal .code:n =
-       { \tl_set:Nn \l_ceur_aff_type_tl { 0 } } ,
-     type / nonum .code:n =
-       { \tl_set:Nn \l_ceur_aff_type_tl { 1 } } ,
+{
+  type      .choice: ,
+  type / normal .code:n =
+  { \tl_set:Nn \l_ceur_aff_type_tl { 0 } } ,
+  type / nonum .code:n =
+  { \tl_set:Nn \l_ceur_aff_type_tl { 1 } } ,
 
-     size      .tl_set:N    = \l_ceur_aff_size_tl      ,
-     shape     .tl_set:N    = \l_ceur_aff_shape_tl     ,
-     weight    .tl_set:N    = \l_ceur_aff_weight_tl    ,
-     before    .dim_set:N   = \l_ceur_aff_before_dim   ,
-     after     .dim_set:N   = \l_ceur_aff_after_dim    ,
-     align     .tl_set:N    = \l_ceur_aff_align_tl     ,
-     color     .tl_set:N    = \l_ceur_aff_color_tl     ,
-     lskip     .dim_set:N   = \l_ceur_aff_lskip_dim    ,
-     rskip     .dim_set:N   = \l_ceur_aff_rskip_dim    ,
-   }
+  size      .tl_set:N    = \l_ceur_aff_size_tl      ,
+  shape     .tl_set:N    = \l_ceur_aff_shape_tl     ,
+  weight    .tl_set:N    = \l_ceur_aff_weight_tl    ,
+  before    .dim_set:N   = \l_ceur_aff_before_dim   ,
+  after     .dim_set:N   = \l_ceur_aff_after_dim    ,
+  align     .tl_set:N    = \l_ceur_aff_align_tl     ,
+  color     .tl_set:N    = \l_ceur_aff_color_tl     ,
+  lskip     .dim_set:N   = \l_ceur_aff_lskip_dim    ,
+  rskip     .dim_set:N   = \l_ceur_aff_rskip_dim    ,
+}
 
 \DeclareDocumentCommand \ceurAffSetup { m }
-   { \keys_set:nn { ceur / affsetup } { #1 } }
+{ \keys_set:nn { ceur / affsetup } { #1 } }
 \DeclareDocumentCommand \ceuraffsetup { m }
-   { \tl_set:Nn \l_ceur_aff_setup_tl
-     { \keys_set:nn { ceur / affsetup } { #1 } }
-   }
+{ \tl_set:Nn \l_ceur_aff_setup_tl
+  { \keys_set:nn { ceur / affsetup } { #1 } }
+}
 \ceuraffsetup {
-    size   = \footnotesize,
-    shape  = \itshape,
-    color  = black,
-    before = 0pt,
-    weight = \mdseries,
-    align  = \raggedright,
-    }
+  size   = \footnotesize,
+  shape  = \itshape,
+  color  = black,
+  before = 0pt,
+  weight = \mdseries,
+  align  = \raggedright,
+}
 
 \NewDocumentCommand \ceuraddress { }
-   {
-     \bool_if:NTF \g_ceur_augr_bool
-     { }
-     {
-       \group_begin:
-       \ceurAffSetup { type = normal }
-       \l_ceur_aff_setup_tl
-       \par \vskip\l_ceur_aff_before_dim
-       \l_ceur_aff_align_tl
-       \l_ceur_aff_size_tl
-       \l_ceur_aff_shape_tl
-       \l_ceur_aff_weight_tl
-       \color{ \l_ceur_aff_color_tl }
-       \seq_use:cn { g_ceur_aff\int_use:N \g_ceur_aaugr_int _seq }
-       { \par\vskip2pt  }
-       \par\vskip\l_ceur_aff_after_dim
-       \group_end:
-     }
-   }
+{
+  \bool_if:NTF \g_ceur_augr_bool
+  { }
+  {
+    \group_begin:
+    \ceurAffSetup { type = normal }
+    \l_ceur_aff_setup_tl
+    \par \vskip\l_ceur_aff_before_dim
+    \l_ceur_aff_align_tl
+    \l_ceur_aff_size_tl
+    \l_ceur_aff_shape_tl
+    \l_ceur_aff_weight_tl
+    \color{ \l_ceur_aff_color_tl }
+    \seq_use:cn { g_ceur_aff\int_use:N \g_ceur_aaugr_int _seq }
+    { \par\vskip2pt  }
+    \par\vskip\l_ceur_aff_after_dim
+    \group_end:
+  }
+}
 
 \int_new:N \g_ceur_augr_int
 \seq_new:N \g_ceur_augr_seq
@@ -1737,8 +1730,8 @@
   \global \booltrue { usecasgrabsbox }
   \global\setbox\casgrabsbox=\vbox\bgroup
   \begin{PrelimsAbstract}[#1]
-  \noindent \ignorespaces
-} {
+    \noindent \ignorespaces
+  } {
   \end{PrelimsAbstract}
   \egroup
 }
@@ -1747,38 +1740,38 @@
   \global \booltrue { usecashlsbox }
   \global\setbox\casauhlbox=\vbox\bgroup
   \begin{PrelimsAbstract}[#1]
-  \noindent \ignorespaces
-  \begin{itemize}
-} {
-  \end{itemize}
+    \noindent \ignorespaces
+    \begin{itemize}
+      } {
+    \end{itemize}
   \end{PrelimsAbstract}
   \egroup
 }
 
 \NewDocumentCommand \dashrule { O{.4pt} m m }
-   {
-     % \color{black!50}
-     \skip_vertical:n { #2 }
-     % \noindent \rule { \linewidth } { #1}
-     \normalcolor \skip_vertical:n { #3 }
-   }
+{
+  % \color{black!50}
+  \skip_vertical:n { #2 }
+  % \noindent \rule { \linewidth } { #1}
+  \normalcolor \skip_vertical:n { #3 }
+}
 
 \NewDocumentCommand \keywordtitle { } { Keywords }
 \NewDocumentCommand \keywordtitlesep { } {:\c_space_token }
 \box_new:N \g_ceur_key_box
 
 \NewDocumentCommand \MSC { O{} m }
-   {
-     \par\noindent \textit { #1\c_space_token MSC:\c_space_token } #2
-   }
+{
+  \par\noindent \textit { #1\c_space_token MSC:\c_space_token } #2
+}
 \NewDocumentCommand \JEL { m }
-   {
-     \par\noindent \textit { JEL:\c_space_token } #1
-   }
+{
+  \par\noindent \textit { JEL:\c_space_token } #1
+}
 \NewDocumentCommand \PACS { m }
-   {
-     \par\noindent \textit { PACS:\c_space_token } #1
-   }
+{
+  \par\noindent \textit { PACS:\c_space_token } #1
+}
 
 \NewDocumentEnvironment { keywords } { +b } {
   %% Keywords list for PDF/A
@@ -1797,8 +1790,6 @@
   \skip_vertical:n { \baselineskip }
   \egroup
 } { }
-
-
 
 %% Copyright
 
@@ -1845,8 +1836,8 @@
     \tiny
     \textcopyright\ \@copyrightyear\ %
     \ifx\@copyrightclause\@empty%
-      \doclicenseText
-      % \textcolor{red}{Author: Please fill in the \string\copyrightclause\space macro}%
+    \doclicenseText
+    % \textcolor{red}{Author: Please fill in the \string\copyrightclause\space macro}%
     \else\@copyrightclause%
     \fi
   \end{minipage}
@@ -1854,7 +1845,6 @@
 }
 
 \RequirePackage{calc}
-
 
 \seq_new:N \g_ceur_logonote_seq
 
@@ -1868,13 +1858,12 @@
       \hspace*{-\parindent}
       % \hspace*{-\labelsep}
       \hspace*{-\footnotemargin}
-      #1}
+    #1}
   }
   \group_end:
 }
 
 \newcommand \printlogonotes { \seq_use:Nn \g_ceur_logonote_seq { \par } }
-
 
 \bool_new:N \g_ceur_longmktitle_bool
 \int_new:N \g_ceur_jtype_int
@@ -1906,7 +1895,7 @@
   \printlogonotes
   \bool_if:NTF \g_ceur_longmktitle_bool {
     \if@twocolumn
-      \tex_let:D \columnwidth = \Columnwidth \fi
+    \tex_let:D \columnwidth = \Columnwidth \fi
   } { }
   \normalcolor
 }
@@ -1922,11 +1911,11 @@
 { <do something with the date> }
 
 \NewDocumentCommand \received { m }
-    { \tl_gput_right:Nn \g_ceur_recd_tl { #1 } }
+{ \tl_gput_right:Nn \g_ceur_recd_tl { #1 } }
 \NewDocumentCommand \accepted { m }
-    { \tl_gput_right:Nn \g_ceur_accd_tl { #1 } }
+{ \tl_gput_right:Nn \g_ceur_accd_tl { #1 } }
 \NewDocumentCommand \revised { m }
-    { \tl_gput_right:Nn \g_ceur_revd_tl { #1 } }
+{ \tl_gput_right:Nn \g_ceur_revd_tl { #1 } }
 \NewDocumentCommand \published { O{} m }
 {
   \tl_if_eq:nnTF { #1 } { online }
@@ -1941,7 +1930,6 @@
 { \tl_set:Nn \l_ceur_verso_tl { #1 } }
 \NewDocumentCommand \recto { m }
 { \tl_set:Nn \l_ceur_recto_tl { #1 } }
-
 
 \newcounter{au}
 \newcounter{cnote}
@@ -1961,8 +1949,8 @@
 {
   blind        .bool_gset:N     = \g_ceur_blind_bool        ,
   footer       .multichoice:,
-       footer/default  .tl_gset:N  = \g_ceur_footer_default_tl ,
-       footer/custom   .tl_gset:N  = \g_ceur_footer_custom_tl  ,
+  footer/default  .tl_gset:N  = \g_ceur_footer_default_tl ,
+  footer/custom   .tl_gset:N  = \g_ceur_footer_custom_tl  ,
   longtitle     .bool_gset:N    = \g_ceur_longtitle_bool    ,
   longabstract  .bool_gset:N    = \g_ceur_longtitle_bool    ,
   breakafter    .clist_gset:N   = \g_ceur_breakafter_clist  ,
@@ -2069,21 +2057,21 @@
     \ceurcollab \par
     \footnotesize \itshape \ceuraddress \par
     \group_end:
-  %
-  \dashrule{0pt}{3pt}
-  \begin{Abstract}
-    \noindent \ignorespaces
-    \file_if_exist:nT { \jobname.abs } { \file_input:n { \jobname.abs } }
-  \end{Abstract}
-  \dashrule{3pt}{3pt}
+    %
+    \dashrule{0pt}{3pt}
+    \begin{Abstract}
+      \noindent \ignorespaces
+      \file_if_exist:nT { \jobname.abs } { \file_input:n { \jobname.abs } }
+    \end{Abstract}
+    \dashrule{3pt}{3pt}
   }
   \vbox_gset:Nn \g_ceur_notes_box
   {  \cs_set_eq:NN \footnotetext \__fn_text:n  \printFirstPageNotes }
-   \dim_gset:Nn \g_tmpb_dim { \box_ht:N \g_ceur_notes_box }
-   % \iow_term:x { ...~[ht: \dim_use:N \g_tmpb_dim  ] }
-   \dim_gadd:Nn \g_tmpb_dim { \box_dp:N \g_ceur_notes_box }
-   % \iow_term:x { ...~[ht+dp: \dim_use:N \g_tmpb_dim  ] }
-   \ifbool{sc}{\dim_gadd:Nn \g_tmpb_dim { 12pt } } { }
+  \dim_gset:Nn \g_tmpb_dim { \box_ht:N \g_ceur_notes_box }
+  % \iow_term:x { ...~[ht: \dim_use:N \g_tmpb_dim  ] }
+  \dim_gadd:Nn \g_tmpb_dim { \box_dp:N \g_ceur_notes_box }
+  % \iow_term:x { ...~[ht+dp: \dim_use:N \g_tmpb_dim  ] }
+  \ifbool{sc}{\dim_gadd:Nn \g_tmpb_dim { 12pt } } { }
 
 }
 
@@ -2124,7 +2112,7 @@
     { \twocolumn[{\vbox_unpack_clear:N \g_ceur_front_box}] }
     { \vbox_unpack_clear:N \g_ceur_front_box }
   }
- \normalcolor \normalfont
+  \normalcolor \normalfont
 }
 \ExplSyntaxOff
 
@@ -2135,20 +2123,15 @@
 \newdimen\subparaindent  \subparaindent=\parindent
 \def\ssssparaindent{}
 \def\sectionfont{\rmfamily\fontsize{12pt}{14pt}%
-  \bfseries}
+\bfseries}
 \def\ssectionfont{\rmfamily\fontsize{11pt}{13pt}%
-  \bfseries\selectfont}
+\bfseries\selectfont}
 \def\sssectionfont{\rmfamily\fontsize{10.5pt}{12pt}%
-  \fontseries{b}\fontshape{it}\selectfont}
+\fontseries{b}\fontshape{it}\selectfont}
 \def\ssssectionfont{\rmfamily\fontsize{11pt}{10pt}\itshape\selectfont}
 \def\sssssectionfont{\rmfamily\fontsize{11pt}{10pt}\selectfont}%
 
 \AtBeginDocument{\global\@afterindentfalse}
-
-
-
-
-
 
 \def\thesubsection{\thesection.\arabic{subsection}}
 \def\thesubsubsection{\thesubsection.\arabic{subsubsection}}
@@ -2163,11 +2146,10 @@
 \def\lastpage{100}
 
 \AtEndDocument{%
-   \immediate\write\@auxout{\string\csxdef{lastpage}{\thepage}}
+  \immediate\write\@auxout{\string\csxdef{lastpage}{\thepage}}
 }
 
 \ExplSyntaxOn
-
 
 \RequirePackage{scrlayer-scrpage}
 \clearpairofpagestyles
@@ -2183,10 +2165,6 @@
   \ohead[]{\firstpage--\lastpage}
   \ihead[]{\__short_authors:{} ~ { \rmfamily \itshape CEUR~Workshop~Proceedings}}
 }{ }
-
-
-
-
 
 \cs_new:Npn \__first_footerline: {
   \group_begin:
@@ -2229,10 +2207,6 @@
   }
 }
 
-
-
-
-
 \def\topfraction{.9}
 \def\bottomfraction{.9}
 \setcounter{topnumber}{4}
@@ -2269,7 +2243,7 @@
   % \fboxsep=4pt
   % \colorbox{white}
   {\parbox{ \dimexpr(\l_tbl_width_dim)}
-    {\rightskip=0pt\sffamily\small\textbf{\color{scolor}#1}\par#2\par\vskip4pt }}
+  {\rightskip=0pt\sffamily\small\textbf{\color{scolor}#1}\par#2\par\vskip4pt }}
   \skip_vertical:N \l_tbl_belowcap_skip
 }
 
@@ -2402,19 +2376,19 @@
 \tl_new:N  \l_wrap_figfile_tl
 
 \NewDocumentCommand \wfigwidth { m }
-  { \dim_set:Nn \l_wrap_figwidth_dim { #1 } }
+{ \dim_set:Nn \l_wrap_figwidth_dim { #1 } }
 \NewDocumentCommand \wfighspace { m }
-  { \dim_set:Nn \l_wrap_fighspace_dim { #1 } }
+{ \dim_set:Nn \l_wrap_fighspace_dim { #1 } }
 \NewDocumentCommand \wfigvspace { m }
-  { \dim_set:Nn \l_wrap_figvspace_dim { #1 } }
+{ \dim_set:Nn \l_wrap_figvspace_dim { #1 } }
 \NewDocumentCommand \wfighcorr { m }
-  { \dim_set:Nn \l_wrap_fighcorr_dim { #1 } }
+{ \dim_set:Nn \l_wrap_fighcorr_dim { #1 } }
 \NewDocumentCommand \wfigvcorr { m }
-  { \dim_set:Nn \l_wrap_figvcorr_dim { #1 } }
+{ \dim_set:Nn \l_wrap_figvcorr_dim { #1 } }
 \NewDocumentCommand \addfiglines { m }
-  { \int_set:Nn \l_wrap_figlcorr_int { #1 } }
+{ \int_set:Nn \l_wrap_figlcorr_int { #1 } }
 \NewDocumentCommand \abovebioskip { m }
-  { \dim_set:Nn \l_above_bio_dim { #1 } }
+{ \dim_set:Nn \l_above_bio_dim { #1 } }
 
 \cs_new:Nn \__fig_defaults: {
   \wfigwidth  { 25.5mm }
@@ -2509,7 +2483,6 @@
 \cs_set:Nn \__fwidth: { 1in }
 \cs_set:Nn \__fpos: { l }
 
-
 \tl_new:N \__short_authors:
 \newcommand\shortauthors[1]{ \cs_gset:Nn \__short_authors: { #1 } }
 
@@ -2534,16 +2507,16 @@
 \int_new:N \l_ca_temp_inta
 
 \NewDocumentCommand \endbio { } {
- \ifbool{ cas_no_pic_bio } { } {
-  \egroup
-  \int_gset:Nn \l_ca_temp_inta
-      { \numexpr\dimexpr(\the\ht\l_bio_text_box + 2\baselineskip )/
-        \dimexpr\the\baselineskip }
-  \iow_now:Nx \@auxout {
-     \string\csgdef{cabio\theca_biography_ctr lines}
-        { \int_use:N \l_ca_temp_inta } }
-\mbox{}\vspace*{-4.5pt}\noindent
-\unvbox \l_bio_text_box }
+  \ifbool{ cas_no_pic_bio } { } {
+    \egroup
+    \int_gset:Nn \l_ca_temp_inta
+    { \numexpr\dimexpr(\the\ht\l_bio_text_box + 2\baselineskip )/
+    \dimexpr\the\baselineskip }
+    \iow_now:Nx \@auxout {
+      \string\csgdef{cabio\theca_biography_ctr lines}
+    { \int_use:N \l_ca_temp_inta } }
+    \mbox{}\vspace*{-4.5pt}\noindent
+  \unvbox \l_bio_text_box }
 }
 
 \let\casbiographyfont\relax
@@ -2569,7 +2542,7 @@
 \def\@enLabel#1#2{%
   \edef\@enThe{\noexpand#1{\@enumctr}}%
   \@enLab\expandafter{\the\@enLab\csname the\@enumctr\endcsname}%
-  \@enloop}
+\@enloop}
 \def\@enSpace{\afterassignment\@enSp@ce\let\@tempa= }
 \def\@enSp@ce{\@enLab\expandafter{\the\@enLab\space}\@enloop}
 \def\@enGroup#1{\@enLab\expandafter{\the\@enLab{#1}}\@enloop}
@@ -2584,299 +2557,298 @@
   \ifx \@sptoken\@entemp \let\@tempa\@enSpace         \else
   \ifx \bgroup\@entemp   \let\@tempa\@enGroup         \else
   \ifx \@enum@\@entemp   \let\@tempa\@gobble          \else
-                         \let\@tempa\@enOther
-             \fi\fi\fi\fi\fi\fi\fi\fi
-  \@tempa}
+  \let\@tempa\@enOther
+  \fi\fi\fi\fi\fi\fi\fi\fi
+\@tempa}
 \newlength{\@sep} \newlength{\@@sep}
 \setlength{\@sep}{.5\baselineskip plus.2\baselineskip
-            minus.2\baselineskip}
+minus.2\baselineskip}
 \setlength{\@@sep}{.1\baselineskip plus.01\baselineskip
-            minus.05\baselineskip}
+minus.05\baselineskip}
 \providecommand{\sfbc}{\rmfamily\upshape}
 \providecommand{\sfn}{\rmfamily\upshape}
 \def\@enfont{\ifnum \@enumdepth >1\let\@nxt\sfn \else\let\@nxt\sfbc \fi\@nxt}
 \def\enumerate{%
-   \ifnum \@enumdepth >3 \@toodeep\else
-      \advance\@enumdepth \@ne
-      \edef\@enumctr{enum\romannumeral\the\@enumdepth}\fi
-   \@ifnextchar[{\@@enum@}{\@enum@}}
-\def\@@enum@[#1]{%
-  \@enLab{}\let\@enThe\@enQmark
-  \@enloop#1\@enum@
-  \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
-   ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
-  \expandafter\edef\csname label\@enumctr\endcsname{\the\@enLab}%
-  \expandafter\let\csname the\@enumctr\endcsname\@enThe
-  \csname c@\@enumctr\endcsname7
-  \expandafter\settowidth
-            \csname leftmargin\romannumeral\@enumdepth\endcsname
-            {\the\@enLab\hskip\labelsep}%
+  \ifnum \@enumdepth >3 \@toodeep\else
+  \advance\@enumdepth \@ne
+  \edef\@enumctr{enum\romannumeral\the\@enumdepth}\fi
+  \@ifnextchar[{\@@enum@}{\@enum@}}
+  \def\@@enum@[#1]{%
+    \@enLab{}\let\@enThe\@enQmark
+    \@enloop#1\@enum@
+    \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
+    ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
+    \expandafter\edef\csname label\@enumctr\endcsname{\the\@enLab}%
+    \expandafter\let\csname the\@enumctr\endcsname\@enThe
+    \csname c@\@enumctr\endcsname7
+    \expandafter\settowidth
+    \csname leftmargin\romannumeral\@enumdepth\endcsname
+    {\the\@enLab\hskip\labelsep}%
   \@enum@}
-\def\@enum@{\list{{\@enfont\csname label\@enumctr\endcsname}}%
-           {\usecounter{\@enumctr}\def\makelabel##1{\hss\llap{##1}}%
-     \ifnum \@enumdepth>1\setlength{\topsep}{\@@sep}\else
-           \setlength{\topsep}{\@sep}\fi
-     \ifnum \@enumdepth>1\setlength{\itemsep}{0pt plus1pt minus1pt}%
+  \def\@enum@{\list{{\@enfont\csname label\@enumctr\endcsname}}%
+    {\usecounter{\@enumctr}\def\makelabel##1{\hss\llap{##1}}%
+      \ifnum \@enumdepth>1\setlength{\topsep}{\@@sep}\else
+      \setlength{\topsep}{\@sep}\fi
+      \ifnum \@enumdepth>1\setlength{\itemsep}{0pt plus1pt minus1pt}%
       \else \setlength{\itemsep}{\@@sep}\fi
-     %\setlength\leftmargin{\leftMargin}%%%{1.8em}
-     \setlength{\parsep}{0pt plus1pt minus1pt}%
-     \setlength{\parskip}{0pt plus1pt minus1pt}
-                   }}
+      %\setlength\leftmargin{\leftMargin}%%%{1.8em}
+      \setlength{\parsep}{0pt plus1pt minus1pt}%
+      \setlength{\parskip}{0pt plus1pt minus1pt}
+  }}
 
-\def\endenumerate{\par\ifnum \@enumdepth >1\addvspace{\@@sep}\else
-           \addvspace{\@sep}\fi \endlist}
+  \def\endenumerate{\par\ifnum \@enumdepth >1\addvspace{\@@sep}\else
+  \addvspace{\@sep}\fi \endlist}
 
-\def\sitem{\@noitemargtrue\@item[\@itemlabel *]}
+  \def\sitem{\@noitemargtrue\@item[\@itemlabel *]}
 
-\def\itemize{\@ifnextchar[{\@Itemize}{\@Itemize[]}}
+  \def\itemize{\@ifnextchar[{\@Itemize}{\@Itemize[]}}
 
-\def\@Itemize[#1]{%
-  \def\next{#1}%
-  \ifnum \@itemdepth >\thr@@\@toodeep\else
-    \advance\@itemdepth\@ne
-    \ifx\next\@empty\else\expandafter\def\csname
+    \def\@Itemize[#1]{%
+      \def\next{#1}%
+      \ifnum \@itemdepth >\thr@@\@toodeep\else
+      \advance\@itemdepth\@ne
+      \ifx\next\@empty\else\expandafter\def\csname
       labelitem\romannumeral\the\@itemdepth\endcsname{#1}\fi%
-    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
-    \expandafter\list\csname\@itemitem\endcsname
-    {\def\makelabel##1{\hss\llap{##1}}}%
-  \fi
-  \setlength{\itemsep}{\@@sep}
-  \setlength{\parsep}{0pt plus1pt minus1pt}%
-  \setlength{\parskip}{0pt plus1pt minus1pt}
-}
+      \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+      \expandafter\list\csname\@itemitem\endcsname
+      {\def\makelabel##1{\hss\llap{##1}}}%
+      \fi
+      \setlength{\itemsep}{\@@sep}
+      \setlength{\parsep}{0pt plus1pt minus1pt}%
+      \setlength{\parskip}{0pt plus1pt minus1pt}
+    }
 
+    \def\newdefinition#1{%
+      \@ifnextchar[{\@odfn{#1}}{\@ndfn{#1}}}%]
+      \def\@ndfn#1#2{%
+        \@ifnextchar[{\@xndfn{#1}{#2}}{\@yndfn{#1}{#2}}}
+        \def\@xndfn#1#2[#3]{%
+          \expandafter\@ifdefinable\csname #1\endcsname
+          {\@definecounter{#1}\@newctr{#1}[#3]%
+            \expandafter\xdef\csname the#1\endcsname{%
+              \expandafter\noexpand\csname the#3\endcsname \@dfncountersep
+            \@dfncounter{#1}}%
+            \global\@namedef{#1}{\@dfn{#1}{#2}}%
+        \global\@namedef{end#1}{\@enddefinition}}}
+        \def\@yndfn#1#2{%
+          \expandafter\@ifdefinable\csname #1\endcsname
+          {\@definecounter{#1}%
+            \expandafter\xdef\csname the#1\endcsname{\@dfncounter{#1}}%
+            \global\@namedef{#1}{\@dfn{#1}{#2}}%
+        \global\@namedef{end#1}{\@enddefinition}}}
+        \def\@odfn#1[#2]#3{%
+          \@ifundefined{c@#2}{\@nocounterr{#2}}%
+          {\expandafter\@ifdefinable\csname #1\endcsname
+            {\global\@namedef{the#1}{\@nameuse{the#2}}
+              \global\@namedef{#1}{\@dfn{#2}{#3}}%
+        \global\@namedef{end#1}{\@enddefinition}}}}
+        \def\@dfn#1#2{%
+          \refstepcounter{#1}%
+          \@ifnextchar[{\@ydfn{#1}{#2}}{\@xdfn{#1}{#2}}}
+          \def\@xdfn#1#2{%
+          \@begindefinition{#2}{\csname the#1\endcsname}\ignorespaces}
+          \def\@ydfn#1#2[#3]{%
+          \@opargbegindefinition{#2}{\csname the#1\endcsname}{#3}\ignorespaces}
+          \def\@dfncounter#1{\noexpand\arabic{#1}}
+          \def\@dfncountersep{.}
+          \def\@begindefinition#1#2{\trivlist
+        \item[\hskip\labelsep{\bfseries #1\ #2.}]\upshape}
+          \def\@opargbegindefinition#1#2#3{\trivlist
+        \item[\hskip\labelsep{\bfseries #1\ #2\ (#3).}]\upshape}
+          \def\@enddefinition{\endtrivlist}
 
-\def\newdefinition#1{%
-  \@ifnextchar[{\@odfn{#1}}{\@ndfn{#1}}}%]
-\def\@ndfn#1#2{%
-  \@ifnextchar[{\@xndfn{#1}{#2}}{\@yndfn{#1}{#2}}}
-\def\@xndfn#1#2[#3]{%
-  \expandafter\@ifdefinable\csname #1\endcsname
-    {\@definecounter{#1}\@newctr{#1}[#3]%
-     \expandafter\xdef\csname the#1\endcsname{%
-       \expandafter\noexpand\csname the#3\endcsname \@dfncountersep
-          \@dfncounter{#1}}%
-     \global\@namedef{#1}{\@dfn{#1}{#2}}%
-     \global\@namedef{end#1}{\@enddefinition}}}
-\def\@yndfn#1#2{%
-  \expandafter\@ifdefinable\csname #1\endcsname
-    {\@definecounter{#1}%
-     \expandafter\xdef\csname the#1\endcsname{\@dfncounter{#1}}%
-     \global\@namedef{#1}{\@dfn{#1}{#2}}%
-     \global\@namedef{end#1}{\@enddefinition}}}
-\def\@odfn#1[#2]#3{%
-  \@ifundefined{c@#2}{\@nocounterr{#2}}%
-    {\expandafter\@ifdefinable\csname #1\endcsname
-    {\global\@namedef{the#1}{\@nameuse{the#2}}
-  \global\@namedef{#1}{\@dfn{#2}{#3}}%
-  \global\@namedef{end#1}{\@enddefinition}}}}
-\def\@dfn#1#2{%
-  \refstepcounter{#1}%
-  \@ifnextchar[{\@ydfn{#1}{#2}}{\@xdfn{#1}{#2}}}
-\def\@xdfn#1#2{%
-  \@begindefinition{#2}{\csname the#1\endcsname}\ignorespaces}
-\def\@ydfn#1#2[#3]{%
-  \@opargbegindefinition{#2}{\csname the#1\endcsname}{#3}\ignorespaces}
-\def\@dfncounter#1{\noexpand\arabic{#1}}
-\def\@dfncountersep{.}
-\def\@begindefinition#1#2{\trivlist
-   \item[\hskip\labelsep{\bfseries #1\ #2.}]\upshape}
-\def\@opargbegindefinition#1#2#3{\trivlist
-      \item[\hskip\labelsep{\bfseries #1\ #2\ (#3).}]\upshape}
-\def\@enddefinition{\endtrivlist}
+          \def\@begintheorem#1#2{\trivlist
+            \let\baselinestretch\@blstr
+        \item[\hskip \labelsep{\bfseries #1\ #2.}]\itshape}
+          \def\@opargbegintheorem#1#2#3{\trivlist
+            \let\baselinestretch\@blstr
+        \item[\hskip \labelsep{\bfseries #1\ #2\ (#3).}]\itshape}
+          \def\newproof#1{%
+            \@ifnextchar[{\@oprf{#1}}{\@nprf{#1}}}
+            \def\@nprf#1#2{%
+              \@ifnextchar[{\@xnprf{#1}{#2}}{\@ynprf{#1}{#2}}}
+              \def\@xnprf#1#2[#3]{%
+                \expandafter\@ifdefinable\csname #1\endcsname
+                {\@definecounter{#1}\@newctr{#1}[#3]%
+                  \expandafter\xdef\csname the#1\endcsname{%
+                    \expandafter\noexpand\csname the#3\endcsname \@prfcountersep
+                  \@prfcounter{#1}}%
+                  \global\@namedef{#1}{\@prf{#1}{#2}}%
+              \global\@namedef{end#1}{\@endproof}}}
+              \def\@ynprf#1#2{%
+                \expandafter\@ifdefinable\csname #1\endcsname
+                {\@definecounter{#1}%
+                  \expandafter\xdef\csname the#1\endcsname{\@prfcounter{#1}}%
+                  \global\@namedef{#1}{\@prf{#1}{#2}}%
+              \global\@namedef{end#1}{\@endproof}}}
+              \def\@oprf#1[#2]#3{%
+                \@ifundefined{c@#2}{\@nocounterr{#2}}%
+                {\expandafter\@ifdefinable\csname #1\endcsname
+                  {\global\@namedef{the#1}{\@nameuse{the#2}}%
+                    \global\@namedef{#1}{\@prf{#2}{#3}}%
+              \global\@namedef{end#1}{\@endproof}}}}
+              \def\@prf#1#2{%
+                \refstepcounter{#1}%
+                \@ifnextchar[{\@yprf{#1}{#2}}{\@xprf{#1}{#2}}}
+                \def\@xprf#1#2{%
+                \@beginproof{#2}{\csname the#1\endcsname}\ignorespaces}
+                \def\@yprf#1#2[#3]{%
+                \@opargbeginproof{#2}{\csname the#1\endcsname}{#3}\ignorespaces}
+                \def\@prfcounter#1{\noexpand\arabic{#1}}
+                \def\@prfcountersep{.}
+                \def\@beginproof#1#2{\trivlist\let\baselinestretch\@blstr
+              \item[\hskip \labelsep{\scshape #1.}]\rmfamily}
+                \def\@opargbeginproof#1#2#3{\trivlist\let\baselinestretch\@blstr
+              \item[\hskip \labelsep{\scshape #1\ (#3).}]\rmfamily}
+                \def\@endproof{\endtrivlist}
+                \newcommand*{\qed}{\hbox{}\hfill$\Box$}
 
-\def\@begintheorem#1#2{\trivlist
-  \let\baselinestretch\@blstr
-   \item[\hskip \labelsep{\bfseries #1\ #2.}]\itshape}
-\def\@opargbegintheorem#1#2#3{\trivlist
-  \let\baselinestretch\@blstr
-      \item[\hskip \labelsep{\bfseries #1\ #2\ (#3).}]\itshape}
-\def\newproof#1{%
-  \@ifnextchar[{\@oprf{#1}}{\@nprf{#1}}}
-\def\@nprf#1#2{%
-  \@ifnextchar[{\@xnprf{#1}{#2}}{\@ynprf{#1}{#2}}}
-\def\@xnprf#1#2[#3]{%
-  \expandafter\@ifdefinable\csname #1\endcsname
-    {\@definecounter{#1}\@newctr{#1}[#3]%
-     \expandafter\xdef\csname the#1\endcsname{%
-       \expandafter\noexpand\csname the#3\endcsname \@prfcountersep
-          \@prfcounter{#1}}%
-     \global\@namedef{#1}{\@prf{#1}{#2}}%
-     \global\@namedef{end#1}{\@endproof}}}
-\def\@ynprf#1#2{%
-  \expandafter\@ifdefinable\csname #1\endcsname
-    {\@definecounter{#1}%
-     \expandafter\xdef\csname the#1\endcsname{\@prfcounter{#1}}%
-     \global\@namedef{#1}{\@prf{#1}{#2}}%
-     \global\@namedef{end#1}{\@endproof}}}
-\def\@oprf#1[#2]#3{%
-  \@ifundefined{c@#2}{\@nocounterr{#2}}%
-    {\expandafter\@ifdefinable\csname #1\endcsname
-    {\global\@namedef{the#1}{\@nameuse{the#2}}%
-  \global\@namedef{#1}{\@prf{#2}{#3}}%
-  \global\@namedef{end#1}{\@endproof}}}}
-\def\@prf#1#2{%
-  \refstepcounter{#1}%
-  \@ifnextchar[{\@yprf{#1}{#2}}{\@xprf{#1}{#2}}}
-\def\@xprf#1#2{%
-  \@beginproof{#2}{\csname the#1\endcsname}\ignorespaces}
-\def\@yprf#1#2[#3]{%
-  \@opargbeginproof{#2}{\csname the#1\endcsname}{#3}\ignorespaces}
-\def\@prfcounter#1{\noexpand\arabic{#1}}
-\def\@prfcountersep{.}
-\def\@beginproof#1#2{\trivlist\let\baselinestretch\@blstr
-   \item[\hskip \labelsep{\scshape #1.}]\rmfamily}
-\def\@opargbeginproof#1#2#3{\trivlist\let\baselinestretch\@blstr
-      \item[\hskip \labelsep{\scshape #1\ (#3).}]\rmfamily}
-\def\@endproof{\endtrivlist}
-\newcommand*{\qed}{\hbox{}\hfill$\Box$}
+              \xspaceaddexceptions{]}
 
-\xspaceaddexceptions{]}
+              \ExplSyntaxOn
 
-\ExplSyntaxOn
+              %%
+              %% Bibliography
+              %%
 
-%%
-%% Bibliography
-%%
+              \RequirePackage[numbers]{natbib}
+              \AtBeginDocument{\bibsep=0pt}
 
-\RequirePackage[numbers]{natbib}
-\AtBeginDocument{\bibsep=0pt}
+              \bibliographystyle{elsarticle-num-names}
 
-\bibliographystyle{elsarticle-num-names}
+              %%
+              %% Fonts
+              %%
 
-%%
-%% Fonts
-%%
+              \ifpdftex
+              \RequirePackage[T1]{fontenc}
+              \fi
 
-\ifpdftex
-\RequirePackage[T1]{fontenc}
-\fi
+              %% Main font
+              \file_if_exist:nTF { libertinus.sty }
+              {
+                \RequirePackage{libertinus}
+              }{
+                \iow_term:x { Libertinus fonts are not available }
+              }
 
-%% Main font
-\file_if_exist:nTF { libertinus.sty }
-{
-  \RequirePackage{libertinus}
-}{
-  \iow_term:x { Libertinus fonts are not available }
-}
+              %% Math font for pdfLaTeX
 
-%% Math font for pdfLaTeX
+              \ExplSyntaxOff
 
-\ExplSyntaxOff
+              %%
+              %% Compatibility workaround
+              %%
 
-%%
-%% Compatibility workaround
-%%
+              %% Old font naming commands for Koma class
 
-%% Old font naming commands for Koma class
+              \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+              \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+              \DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+              \DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+              \DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+              \DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+              \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
 
-\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
-\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
-\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
-\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
-\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
-\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
-\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+              %%% Supplementary
 
-%%% Supplementary
+              \ProvideDocumentCommand \DivFontShape {} { \sffamily \bfseries }
 
-\ProvideDocumentCommand \DivFontShape {} { \sffamily \bfseries }
+              %%%% Author Contributions
 
-%%%% Author Contributions
+              \def\authorcontributionsname{Author~contributions}
 
-\def\authorcontributionsname{Author~contributions}
+              \ProvideDocumentEnvironment { authorcontributions } { +b } {%
+                % \smallskip
+                % \noindent
+                % {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
+                \section*{\authorcontributionsname} { #1 }
+              } {}
 
-\ProvideDocumentEnvironment { authorcontributions } { +b } {%
-  % \smallskip
-  % \noindent
-  % {\footnotesize{\DivFontShape{\authorcontributionsname}:~} { #1 }}
-  \section*{\authorcontributionsname} { #1 }
-} {}
+              %%%% Funding
 
-%%%% Funding
+              \def\fundingname{Funding}
 
-\def\fundingname{Funding}
+              \ProvideDocumentEnvironment { funding } { +b } {%
+                % \smallskip
+                % \noindent
+                % {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
+                \section*{\fundingname} { #1 }
+              } {}
 
-\ProvideDocumentEnvironment { funding } { +b } {%
-  % \smallskip
-  % \noindent
-  % {\footnotesize{\DivFontShape{\fundingname}:~} { #1 }}
-  \section*{\fundingname} { #1 }
-} {}
+              %%%% Data Availability Statement
 
-%%%% Data Availability Statement
+              \def\dataavailabilityname{Data~availability~statement}
 
-\def\dataavailabilityname{Data~availability~statement}
+              \ProvideDocumentEnvironment { dataavailability } { +b } {%
+                % \smallskip
+                % \noindent
+                % {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
+                \section*{\dataavailabilityname} { #1 }
+              } {}
 
-\ProvideDocumentEnvironment { dataavailability } { +b } {%
-  % \smallskip
-  % \noindent
-  % {\footnotesize{\DivFontShape{\dataavailabilityname}:~} { #1 }}
-  \section*{\dataavailabilityname} { #1 }
-} {}
+              %%%% Conflicts of Interest
 
-%%%% Conflicts of Interest
+              \def\conflictsofinterestname{Conflicts~of~interest}
 
-\def\conflictsofinterestname{Conflicts~of~interest}
+              \ProvideDocumentEnvironment { conflictsofinterest } { +b } {%
+                % \smallskip
+                % \noindent
+                % {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
+                \section*{\conflictsofinterestname} { #1 }
+              } {}
 
-\ProvideDocumentEnvironment { conflictsofinterest } { +b } {%
-  % \smallskip
-  % \noindent
-  % {\footnotesize{\DivFontShape{\conflictsofinterestname}:~} { #1 }}
-  \section*{\conflictsofinterestname} { #1 }
-} {}
+              %%%% Acknowledgments
 
-%%%% Acknowledgments
+              \def\acknowledgmentsname{Acknowledgments}
 
-\def\acknowledgmentsname{Acknowledgments}
+              \ProvideDocumentEnvironment { acknowledgments } { +b } {%
+                % \smallskip
+                % \noindent
+                % {\footnotesize{\DivFontShape{\acknowledgmentsname}:~{ #1 }}
+                \section*{\acknowledgmentsname} { #1 }
+              } {}
 
-\ProvideDocumentEnvironment { acknowledgments } { +b } {%
-  % \smallskip
-  % \noindent
-  % {\footnotesize{\DivFontShape{\acknowledgmentsname}:~{ #1 }}
-  \section*{\acknowledgmentsname} { #1 }
-} {}
+              %%%% Declaration on Generative AI
 
-%%%% Declaration on Generative AI
+              \def\aideclarationname{Declaration~on~Generative~AI}
 
-\def\aideclarationname{Declaration~on~Generative~AI}
+              \ProvideDocumentEnvironment { aideclaration } { +b } {%
+                % \smallskip
+                % \noindent
+                % {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
+                \section*{\aideclarationname} { #1 }
+              } {}
 
-\ProvideDocumentEnvironment { aideclaration } { +b } {%
-  % \smallskip
-  % \noindent
-  % {\footnotesize{\DivFontShape{\aideclarationname}:~} { #1 }}
-  \section*{\aideclarationname} { #1 }
-} {}
+              %%% Page geometry
 
-%%% Page geometry
-
-\RequirePackage{geometry}
-\geometry{a4paper}
-\geometry{%
-  twoside=false,
-  vmargin=1cm,
-  hmargin=1in,
-  centering,
-  columnsep=2pc,
-  heightrounded,
-  includeheadfoot,
-}
-%% 
-%% Copyright (C) 2019-2025 CEUR Workshop Proceedings (CEUR-WS.org)
-%% 
-%% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License (LPPL), either
-%% version 1.3c of this license or (at your option) any later
-%% version.  The latest version of this license is in the file:
-%% 
-%% http://www.latex-project.org/lppl.txt
-%% 
-%% This work is "maintained" (as per LPPL maintenance status) by Dmitry S. Kulyabov.
-%% 
-%% This work consists of the file ceurart.dtx and a Makefile.
-%% Running "make" generates the derived files README, ceurart.pdf and ceurart.cls.
-%% Running "make inst" installs the files in the user's TeX tree.
-%% Running "make install" installs the files in the local TeX tree.
-%% 
-%%
-%% End of file `ceurart.cls'.
+              \RequirePackage{geometry}
+              \geometry{a4paper}
+              \geometry{%
+                twoside=false,
+                vmargin=1cm,
+                hmargin=1in,
+                centering,
+                columnsep=2pc,
+                heightrounded,
+                includeheadfoot,
+              }
+              %%
+              %% Copyright (C) 2019-2025 CEUR Workshop Proceedings (CEUR-WS.org)
+              %%
+              %% This work may be distributed and/or modified under the
+              %% conditions of the LaTeX Project Public License (LPPL), either
+              %% version 1.3c of this license or (at your option) any later
+              %% version.  The latest version of this license is in the file:
+              %%
+              %% http://www.latex-project.org/lppl.txt
+              %%
+              %% This work is "maintained" (as per LPPL maintenance status) by Dmitry S. Kulyabov.
+              %%
+              %% This work consists of the file ceurart.dtx and a Makefile.
+              %% Running "make" generates the derived files README, ceurart.pdf and ceurart.cls.
+              %% Running "make inst" installs the files in the user's TeX tree.
+              %% Running "make install" installs the files in the local TeX tree.
+              %%
+              %%
+              %% End of file `ceurart.cls'.
