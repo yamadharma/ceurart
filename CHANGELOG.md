@@ -1,3 +1,9 @@
+## [0.6.4](https://github.com/yamadharma/ceurart/compare/v0.6.3...v0.6.4) (2026-07-19)
+
+### Bug Fixes
+
+* **sample:** remove real ORCID's ([5d4741b](https://github.com/yamadharma/ceurart/commit/5d4741b440d7a7152ea0e7342634402803c1907c))
+
 ## [0.6.3](https://github.com/yamadharma/ceurart/compare/v0.6.2...v0.6.3) (2026-01-14)
 
 
